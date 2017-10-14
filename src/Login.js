@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   TextInput,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -54,11 +54,11 @@ export default class Login extends React.Component {
     const { navigate } = this.props.navigation;
     return (
      <KeyboardAvoidingView style={styles.container}  behavior="padding">
-        <TextInput 
+        <TextInput
           style={styles.textInput}
           value={this.state.email}
           onChangeText={(email) => this.setState({email})} />
-        <TextInput 
+        <TextInput
           style={styles.textInput}
           value={this.state.password}
           secureTextEntry={true}
