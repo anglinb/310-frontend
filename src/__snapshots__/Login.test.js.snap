@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<View
+  keyboardVerticalOffset={0}
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#fff",
+        "flex": 1,
+        "justifyContent": "center",
+        "padding": 10,
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "display": "flex",
+        "paddingTop": 10,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#676E6E",
+          "fontFamily": "Avenir Next",
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Email
+    </Text>
+    <TextInput
+      labelText="Email"
+      onChangeText={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#D8D8D8",
+          "borderRadius": 8,
+          "color": "#676E6E",
+          "fontFamily": "Avenir Next",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "height": 36,
+          "padding": 8,
+        }
+      }
+      value=""
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "display": "flex",
+        "paddingTop": 10,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#676E6E",
+          "fontFamily": "Avenir Next",
+          "fontSize": 18,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Password
+    </Text>
+    <TextInput
+      labelText="Password"
+      onChangeText={[Function]}
+      secureTextEntry={true}
+      style={
+        Object {
+          "backgroundColor": "#D8D8D8",
+          "borderRadius": 8,
+          "color": "#676E6E",
+          "fontFamily": "Avenir Next",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "height": 36,
+          "padding": 8,
+        }
+      }
+      value=""
+    />
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+        },
+        Object {
+          "marginTop": 20,
+        },
+      ]
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <View>
+      <ExponentLinearGradient
+        colors={
+          Array [
+            4278628033,
+            4278632359,
+          ]
+        }
+        end={undefined}
+        locations={null}
+        start={undefined}
+        style={
+          Object {
+            "alignItems": "center",
+            "borderRadius": 5,
+            "padding": 15,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#fff",
+              "fontFamily": "Avenir Next",
+              "fontSize": 20,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Login/Sign Up
+        </Text>
+      </ExponentLinearGradient>
+    </View>
+  </View>
+</View>
+`;

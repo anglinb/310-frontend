@@ -47,7 +47,6 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <Container avoidKeyboard={true} centerContent={true}>
         <StyledTextInput 
@@ -60,6 +59,7 @@ export default class Login extends React.Component {
           secureTextEntry={true}
           onChangeText={(password) => this.setState({password})} />
         <StyledButton
+          style={{marginTop: 20}}
           title={`Login/Sign Up`}
           onPress={this.handleButtonPress}/>
       </Container>

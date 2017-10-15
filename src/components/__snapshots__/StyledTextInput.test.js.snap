@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing w/ label 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "stretch",
+      "display": "flex",
+      "paddingTop": 10,
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#676E6E",
+        "fontFamily": "Avenir Next",
+        "fontSize": 18,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Label
+  </Text>
+  <TextInput
+    labelText="Label"
+    style={
+      Object {
+        "backgroundColor": "#D8D8D8",
+        "borderRadius": 8,
+        "color": "#676E6E",
+        "fontFamily": "Avenir Next",
+        "fontSize": 18,
+        "fontWeight": "bold",
+        "height": 36,
+        "padding": 8,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`renders without crashing w/o label 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "stretch",
+      "display": "flex",
+      "paddingTop": 10,
+    }
+  }
+>
+  <TextInput
+    style={
+      Object {
+        "backgroundColor": "#D8D8D8",
+        "borderRadius": 8,
+        "color": "#676E6E",
+        "fontFamily": "Avenir Next",
+        "fontSize": 18,
+        "fontWeight": "bold",
+        "height": 36,
+        "padding": 8,
+      }
+    }
+  />
+</View>
+`;

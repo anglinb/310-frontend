@@ -38,8 +38,6 @@ const textInputStyles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     alignItems: 'stretch',
-    borderColor: 'blue',
-    borderWidth: 2,
     paddingTop: 10,
   },
   label: {
@@ -58,7 +56,5 @@ const textInputStyles = StyleSheet.create({
     fontSize: 18,
     padding: 8, 
     backgroundColor: config.darkBackground,
-    borderColor: 'red',
-    borderWidth: 2,
   } 
 })
