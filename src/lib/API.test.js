@@ -5,7 +5,7 @@ describe('API', () => {
   describe('verbs', () => {
     it('should include get', async () => {
       fetchMock.get('http://localhost:3000/yo', {hello: 'world'})
-      let resp = await API.build().get({endpoint: '/yo'})
+      let { resp, error } = await API.build().get({endpoint: '/yo'})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
@@ -14,7 +14,7 @@ describe('API', () => {
         let parsedBody = JSON.parse(options.body)
         return parsedBody.yo === "dawg" && 'http://localhost:3000/yo' === url
       }, {hello: 'world'})
-      let resp = await API.build().post({endpoint: '/yo', body: {yo: 'dawg'}})
+      let { resp, error } = await API.build().post({endpoint: '/yo', body: {yo: 'dawg'}})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
@@ -23,14 +23,14 @@ describe('API', () => {
         let parsedBody = JSON.parse(options.body)
         return parsedBody.yo === "dawg" && 'http://localhost:3000/yo' === url
       }, {hello: 'world'})
-      let resp = await API.build().put({endpoint: '/yo', body: {yo: 'dawg'}})
+      let { resp, error } = await API.build().put({endpoint: '/yo', body: {yo: 'dawg'}})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
 
     it('should include delete', async () => {
       fetchMock.delete('http://localhost:3000/yo', {hello: 'world'})
-      let resp = await API.build().delete({endpoint: '/yo', body: {yo: 'dawg'}})
+      let { resp, error } = await API.build().delete({endpoint: '/yo', body: {yo: 'dawg'}})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
@@ -44,7 +44,7 @@ describe('API', () => {
           options.headers['X-Example'] === 'winning')
       }, {hello: 'world'})
 
-      let resp = await API.build({defaultHeaders: {'X-Example': 'winning'}}).get({endpoint: '/yo'})
+      let { resp, error } = await API.build({defaultHeaders: {'X-Example': 'winning'}}).get({endpoint: '/yo'})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
@@ -59,7 +59,7 @@ describe('API', () => {
 
       let api = API
         .build({defaultHeaders: {'X-Example': 'winning'}})
-      let resp = await api.get({endpoint: '/yo', headers: { 'X-Example': 'loosing'}})
+      let { resp, error } = await api.get({endpoint: '/yo', headers: { 'X-Example': 'loosing'}})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
 
@@ -70,7 +70,7 @@ describe('API', () => {
           options.headers['X-Example'] === 'winning')
       }, {hello: 'world'})
       let secondRsp = await api.get({endpoint: '/yo'})
-      expect(secondRsp).toEqual({hello: 'world'})
+      expect(secondRsp.resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
   })
@@ -81,7 +81,7 @@ describe('API', () => {
       fetchMock.get((url, options) => {
         return options.headers['Authentication'] === 'Bearer 12345'
       }, {hello: 'world'})
-      let resp = await api.authenticated().get({endpoint: '/yo'})
+      let { resp, error } = await api.authenticated().get({endpoint: '/yo'})
       expect(resp).toEqual({hello: 'world'})
       fetchMock.restore()
 
@@ -91,7 +91,7 @@ describe('API', () => {
         return options.headers['Authentication'] === undefined
       }, {hello: 'world'})
       let secondRsp = await api.get({endpoint: '/yo'})
-      expect(secondRsp).toEqual({hello: 'world'})
+      expect(secondRsp.resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
 
@@ -106,11 +106,11 @@ describe('API', () => {
       fetchMock.get((url, options) => {
         return options.headers['Authentication'] === 'Bearer 12345'
       }, {hello: 'world'})
-      let resp = await api.get({endpoint: '/yo'})
+      let { resp, error } = await api.get({endpoint: '/yo'})
       expect(resp).toEqual({hello: 'world'})
 
       let secondRsp = await api.authenticated().get({endpoint: '/yo'})
-      expect(secondRsp).toEqual({hello: 'world'})
+      expect(secondRsp.resp).toEqual({hello: 'world'})
       fetchMock.restore()
     })
   })

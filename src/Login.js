@@ -3,11 +3,15 @@ import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
-  TextInput,
   Button,
   Text, 
   View
 } from 'react-native';
+
+import StyledTextInput from './components/StyledTextInput'
+import StyledButton from './components/StyledButton'
+import Container from './components/Container'
+import API from './lib/API'
 
 export default class Login extends React.Component {
 
@@ -21,66 +25,47 @@ export default class Login extends React.Component {
   }
 
   async handleButtonPress() {
-    try {
-      let resp = await fetch('http://localhost:3000/authenticate', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: this.state.email,
-          password: this.state.password,
-        })
-      })
-      let payload = await resp.json()
-      console.log('PAYLOAD', payload)
-      if (payload.error) {
-        Alert.alert(
-          'Whoops!',
-          payload.error.msg,
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
-          { cancelable: false }
-        )
+    let { resp, error } = await API.build().post({
+      endpoint: '/authenticate',
+      body: {
+        username: this.state.email,
+        password: this.state.password,
       }
-    } catch(error) {
-      console.error(error);
+    })
+    if (error) {
+      Alert.alert(
+        'Whoops!',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      console.log('SUCCESS!!!!!!!!!')
     }
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
-     <KeyboardAvoidingView style={styles.container}  behavior="padding">
-        <TextInput 
-          style={styles.textInput}
+      <Container avoidKeyboard={true} centerContent={true}>
+        <StyledTextInput 
+          labelText={`Email`}
           value={this.state.email}
           onChangeText={(email) => this.setState({email})} />
-        <TextInput 
-          style={styles.textInput}
+        <StyledTextInput 
+          labelText={`Password`}
           value={this.state.password}
           secureTextEntry={true}
           onChangeText={(password) => this.setState({password})} />
-        <Button
+        <StyledButton
           title={`Login/Sign Up`}
           onPress={this.handleButtonPress}/>
-        </KeyboardAvoidingView>
+      </Container>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    borderColor: 'red',
-    borderWidth: 2,
-    width: 200,
-  }
 });

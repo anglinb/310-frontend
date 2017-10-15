@@ -1,6 +1,7 @@
 import Store from './Store'
+import config from '../config'
 
-const ENDPOINT = process.env.BUILD_ENDPOINT || 'http://localhost:3000'
+const ENDPOINT = config.endpoint
 
 export default class API {
   constructor({ authenticationStore, defaultHeaders, alwaysAuthenticate, logger }) {
@@ -44,41 +45,55 @@ export default class API {
     return this
   }
 
+  async request({ endpoint, headers, body, method }) {
+    try {
+      let completeResponse = await fetch(endpoint, {
+        method,
+        headers,
+        body,
+      })
+      let resp = await completeResponse.json()
+      if (!completeResponse.ok) {
+        return { resp: null, error: new Error(resp.statusText) }
+      }
+      return { resp, error: null }
+    } catch (error) {
+      this.logger.log('Request failed with error: ', error)
+      return { resp: null, error }
+    }
+  }
+
   async get({ endpoint, headers }) {
-    let resp = await fetch(ENDPOINT  + endpoint, {
+    return this.request({
+      endpoint: ENDPOINT  + endpoint,
       method: 'GET',
       headers: await this.headers(headers),
     }) 
-    let payload = await resp.json()    
-    return payload
   }
 
   async delete({ endpoint, headers }) {
-    let resp = await fetch(ENDPOINT  + endpoint, {
+    return this.request({
+      endpoint: ENDPOINT  + endpoint,
       method: 'DELETE',
       headers: await this.headers(headers),
     }) 
-    let payload = await resp.json()    
-    return payload
   }
 
   async put({ endpoint, headers, body }) {
-    let resp = await fetch(ENDPOINT  + endpoint, {
+    return this.request({
+      endpoint: ENDPOINT  + endpoint,
       method: 'PUT',
       headers: await this.headers(headers),
       body: JSON.stringify(body)
     }) 
-    let payload = await resp.json()    
-    return payload
   }
 
   async post({ endpoint, headers, body }) {
-    let resp = await fetch(ENDPOINT  + endpoint, {
+    return this.request({ 
+      endpoint: ENDPOINT  + endpoint,
       method: 'POST',
       headers: await this.headers(headers),
       body: JSON.stringify(body)
     })
-    let payload = await resp.json()    
-    return payload
   }
 }
