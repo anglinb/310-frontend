@@ -23,8 +23,10 @@ import NotificationSettings from './src/NotificationSettings';
 import AccountSetUp from './src/AccountSetUp';
 import AccountSettings from './src/AccountSettings';
 import ControlBanner from './src/components/ControlBanner';
+import HamburgerNavigation from './src/HamburgerNavigation';
 
 module.exports = StackNavigator({
+  HamburgerNavigation: { screen: HamburgerNavigation },
   NewCategory: { screen: NewCategory },
   Login: { screen: Login },
   AccountSettings: { screen: AccountSettings },
