@@ -7,7 +7,6 @@ import {
   Text,
   View
 } from 'react-native';
-
 import BudgetBanner from './BudgetBanner'
 import BudgetStatusBar from './BudgetStatusBar'
 import Container from './Container'
@@ -17,8 +16,9 @@ export default class BudgetWidget extends React.Component {
   constructor(props) {
     super(props);
 
-    //this.handleButtonPress = this.handleButtonPress.bind(this)
   }
+
+
 
 
 
@@ -26,7 +26,7 @@ export default class BudgetWidget extends React.Component {
     return (
       <View style={styles.budgetView}>
         <View style={styles.titleSection}>
-          <Text style={styles.title}> Title Information</Text>
+          <Text style={styles.title}> {this.props.budget.item.name}</Text>
         </View>
           <BudgetBanner
             budgetRatio={`fsdlkdsjlk`}

@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -24,11 +24,10 @@ export default class Budget extends React.Component {
   }
 
   async componentDidMount() {
-    // This would happen in the login component 
+    // This would happen in the login component
     let authStore = Store.authenticationStore()
 
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWUzZmU3MWJjZTQxMDU2YmY0ZGViN2YiLCJpYXQiOjE1MDgxMTQwMzN9.tyD669YEo8hfg5LddFKx8TlWM7apG2apL2QEFID6MNI'
-    await authStore.setAuthenticationToken(token)
+
 
 
     /// htis  is her
@@ -39,7 +38,7 @@ export default class Budget extends React.Component {
     })
     console.log('FLJEWLJFEWJL resp', resp)
     console.log('FLJEWLJFEWJL error', error)
-  } 
+  }
 
   render() {
     return (
@@ -49,11 +48,11 @@ export default class Budget extends React.Component {
           <Button title={`Edit`} />
         </View>
         <BudgetBanner
-          budgetRatio={`fsdlkdsjlk`} 
+          budgetRatio={`fsdlkdsjlk`}
           resetDate={`10/1`}
           />
         <BudgetStatusBar
-          leftLabel={`9/21`} 
+          leftLabel={`9/21`}
           rightLabel={`10/21`}
           />
       </Container>

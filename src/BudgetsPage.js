@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import BudgetWidget from './components/BudgetWidget'
 
+import Store from './lib/Store'
 
 import StyledTextInput from './components/StyledTextInput'
 import StyledButtonLight from './components/StyledButtonLight'
@@ -21,11 +22,30 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      budgets: [{'key': 'Budget 1'}, {'key':'Budget 2'}],
+      budgets: [],
     }
   }
 
+  async componentDidMount() {
+    let authStore = Store.authenticationStore()
+    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWU0MzVhNmQ5ODQ3MTgxMjJlZjYxMDciLCJpYXQiOjE1MDgxMjg5NTN9.9k8sgkPXgN14FJVt8QJuGY_wEZZHjOnoe0sKoT3AhBo'
+    await authStore.setAuthenticationToken(token)
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets/'
+    })
 
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList})
+    this.handleButtonPress = this.handleButtonPress.bind(this)
+  }
+
+  async handleButtonPress() {
+    console.log("button clicked")
+  }
 
   render() {
     return (
@@ -33,10 +53,12 @@ export default class Login extends React.Component {
         <View style={styles.container}>
           <FlatList
           data={this.state.budgets}
+
           renderItem={(budget) => <BudgetWidget budget={budget}/>}
         />
       </View>
         <StyledButtonLight
+          onPress={this.handleButtonPress}
           style={{marginTop: 20, marginLeft: 20, marginRight: 20, marginBottom: 20}}
           title={`+ Add a New Budget`}/>
       </Container>
