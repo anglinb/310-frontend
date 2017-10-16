@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -49,11 +49,11 @@ export default class Login extends React.Component {
   render() {
     return (
       <Container avoidKeyboard={true} centerContent={true}>
-        <StyledTextInput 
+        <StyledTextInput
           labelText={`Email`}
           value={this.state.email}
           onChangeText={(email) => this.setState({email})} />
-        <StyledTextInput 
+        <StyledTextInput
           labelText={`Password`}
           value={this.state.password}
           secureTextEntry={true}
