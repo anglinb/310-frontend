@@ -55,7 +55,7 @@ export default class LandingPage extends React.Component {
                 />
                 <LandingPageItem
                   topText={'Regain Sanity'}
-                  bottomText={`Manage multiple budgets in one place and add custom spending categories.`}
+                  bottomText={`Finances shouldn't drive you crazy. $anity lets you get back to your life.`}
                 />
             </View>
           <StyledButton
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: config.font,
     fontWeight: '600',
+    textAlign: 'left',
     color: config.veryDarkText,
   },
   bannerItemBottom: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: config.veryDarkText,
     textAlign: 'left',
-    maxWidth: 300
+    maxWidth: 225
   },
   bannerItemVeryBottom: {
     fontSize: 8,
