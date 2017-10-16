@@ -1,7 +1,9 @@
 const globalConfig = {
   endpoint: 'http://localhost:3000',
   darkBackground: '#D8D8D8',
+  midDark: '#9FA6A6',
   darkText: '#676E6E',
+  veryDarkText: '#666D6D',
   lightText: '#fff',
   font: 'Avenir Next',
   greenGradient: ['#06AEC1', '#06BFA7'],
