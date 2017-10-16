@@ -6,7 +6,9 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View,
+  TouchableHighlight,
+  Image,
 } from 'react-native';
 
 import config from '../config'
@@ -18,9 +20,19 @@ export default class EditingBanner extends React.Component {
     return (
       <View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
-          <Button title={`X`} onPress={this.props.xButtonPress}/>
+          <TouchableHighlight onPress={this.props.xButtonPress}>
+            <Image
+              style={{width: 20, height: 20, alignSelf: 'center'}}
+              source={require('../assets/x.png')}
+              />
+          </TouchableHighlight>
           <Text style={styles.headerText}>{ this.props.header }</Text>
-          <Button title={`Y`} onPress={this.props.yButtonPress}/>
+          <TouchableHighlight onPress={this.props.yButtonPress}>
+            <Image
+              style={{width: 20, height: 20, alignSelf: 'center'}}
+              source={require('../assets/checkmark.png')}
+              />
+          </TouchableHighlight>
         </View>
       </View>
     )

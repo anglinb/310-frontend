@@ -28,6 +28,8 @@ export default class NewCategory extends React.Component {
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
+    this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
+    this.transactionButtonPress = this.transactionButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
