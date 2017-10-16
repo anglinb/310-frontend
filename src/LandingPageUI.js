@@ -10,12 +10,13 @@ import {
 
 import Container from './components/Container'
 import BudgetBanner from './components/BudgetBanner'
-import BudgetStatusBar, { BudgetStatusBarDates } from './components/BudgetStatusBar'
+import BudgetStatusBar from './components/BudgetStatusBar'
+import LandingPage from './components/LandingPage'
 import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
 
-export default class Budget extends React.Component {
+export default class LandingPageUI extends React.Component {
 
   constructor(props) {
     super(props);
@@ -27,44 +28,28 @@ export default class Budget extends React.Component {
     // This would happen in the login component
     let authStore = Store.authenticationStore()
 
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWUzZmU3MWJjZTQxMDU2YmY0ZGViN2YiLCJpYXQiOjE1MDgxMjg5MzJ9.mhXVwZ888TPiOCS0YRh94NP2Wd6rs3spZauVQQtYUR8'
+    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWUzZmU3MWJjZTQxMDU2YmY0ZGViN2YiLCJpYXQiOjE1MDgxMTQwMzN9.tyD669YEo8hfg5LddFKx8TlWM7apG2apL2QEFID6MNI'
     await authStore.setAuthenticationToken(token)
 
 
-    let { resp, error } = await API.build().authenticated().get({
-      endpoint: '/budgets/59e409b032d1c0c0a9eefd64'
-    })
+    /// htis  is her
 
-    if (error) {
-      Alert.alert(
-        'Whoops!',
-        error.message,
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-    } else {
-      this.setState({
-        budget: resp
-      })
-    }
-  } 
+
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets/59e3ff07bce41056bf4deb81'
+    })
+    console.log('FLJEWLJFEWJL resp', resp)
+    console.log('FLJEWLJFEWJL error', error)
+  }
 
   render() {
-
-
     return (
       <Container style={{padding: 0}}>
         <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
-          <Button onPress={()=> {}} title={`Edit`} />
         </View>
-        <BudgetBanner
-          budget={this.state.budget}
-          />
-        <BudgetStatusBarDates
-          budget={this.state.budget}
+        <LandingPage
+          budgetRatio={`fsdlkdsjlk`}
+          resetDate={`10/1`}
           />
       </Container>
     )
