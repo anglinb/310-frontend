@@ -10,7 +10,7 @@ import {
 
 import Container from './components/Container'
 import BudgetBanner from './components/BudgetBanner'
-import BudgetStatusBar from './components/BudgetStatusBar'
+import BudgetStatusBar, { BudgetStatusBarDates } from './components/BudgetStatusBar'
 import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
@@ -27,34 +27,43 @@ export default class Budget extends React.Component {
     // This would happen in the login component 
     let authStore = Store.authenticationStore()
 
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWUzZmU3MWJjZTQxMDU2YmY0ZGViN2YiLCJpYXQiOjE1MDgxMTQwMzN9.tyD669YEo8hfg5LddFKx8TlWM7apG2apL2QEFID6MNI'
+    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWUzZmU3MWJjZTQxMDU2YmY0ZGViN2YiLCJpYXQiOjE1MDgxMjg5MzJ9.mhXVwZ888TPiOCS0YRh94NP2Wd6rs3spZauVQQtYUR8'
     await authStore.setAuthenticationToken(token)
 
 
-    /// htis  is her
-
-
     let { resp, error } = await API.build().authenticated().get({
-      endpoint: '/budgets/59e3ff07bce41056bf4deb81'
+      endpoint: '/budgets/59e409b032d1c0c0a9eefd64'
     })
-    console.log('FLJEWLJFEWJL resp', resp)
-    console.log('FLJEWLJFEWJL error', error)
+    if (error) {
+      Alert.alert(
+        'Whoops!',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.setState({
+        budget: resp
+      })
+    }
   } 
 
   render() {
+
+
     return (
       <Container style={{padding: 0}}>
         <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{`TA Stipend Budget`}</Text>
-          <Button title={`Edit`} />
+          <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
+          <Button onPress={()=> {}} title={`Edit`} />
         </View>
         <BudgetBanner
-          budgetRatio={`fsdlkdsjlk`} 
-          resetDate={`10/1`}
+          budget={this.state.budget}
           />
-        <BudgetStatusBar
-          leftLabel={`9/21`} 
-          rightLabel={`10/21`}
+        <BudgetStatusBarDates
+          budget={this.state.budget}
           />
       </Container>
     )

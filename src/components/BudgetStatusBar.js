@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 
 import config from '../config'
+import BudgetHelper from '../lib/BudgetHelper'
 
 
 export default class BudgetStatusBar extends React.Component {
@@ -22,6 +23,28 @@ export default class BudgetStatusBar extends React.Component {
           <View style={StyleSheet.flatten([styles.bar, styles.indicatorBar])}></View>
         </View>
       </View>
+    )
+  }
+}
+
+export class BudgetStatusBarDates extends React.Component {
+  render() {
+    let leftLabel
+    let rightLabel
+    if (this.props.budget) {
+      let budgetHelper = new BudgetHelper(this.props.budget)
+      let { nextResetDate, previousResetDate, budgetAmount, budgetUsed } = budgetHelper.all()
+      leftLabel = previousResetDate.format('M/D')
+      rightLabel = nextResetDate.format('M/D')
+    } else {
+      leftLabel = '...'
+      rightLabel = '...'
+    }
+    return (
+      <BudgetStatusBar
+        leftLabel={leftLabel}
+        rightLabel={rightLabel}
+      />
     )
   }
 }
