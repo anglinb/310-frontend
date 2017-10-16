@@ -9,6 +9,7 @@ const globalConfig = {
   greenGradient: ['#06AEC1', '#06BFA7'],
   lightGreen: '#70D1C4',
   darkerGreen: '#64C2B6',
+  textGreen: '#04BAB6',
 }
 
 const development = {

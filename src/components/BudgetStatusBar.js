@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
+import {
   StyleSheet,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -12,7 +12,7 @@ export default class BudgetStatusBar extends React.Component {
 
   render() {
     return (
-      <View style={{ padding: 10 }}>
+      <View style={{ padding: 10}}>
         <View style={styles.leftRight}>
           <Text style={styles.labelText}>{this.props.leftLabel}</Text>
           <Text style={styles.labelText}>{this.props.rightLabel}</Text>
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   indicatorBar: {
     marginTop: -20,
     width: 100,
-    backgroundColor: '#0805A3'
+    backgroundColor: '#06AEC1'
+
   }
 });

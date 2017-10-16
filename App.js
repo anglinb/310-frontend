@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
+import {
   Navigator,
   StyleSheet,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -14,9 +14,9 @@ import {
 import Login from './src/Login';
 import Profile from './src/Profile';
 import Budget from './src/Budget';
-
+import BudgetsPage from './src/BudgetsPage';
 module.exports = StackNavigator({
-  Budget: { screen: Budget },
+  BudgetsPage: { screen: BudgetsPage},
   Login: { screen: Login },
   Profile: { screen: Profile },
 });
