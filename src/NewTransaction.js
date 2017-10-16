@@ -6,7 +6,8 @@ import {
   Button,
   Text,
   View,
-  Picker
+  Picker,
+  ScrollView
 } from 'react-native';
 
 import Container from './components/Container'
@@ -18,6 +19,7 @@ import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import StyledPicker from './components/StyledPicker'
 import ControlBanner from './components/ControlBanner'
+import TransactionEntry from './components/TransactionEntry'
 
 export default class NewTransaction extends React.Component {
 
@@ -33,6 +35,7 @@ export default class NewTransaction extends React.Component {
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.anotherButtonPress = this.anotherButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -54,12 +57,10 @@ export default class NewTransaction extends React.Component {
   async yButtonPress() {
     let { resp, error } = await API.build().post({
         //enter endpoint once configured
+        //how to fill the body using a vector of entries
         endpoint: '',
         body: {
-          name: this.state.name,
-          budget: this.state.budget,
-          category: this.state.category,
-          amount: this.state.amount,
+
         }
       })
       if (error) {
@@ -76,6 +77,10 @@ export default class NewTransaction extends React.Component {
       }
   }
 
+  async anotherButtonPress(){
+
+  }
+
   render() {
     return (
       <Container style={{padding: 0}}>
@@ -88,30 +93,16 @@ export default class NewTransaction extends React.Component {
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <View style={{padding: 10}}>
-          <StyledTextInput
-            labelText={'Transaction Name'}
-            value={this.state.name}
-            onChangeText={(name) => this.setState({name})} />
-          <StyledTextInput
-              labelText={`Budget`}
-              value={this.state.budget}
-              onChangeText={(budget) => this.setState({budget})} />
-          <StyledTextInput
-              labelText={`Category`}
-              value={this.state.category}
-              onChangeText={(category) => this.setState({category})} />
-          <StyledTextInput
-              labelText={`Amount`}
-              value={this.state.amount}
-              onChangeText={(amount) => this.setState({amount})} />
-          <StyledButton
+        <ScrollView>
+          <View style={{padding: 10}}>
+            <TransactionEntry/>
+            <StyledButton
               style={{marginTop: 10}}
-              title={`Save Transaction`}
+              title={`+ Another Transaction`}
               onPress={this.yButtonPress}
-          />
-
-        </View>
+              />
+            </View>
+          </ScrollView>
       </Container>
     )
   }

@@ -26,9 +26,9 @@ import ControlBanner from './src/components/ControlBanner';
 import HamburgerNavigation from './src/HamburgerNavigation';
 
 module.exports = StackNavigator({
+  NewTransaction: { screen: NewTransaction },
   Budget: { screen: Budget },
   AccountSettings: { screen: AccountSettings },
-  NewTransaction: { screen: NewTransaction },
   EditCategory: { screen: EditCategory },
   NewCategory: { screen: NewCategory },
   HamburgerNavigation: { screen: HamburgerNavigation },
