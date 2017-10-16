@@ -17,6 +17,7 @@ import Budget from './src/Budget';
 import BudgetsPage from './src/BudgetsPage';
 module.exports = StackNavigator({
   BudgetsPage: { screen: BudgetsPage},
+  Budget: {screen: Budget},
   Login: { screen: Login },
   Profile: { screen: Profile },
 });

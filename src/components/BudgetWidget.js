@@ -5,7 +5,7 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View, TouchableOpacity
 } from 'react-native';
 import BudgetBanner from './BudgetBanner'
 import BudgetStatusBar from './BudgetStatusBar'
@@ -15,29 +15,34 @@ export default class BudgetWidget extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this._onPressBudget = this._onPressBudget.bind(this)
   }
 
 
 
-
+  async _onPressBudget() {
+    const { navigate } = this.props.navigation
+    navigate('Budget', { budget: this.props.budget})
+  }
 
   render() {
     return (
-      <View style={styles.budgetView}>
-        <View style={styles.titleSection}>
-          <Text style={styles.title}> {this.props.budget.item.name}</Text>
-        </View>
-          <BudgetBanner
-            budgetRatio={`fsdlkdsjlk`}
-            resetDate={`10/1`}
-            />
+      <TouchableOpacity onPress={this._onPressBudget}>
+        <View style={styles.budgetView}>
+          <View style={styles.titleSection}>
+            <Text style={styles.title}> {this.props.budget.item.name}</Text>
+          </View>
+            <BudgetBanner
+              budgetRatio={`fsdlkdsjlk`}
+              resetDate={`10/1`}
+              />
 
-          <BudgetStatusBar
-            leftLabel={`9/21`}
-            rightLabel={`10/21`}
-            />
-      </View>
+            <BudgetStatusBar
+              leftLabel={`9/21`}
+              rightLabel={`10/21`}
+              />
+        </View>
+      </TouchableOpacity>
     )
   }
 }

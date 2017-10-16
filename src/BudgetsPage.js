@@ -7,6 +7,7 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import BudgetWidget from './components/BudgetWidget'
 
@@ -24,6 +25,7 @@ export default class Login extends React.Component {
     this.state = {
       budgets: [],
     }
+
   }
 
   async componentDidMount() {
@@ -45,7 +47,11 @@ export default class Login extends React.Component {
 
   async handleButtonPress() {
     console.log("button clicked")
+    //TODO: Bring up create budget screen
   }
+
+
+
 
   render() {
     return (
@@ -54,7 +60,7 @@ export default class Login extends React.Component {
           <FlatList
           data={this.state.budgets}
 
-          renderItem={(budget) => <BudgetWidget budget={budget}/>}
+          renderItem={(budget) =>  <BudgetWidget navigation={this.props.navigation} budget={budget}/> }
         />
       </View>
         <StyledButtonLight
