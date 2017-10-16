@@ -79,7 +79,7 @@ describe('API', () => {
     it('should add the correct authentication header', async () => {
       let api = API.build({authenticationStore: { getAuthenticationToken: () => { return '12345'}}})
       fetchMock.get((url, options) => {
-        return options.headers['Authentication'] === 'Bearer 12345'
+        return options.headers['Authorization'] === 'Bearer 12345'
       }, {hello: 'world'})
       let { resp, error } = await api.authenticated().get({endpoint: '/yo'})
       expect(resp).toEqual({hello: 'world'})
@@ -88,7 +88,7 @@ describe('API', () => {
       // It should only add it for that on request
       fetchMock.get((url, options) => {
         // We don't want an authentication header
-        return options.headers['Authentication'] === undefined
+        return options.headers['Authorization'] === undefined
       }, {hello: 'world'})
       let secondRsp = await api.get({endpoint: '/yo'})
       expect(secondRsp.resp).toEqual({hello: 'world'})
@@ -104,7 +104,7 @@ describe('API', () => {
       })
 
       fetchMock.get((url, options) => {
-        return options.headers['Authentication'] === 'Bearer 12345'
+        return options.headers['Authorization'] === 'Bearer 12345'
       }, {hello: 'world'})
       let { resp, error } = await api.get({endpoint: '/yo'})
       expect(resp).toEqual({hello: 'world'})
