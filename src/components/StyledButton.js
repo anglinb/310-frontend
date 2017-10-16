@@ -19,11 +19,11 @@ export default class StyledButton extends React.Component {
 
   render() {
     return (
-      <TouchableHighlight style={this.props.style} onPress={this.props.onPress}>
+      <TouchableHighlight onPress={this.props.onPress}>
         <View>
           <LinearGradient
             colors={config.greenGradient}
-            style={buttonStyles.gradient}>
+            style={StyleSheet.flatten([buttonStyles.gradient, this.props.style])}>
             <Text
               style={buttonStyles.text}>
               { this.props.title }
@@ -41,11 +41,11 @@ const buttonStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     backgroundColor: 'transparent',
-    fontFamily: config.font 
+    fontFamily: config.font
   },
   gradient: {
     padding: 15,
-    alignItems: 'center', 
+    alignItems: 'center',
     borderRadius: 5
   }
 })
