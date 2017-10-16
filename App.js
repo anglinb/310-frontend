@@ -14,10 +14,12 @@ import {
 import Login from './src/Login';
 import Profile from './src/Profile';
 import Budget from './src/Budget';
-import BudgetsPage from './src/BudgetsPage';
+import LandingPageUI from './src/LandingPageUI';
+
 module.exports = StackNavigator({
+  LandingPageUI: { screen: LandingPageUI },
   BudgetsPage: { screen: BudgetsPage},
-  Budget: {screen: Budget},
   Login: { screen: Login },
+  Budget: { screen: Budget },
   Profile: { screen: Profile },
 });
