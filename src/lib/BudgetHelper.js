@@ -3,7 +3,7 @@ import DateHelper from './DateHelper'
 export default class BudgetHelper {
 
   constructor(budget) {
-    this.budget = budget 
+    this.budget = budget
     this.logger = () => {}
   }
 
@@ -13,7 +13,7 @@ export default class BudgetHelper {
     }, 0)
     this.logger('BUDGET AMOUNT', returnValue)
     return returnValue
-  } 
+  }
 
   budgetUsed() {
     const returnValue = this.budget.categories.reduce( (sum, category)  => {
@@ -51,6 +51,22 @@ export default class BudgetHelper {
       this.dateHelper = new DateHelper({resetDate: this.budget.resetDate})
     }
     return this.dateHelper
+  }
+
+  categoriesSize() {
+    return this.budget.categories.length
+  }
+
+  getCategory(i) {
+    return this.budget.categories[i]
+  }
+
+  getAmounts() {
+    let amounts = []
+    for(var i = 0; i < this.budget.categories.length; i++) {
+      amounts.pushback(this.buget.categories[i].amount)
+    }
+    return amounts
   }
 
   all() {
