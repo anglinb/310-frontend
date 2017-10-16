@@ -3,17 +3,18 @@ import DateHelper from './DateHelper'
 export default class BudgetHelper {
 
   constructor(budget) {
-    this.budget = budget 
+    this.budget = budget
     this.logger = () => {} // Replace this with console.log to get messages
   }
 
   budgetAmount() {
+    console.log(this.budget)
     const returnValue =  this.budget.categories.reduce((accumulator, category) => {
       return accumulator + category.amount
     }, 0)
     this.logger('BUDGET AMOUNT', returnValue)
     return returnValue
-  } 
+  }
 
   budgetUsed() {
     const returnValue = this.budget.categories.reduce( (sum, category)  => {
@@ -36,6 +37,8 @@ export default class BudgetHelper {
 
   nextResetDate() {
     let returnValue = this.getDateHelper().nextResetDate()
+    console.log("next reset date")
+    console.log(returnValue)
     this.logger('NEXT RESET', returnValue)
     return returnValue
   }

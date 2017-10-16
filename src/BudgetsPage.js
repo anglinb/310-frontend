@@ -29,13 +29,10 @@ export default class Login extends React.Component {
   }
 
   async componentDidMount() {
-    let authStore = Store.authenticationStore()
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWU0MzVhNmQ5ODQ3MTgxMjJlZjYxMDciLCJpYXQiOjE1MDgxMjg5NTN9.9k8sgkPXgN14FJVt8QJuGY_wEZZHjOnoe0sKoT3AhBo'
-    await authStore.setAuthenticationToken(token)
     let { resp, error } = await API.build().authenticated().get({
       endpoint: '/budgets/'
     })
-    
+
     const budgetsList = resp.map((obj) => {
       obj.key = obj.name
       return obj;
@@ -60,7 +57,7 @@ export default class Login extends React.Component {
           <FlatList
           data={this.state.budgets}
 
-          renderItem={(budget) =>  <BudgetWidget navigation={this.props.navigation} budget={budget}/> }
+          renderItem={(budget) =>  <BudgetWidget navigation={this.props.navigation} budget={budget.item}/> }
         />
       </View>
         <StyledButtonLight
