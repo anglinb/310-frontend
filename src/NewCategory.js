@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View,
+  Image,
 } from 'react-native';
 
 import Container from './components/Container'
@@ -15,28 +16,11 @@ import Store from './lib/Store'
 import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
+import ControlBanner from './components/ControlBanner'
 
 export default class NewCategory extends React.Component {
 
   constructor(props) {
-    props = Object.assign({}, props, {
-      budget: {
-        _id: '59e409b032d1c0c0a9eefd64',
-        name: 'Budget 1',
-        resetType: 'MONTH',
-        resetDate: 1,
-        owner_id: '59e3fe71bce41056bf4deb7f',
-        categories: [
-          {
-            slug: 'food',
-            name: 'Food',
-            amount: 30
-          }
-        ],
-        reated_at: '2017-10-16T01:21:52.369Z',
-        updated_at: '2017-10-16T01:26:28.678Z'
-      }
-    })
     super(props);
     this.state = {
       name: '',
@@ -46,6 +30,17 @@ export default class NewCategory extends React.Component {
     this.yButtonPress = this.yButtonPress.bind(this)
   }
 
+  //CONTROLBANNER buttons
+  async hamburgerButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    this.props.navigation.navigate('AccountSettings')
+  }
+  async transactionButtonPress(){
+    console.log('navigate to transaction')
+    this.props.navigation.navigate('NewTransaction')
+  }
+
+  //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
     this.props.navigation.navigate('Budget', {name: 'Lucy'})
@@ -76,6 +71,10 @@ export default class NewCategory extends React.Component {
   render() {
     return (
       <Container style={{padding: 0}}>
+        <ControlBanner
+          hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
+          transactionButtonPress={() => {this.transactionButtonPress()}}
+        />
         <EditingBanner
           header = {'New Category'}
           xButtonPress={() => {this.xButtonPress()}}

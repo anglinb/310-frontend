@@ -33,6 +33,7 @@ export default class AccountSettings extends React.Component {
 
   //BUTTON CONTROLS
   async photoButtonPress(){
+    console.log('navigate to camera roll')
     this.props.navigation.navigate('CameraRoll')
   }
   async notificationButtonPress(){

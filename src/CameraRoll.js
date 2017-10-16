@@ -22,7 +22,7 @@ export default class CameraRoll extends React.Component {
   getSelectedImages(image){
     if(image[0]){
       //POST the image to their profile in backend
-      
+
       //navigate back to AccountSettings
       this.props.navigation.navigate('AccountSettings', {name: 'Lucy'})
     }

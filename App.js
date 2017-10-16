@@ -22,15 +22,16 @@ import Budget from './src/Budget';
 import NotificationSettings from './src/NotificationSettings';
 import AccountSetUp from './src/AccountSetUp';
 import AccountSettings from './src/AccountSettings';
+import ControlBanner from './src/components/ControlBanner';
 
 module.exports = StackNavigator({
-  AccountSettings: { screen: AccountSettings },
+  NewCategory: { screen: NewCategory },
   Login: { screen: Login },
+  AccountSettings: { screen: AccountSettings },
   NewTransaction: { screen: NewTransaction },
   EditTransaction: { screen: EditTransaction },
   NotificationSettings: { screen: NotificationSettings },
   EditCategory: { screen: EditCategory },
-  NewCategory: { screen: NewCategory },
   AccountSetUp: { screen: AccountSetUp },
   Budget: { screen: Budget },
   Profile: { screen: Profile },

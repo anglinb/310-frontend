@@ -41,7 +41,10 @@ export default class NotificationSettings extends React.Component {
     this.props.navigation.navigate('AccountSettings')
   }
   async yButtonPress() {
+    //PUT call to update the notifications
 
+    //navigate back to Account Settings
+    this.props.navigation.navigate('AccountSettings')
   }
 
   render() {

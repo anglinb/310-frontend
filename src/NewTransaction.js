@@ -90,7 +90,7 @@ export default class NewTransaction extends React.Component {
               title={`Save Transaction`}
               onPress={this.yButtonPress}
           />
-        
+
         </View>
       </Container>
     )
