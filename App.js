@@ -18,6 +18,7 @@ import LandingPageUI from './src/LandingPageUI';
 
 module.exports = StackNavigator({
   LandingPageUI: { screen: LandingPageUI },
+  BudgetsPage: { screen: BudgetsPage},
   Login: { screen: Login },
   Budget: { screen: Budget },
   Profile: { screen: Profile },

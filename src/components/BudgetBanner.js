@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -19,7 +19,7 @@ class BudgetBannerItem extends React.Component {
         <Text style={styles.bannerItemBottom}>{this.props.bottomText}</Text>
       </View>
     )
-  } 
+  }
 }
 
 export default class BudgetBanner extends React.Component {

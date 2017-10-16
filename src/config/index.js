@@ -9,10 +9,11 @@ const globalConfig = {
   greenGradient: ['#06AEC1', '#06BFA7'],
   lightGreen: '#70D1C4',
   darkerGreen: '#64C2B6',
+  textGreen: '#04BAB6',
 }
 
 const development = {
-  endpoint: 'http://192.168.1.24:3000'
+  endpoint: 'http://localhost:3000'
 }
 
 const test = {
