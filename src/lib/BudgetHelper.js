@@ -4,7 +4,7 @@ export default class BudgetHelper {
 
   constructor(budget) {
     this.budget = budget 
-    this.logger = () => {}
+    this.logger = () => {} // Replace this with console.log to get messages
   }
 
   budgetAmount() {

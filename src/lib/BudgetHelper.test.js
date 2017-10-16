@@ -28,7 +28,6 @@ describe('BudgetHelper', () => {
     expect(budgetAmount).toEqual(30)
     expect(budgetUsed).toEqual(0)
     expect(transactionCount).toEqual(0)
-    // expect(nextResetDate.format('YYYY MM DD')).toEqual('2017 ')
   })
 
 })
