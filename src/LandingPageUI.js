@@ -11,11 +11,12 @@ import {
 import Container from './components/Container'
 import BudgetBanner from './components/BudgetBanner'
 import BudgetStatusBar from './components/BudgetStatusBar'
+import LandingPage from './components/LandingPage'
 import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
 
-export default class Budget extends React.Component {
+export default class LandingPageUI extends React.Component {
 
   constructor(props) {
     super(props);
@@ -45,16 +46,10 @@ export default class Budget extends React.Component {
     return (
       <Container style={{padding: 0}}>
         <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{`TA Stipend Budget`}</Text>
-          <Button title={`Edit`} />
         </View>
-        <BudgetBanner
+        <LandingPage
           budgetRatio={`fsdlkdsjlk`}
           resetDate={`10/1`}
-          />
-        <BudgetStatusBar
-          leftLabel={`9/21`}
-          rightLabel={`10/21`}
           />
       </Container>
     )
