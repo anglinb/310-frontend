@@ -64,6 +64,7 @@ export default class HamburgerNavigation extends React.Component {
           transactionButtonPress={() => {this.transactionButtonPress()}}
         />
         <View style={{padding: 10}}>
+            <Text style={styles.headerText}>{`Navigation Menu`}</Text>
             <StyledButton
               style={{marginTop: 20}}
               title={`Budgets`}
@@ -92,4 +93,9 @@ export default class HamburgerNavigation extends React.Component {
 
 
 const styles = StyleSheet.create({
+  headerText: {
+    color: config.veryDarkText,
+    fontSize: 20,
+    fontWeight: '600',
+  }
 });

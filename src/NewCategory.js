@@ -35,7 +35,7 @@ export default class NewCategory extends React.Component {
   //CONTROLBANNER buttons
   async hamburgerButtonPress(){
     //this is a placeholder until we get Hamburger running
-    this.props.navigation.navigate('AccountSettings')
+    this.props.navigation.navigate('HamburgerNavigation')
   }
   async transactionButtonPress(){
     console.log('navigate to transaction')

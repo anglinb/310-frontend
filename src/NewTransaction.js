@@ -17,6 +17,7 @@ import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import StyledPicker from './components/StyledPicker'
+import ControlBanner from './components/ControlBanner'
 
 export default class NewTransaction extends React.Component {
 
@@ -28,8 +29,23 @@ export default class NewTransaction extends React.Component {
       category: '',
       amount: '',
     }
+    this.xButtonPress = this.xButtonPress.bind(this)
+    this.yButtonPress = this.yButtonPress.bind(this)
+    this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
+    this.transactionButtonPress = this.transactionButtonPress.bind(this)
   }
 
+  //CONTROLBANNER buttons
+  async hamburgerButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    this.props.navigation.navigate('HamburgerNavigation')
+  }
+  async transactionButtonPress(){
+    //already at transaction so leave empty
+    //this.props.navigation.navigate('NewTransaction')
+  }
+
+  //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
     this.props.navigation.navigate('Budget', {name: 'Lucy'})
@@ -63,8 +79,12 @@ export default class NewTransaction extends React.Component {
   render() {
     return (
       <Container style={{padding: 0}}>
+        <ControlBanner
+          hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
+          transactionButtonPress={() => {this.transactionButtonPress()}}
+          />
         <EditingBanner
-          header = {'Edit Transaction'}
+          header = {'New Transaction'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />

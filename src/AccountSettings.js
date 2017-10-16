@@ -14,6 +14,7 @@ import StyledButton from './components/StyledButton'
 import Container from './components/Container'
 import API from './lib/API'
 import EditingBanner from './components/EditingBanner'
+import ControlBanner from './components/ControlBanner'
 
 export default class AccountSettings extends React.Component {
 
@@ -29,9 +30,21 @@ export default class AccountSettings extends React.Component {
     this.pinButtonPress = this.pinButtonPress.bind(this)
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
+    this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
+    this.transactionButtonPress = this.transactionButtonPress.bind(this)
   }
 
-  //BUTTON CONTROLS
+  //CONTROLBANNER buttons
+  async hamburgerButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    this.props.navigation.navigate('HamburgerNavigation')
+  }
+  async transactionButtonPress(){
+    console.log('navigate to transaction')
+    this.props.navigation.navigate('NewTransaction')
+  }
+
+  //OTHER buttons
   async photoButtonPress(){
     console.log('navigate to camera roll')
     this.props.navigation.navigate('CameraRoll')
@@ -42,6 +55,8 @@ export default class AccountSettings extends React.Component {
   async pinButtonPress(){
 
   }
+
+  //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
     this.props.navigation.navigate('Budget', {name: 'Lucy'})
@@ -78,38 +93,44 @@ export default class AccountSettings extends React.Component {
   render() {
     //this.state.img = this.getImg()
     return (
-      <Container avoidKeyboard={true} centerContent={true}>
+      <Container style={{ padding: 0 }}>
+        <ControlBanner
+          hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
+          transactionButtonPress={() => {this.transactionButtonPress()}}
+          />
         <EditingBanner
           header = {'Account Settings'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <Image source={require('./assets/user_icon.png')}
-          style={{width: 120, height: 120, alignSelf: 'center', marginTop: 10}}/>
-        <StyledButton
-          style={{marginTop: 10, padding: 5}}
-          title={`Change Picture`}
-          onPress={this.photoButtonPress}
+        <View style={{padding: 10}}>
+          <Image source={require('./assets/user_icon.png')}
+            style={{width: 100, height: 100, alignSelf: 'center', marginTop: 10}}/>
+          <StyledButton
+              style={{marginTop: 10, padding: 5}}
+              title={`Change Picture`}
+              onPress={this.photoButtonPress}
+              />
+          <StyledTextInput
+              labelText={`Name`}
+              value={this.state.name}
+              onChangeText={(name) => this.setState({name})} />
+          <StyledTextInput
+              labelText={`Email`}
+              value={this.state.email}
+              secureTextEntry={false}
+              onChangeText={(email) => this.setState({email})} />
+          <StyledButton
+            style={{marginTop: 7, padding: 5}}
+            title={`Change Notifications`}
+            onPress={this.notificationButtonPress}
+            />
+          <StyledButton
+            style={{marginTop: 7, padding: 5}}
+            title={`Change PIN`}
+            onPress={this.pinButtonPress}
           />
-        <StyledTextInput
-          labelText={`Name`}
-          value={this.state.name}
-          onChangeText={(name) => this.setState({name})} />
-        <StyledTextInput
-          labelText={`Email`}
-          value={this.state.email}
-          secureTextEntry={false}
-          onChangeText={(email) => this.setState({email})} />
-        <StyledButton
-          style={{marginTop: 7, padding: 5}}
-          title={`Change Notifications`}
-          onPress={this.notificationButtonPress}
-          />
-        <StyledButton
-          style={{marginTop: 7, padding: 5}}
-          title={`Change PIN`}
-          onPress={this.pinButtonPress}
-          />
+        </View>
       </Container>
     )
   }

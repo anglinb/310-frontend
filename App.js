@@ -26,15 +26,15 @@ import ControlBanner from './src/components/ControlBanner';
 import HamburgerNavigation from './src/HamburgerNavigation';
 
 module.exports = StackNavigator({
-  HamburgerNavigation: { screen: HamburgerNavigation },
-  NewCategory: { screen: NewCategory },
-  Login: { screen: Login },
+  Budget: { screen: Budget },
   AccountSettings: { screen: AccountSettings },
   NewTransaction: { screen: NewTransaction },
+  EditCategory: { screen: EditCategory },
+  NewCategory: { screen: NewCategory },
+  HamburgerNavigation: { screen: HamburgerNavigation },
+  Login: { screen: Login },
   EditTransaction: { screen: EditTransaction },
   NotificationSettings: { screen: NotificationSettings },
-  EditCategory: { screen: EditCategory },
   AccountSetUp: { screen: AccountSetUp },
-  Budget: { screen: Budget },
   Profile: { screen: Profile },
 });

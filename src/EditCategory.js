@@ -15,6 +15,7 @@ import Store from './lib/Store'
 import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
+import ControlBanner from './components/ControlBanner'
 
 export default class EditCategory extends React.Component {
 
@@ -24,9 +25,24 @@ export default class EditCategory extends React.Component {
       name: '',
       budgetAmount: '',
     }
+    this.xButtonPress = this.xButtonPress.bind(this)
+    this.yButtonPress = this.yButtonPress.bind(this)
+    this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
+    this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.deleteButtonPress = this.deleteButtonPress.bind(this)
   }
 
-  //BUTTON CONTROLS
+  //CONTROLBANNER buttons
+  async hamburgerButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    this.props.navigation.navigate('HamburgerNavigation')
+  }
+  async transactionButtonPress(){
+    console.log('navigate to transaction')
+    this.props.navigation.navigate('NewTransaction')
+  }
+
+  //EDITINGBBANNER buttons
   async xButtonPress() {
     //navigate back a page
     this.props.navigation.navigate('Budget', {name: 'Lucy'})
@@ -81,6 +97,10 @@ export default class EditCategory extends React.Component {
   render() {
     return (
       <Container style={{padding: 0}}>
+        <ControlBanner
+          hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
+          transactionButtonPress={() => {this.transactionButtonPress()}}
+          />
         <EditingBanner
           header = {'Edit Category'}
           xButtonPress={() => {this.xButtonPress()}}

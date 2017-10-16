@@ -29,7 +29,7 @@ export default class AccountSetUp extends React.Component {
     return (
       <Container avoidKeyboard={true} centerContent={true}>
         <Image source={require('./assets/user_icon.png')}
-          style={{width: 120, height: 120, alignSelf: 'center'}}/>
+          style={{width: 100, height: 100, alignSelf: 'center'}}/>
         <StyledButton
           style={{marginTop: 20}}
           title={`Change Picture`}

@@ -7,7 +7,6 @@ import {
   Text,
   View,
   Image,
-  Store,
 } from 'react-native';
 
 import StyledTextInput from './components/StyledTextInput'
@@ -27,7 +26,6 @@ export default class Login extends React.Component {
   }
 
   async handleButtonPress() {
-    //console.log('in handle button press')
     let { resp, error } = await API.build().post({
       endpoint: '/authenticate',
       body: {
@@ -35,7 +33,6 @@ export default class Login extends React.Component {
         password: this.state.password,
       }
     })
-    console.log(resp)
     if (error) {
       Alert.alert(
         'Whoops!',
@@ -48,7 +45,6 @@ export default class Login extends React.Component {
     } else {
       let authStore = Store.authenticationStore()
       await authStore.setAuthenticationToken(resp.authentication)
-      console.log('At Navigation command')
       this.props.navigation.navigate('Budget', {name: 'Lucy'})
     }
   }
