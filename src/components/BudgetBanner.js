@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -18,7 +18,7 @@ class BudgetBannerItem extends React.Component {
         <Text style={styles.bannerItemBottom}>{this.props.bottomText}</Text>
       </View>
     )
-  } 
+  }
 }
 
 export default class BudgetBanner extends React.Component {
@@ -29,15 +29,15 @@ export default class BudgetBanner extends React.Component {
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
           <BudgetBannerItem
             topText={this.props.budgetRatio}
-            bottomText={`Total Spent`} 
+            bottomText={`Total Spent`}
             />
           <BudgetBannerItem
             topText={this.props.resetDate}
-            bottomText={`Next Reset Date`} 
+            bottomText={`Next Reset Date`}
             />
         </View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.darkerGreen}])}>
-          <Text style={styles.bannerBottomText}>{`12 Transactions`}</Text>
+          <Text style={styles.bannerBottomText}>{this.props.transactions} Transaction(s) </Text>
         </View>
       </View>
     )

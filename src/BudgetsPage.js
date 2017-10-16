@@ -35,7 +35,7 @@ export default class Login extends React.Component {
     let { resp, error } = await API.build().authenticated().get({
       endpoint: '/budgets/'
     })
-
+    
     const budgetsList = resp.map((obj) => {
       obj.key = obj.name
       return obj;
