@@ -26,11 +26,65 @@ export default class EditCategory extends React.Component {
     }
   }
 
+  //BUTTON CONTROLS
+  async xButtonPress() {
+    //navigate back a page
+    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+  }
+
+  async yButtonPress() {
+    let { resp, error } = await API.build().post({
+        //how do you get the Budget ID?
+        endpoint: '/budgets/{budgetId}/categories/{categorySlug}',
+        body: {
+          name: this.state.name,
+          amount: this.state.budgetAmount,
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      }
+  }
+
+  async deleteButtonPress() {
+    let { resp, error } = await API.build().post({
+        //how do you get the Budget ID or CategorySlug?
+        endpoint: '/budgets/{budgetId}/categories/{categorySlug}',
+        body: {
+          name: this.state.name,
+          amount: this.state.budgetAmount,
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      }
+  }
+
   render() {
     return (
       <Container style={{padding: 0}}>
         <EditingBanner
           header = {'Edit Category'}
+          xButtonPress={() => {this.xButtonPress()}}
+          yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
           <StyledTextInput
@@ -42,12 +96,14 @@ export default class EditCategory extends React.Component {
               value={this.state.budgetAmount}
               onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
               <StyledButton
-              style={{marginTop: 20}}
+              style={{marginTop: 10}}
               title={`Save Category`}
+              onPress={this.yButtonPress}
             />
             <StyledButton
-            style={{marginTop: 20}}
+            style={{marginTop: 10}}
             title={`Delete Category`}
+            onPress={this.deleteButtonPress}
           />
         </View>
       </Container>

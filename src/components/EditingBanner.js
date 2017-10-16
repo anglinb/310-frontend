@@ -12,16 +12,15 @@ import {
 import config from '../config'
 
 export default class EditingBanner extends React.Component {
+
   //need to change the Y button to a check image
   render() {
     return (
       <View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
-          <Button title={`X`}
-          onPress={this.xButtonPress}/>
+          <Button title={`X`} onPress={this.props.xButtonPress}/>
           <Text style={styles.headerText}>{ this.props.header }</Text>
-          <Button title={`Y`}
-          onPress={this.yButtonPress}/>
+          <Button title={`Y`} onPress={this.props.yButtonPress}/>
         </View>
       </View>
     )

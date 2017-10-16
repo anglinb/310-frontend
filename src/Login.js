@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View,
+  Image,
 } from 'react-native';
 
 import StyledTextInput from './components/StyledTextInput'
@@ -49,6 +50,8 @@ export default class Login extends React.Component {
   render() {
     return (
       <Container avoidKeyboard={true} centerContent={true}>
+        <Image source={require('./assets/Logo.png')}
+          style={{width: 120, height: 40, alignSelf: 'center', marginTop: 10}}/>
         <StyledTextInput
           labelText={`Email`}
           value={this.state.email}

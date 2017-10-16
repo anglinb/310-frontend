@@ -24,6 +24,35 @@ export default class NewCategory extends React.Component {
       name: '',
       budgetAmount: '',
     }
+    this.xButtonPress = this.xButtonPress.bind(this)
+    this.yButtonPress = this.yButtonPress.bind(this)
+  }
+
+  async xButtonPress() {
+    //navigate back a page
+    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+  }
+  async yButtonPress() {
+    let { resp, error } = await API.build().post({
+        //how do you get the Budget ID?
+        endpoint: '/budgets/{budgetID}/categories',
+        body: {
+          name: this.state.name,
+          amount: this.state.budgetAmount,
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      }
   }
 
   render() {
@@ -31,6 +60,8 @@ export default class NewCategory extends React.Component {
       <Container style={{padding: 0}}>
         <EditingBanner
           header = {'New Category'}
+          xButtonPress={() => {this.xButtonPress()}}
+          yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
           <StyledTextInput
@@ -44,12 +75,14 @@ export default class NewCategory extends React.Component {
               <StyledButton
               style={{marginTop: 20}}
               title={`Save Category`}
+              onPress={this.xButtonPress}
             />
         </View>
       </Container>
     )
   }
 }
+
 
 const styles = StyleSheet.create({
 });

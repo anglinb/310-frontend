@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View,
+  Picker
 } from 'react-native';
 
 import Container from './components/Container'
@@ -15,8 +16,9 @@ import Store from './lib/Store'
 import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
+import StyledPicker from './components/StyledPicker'
 
-export default class NewCategory extends React.Component {
+export default class NewTransaction extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,11 +30,43 @@ export default class NewCategory extends React.Component {
     }
   }
 
+  async xButtonPress() {
+    //navigate back a page
+    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+  }
+
+  async yButtonPress() {
+    let { resp, error } = await API.build().post({
+        //enter endpoint once configured
+        endpoint: '',
+        body: {
+          name: this.state.name,
+          budget: this.state.budget,
+          category: this.state.category,
+          amount: this.state.amount,
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      }
+  }
+
   render() {
     return (
       <Container style={{padding: 0}}>
         <EditingBanner
-          header = {'New Transaction'}
+          header = {'Edit Transaction'}
+          xButtonPress={() => {this.xButtonPress()}}
+          yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
           <StyledTextInput
@@ -41,20 +75,22 @@ export default class NewCategory extends React.Component {
             onChangeText={(name) => this.setState({name})} />
           <StyledTextInput
               labelText={`Budget`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+              value={this.state.budget}
+              onChangeText={(budget) => this.setState({budget})} />
           <StyledTextInput
               labelText={`Category`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+              value={this.state.category}
+              onChangeText={(category) => this.setState({category})} />
           <StyledTextInput
               labelText={`Amount`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+              value={this.state.amount}
+              onChangeText={(amount) => this.setState({amount})} />
           <StyledButton
-              style={{marginTop: 20}}
+              style={{marginTop: 10}}
               title={`Save Transaction`}
+              onPress={this.yButtonPress}
           />
+        
         </View>
       </Container>
     )

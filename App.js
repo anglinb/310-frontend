@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Button,
   Text,
-  View
+  View,
+  Image,
 } from 'react-native';
 
 import {
@@ -23,14 +24,14 @@ import AccountSetUp from './src/AccountSetUp';
 import AccountSettings from './src/AccountSettings';
 
 module.exports = StackNavigator({
-  AccountSettings: { screen: AccountSettings },
-  AccountSetUp: { screen: AccountSetUp },
-  NotificationSettings: { screen: NotificationSettings },
   NewTransaction: { screen: NewTransaction },
   EditTransaction: { screen: EditTransaction },
+  Login: { screen: Login },
+  NotificationSettings: { screen: NotificationSettings },
+  AccountSettings: { screen: AccountSettings },
   EditCategory: { screen: EditCategory },
   NewCategory: { screen: NewCategory },
+  AccountSetUp: { screen: AccountSetUp },
   Budget: { screen: Budget },
-  Login: { screen: Login },
   Profile: { screen: Profile },
 });

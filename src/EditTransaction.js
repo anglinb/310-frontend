@@ -28,11 +28,69 @@ export default class EditTransaction extends React.Component {
     }
   }
 
+  //BUTTON CONTROLS
+  async xButtonPress() {
+    //navigate back a page
+    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+  }
+
+  async yButtonPress() {
+    let { resp, error } = await API.build().post({
+        //get handle
+        endpoint: '',
+        body: {
+          name: this.state.name,
+          budget: this.state.budget,
+          category: this.state.category,
+          amount: this.state.amount,
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      }
+  }
+
+  async deleteButtonPress() {
+    let { resp, error } = await API.build().post({
+        //get handle
+        endpoint: '',
+        body: {
+          name: this.state.name,
+          budget: this.state.budget,
+          category: this.state.category,
+          amount: this.state.amount,
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      }
+  }
+
   render() {
     return (
       <Container style={{padding: 0}}>
         <EditingBanner
-          header = {'New Transaction'}
+          header = {'Edit Transaction'}
+          xButtonPress={() => {this.xButtonPress()}}
+          yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
           <StyledTextInput
@@ -52,12 +110,14 @@ export default class EditTransaction extends React.Component {
               value={this.state.amount}
               onChangeText={(amount) => this.setState({amount})} />
           <StyledButton
-              style={{marginTop: 20}}
+              style={{marginTop: 10}}
               title={`Save Transaction`}
+              onPress={this.yButtonPress}
           />
           <StyledButton
-              style={{marginTop: 20}}
+              style={{marginTop: 10}}
               title={`Delete Transaction`}
+              onPress={this.deleteButtonPress}
           />
         </View>
       </Container>
