@@ -22,13 +22,18 @@ export default class AccountSettings extends React.Component {
     this.state = {
       email: '',
       name: '',
+      img: './assets/Logo.png',
     }
-    //this.handleButtonPress = this.handleButtonPress.bind(this)
+    this.photoButtonPress = this.photoButtonPress.bind(this)
+    this.notificationButtonPress = this.notificationButtonPress.bind(this)
+    this.pinButtonPress = this.pinButtonPress.bind(this)
+    this.xButtonPress = this.xButtonPress.bind(this)
+    this.yButtonPress = this.yButtonPress.bind(this)
   }
 
   //BUTTON CONTROLS
   async photoButtonPress(){
-
+    this.props.navigation.navigate('CameraRoll')
   }
   async notificationButtonPress(){
     this.props.navigation.navigate('NotificationSettings', {name: 'Lucy'})
@@ -63,7 +68,13 @@ export default class AccountSettings extends React.Component {
       }
   }
 
+  //Used as a GET call for the accounts imgage
+  getImg(){
+    //this.state.img =
+  }
+
   render() {
+    getImg()
     return (
       <Container avoidKeyboard={true} centerContent={true}>
         <EditingBanner
@@ -71,7 +82,7 @@ export default class AccountSettings extends React.Component {
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <Image source={require('./assets/user_icon.png')}
+        <Image source={require(this.img)}
           style={{width: 120, height: 120, alignSelf: 'center', marginTop: 10}}/>
         <StyledButton
           style={{marginTop: 10, padding: 5}}

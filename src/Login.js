@@ -43,7 +43,9 @@ export default class Login extends React.Component {
         { cancelable: false }
       )
     } else {
-      console.log('SUCCESS!!!!!!!!!')
+      let authStore = Store.authenticationStore()
+      await authStore.setAuthenticationToken(resp.authentication)
+      this.props.navigation.navigate('Budget', {name: 'Lucy'})
     }
   }
 
@@ -63,7 +65,7 @@ export default class Login extends React.Component {
           onChangeText={(password) => this.setState({password})} />
         <StyledButton
           style={{marginTop: 20}}
-          title={`Login/Sign Up`}
+          title={`Login/Sign U`}
           onPress={this.handleButtonPress}/>
       </Container>
     )

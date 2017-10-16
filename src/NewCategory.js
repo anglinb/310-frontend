@@ -19,6 +19,24 @@ import StyledButton from './components/StyledButton'
 export default class NewCategory extends React.Component {
 
   constructor(props) {
+    props = Object.assign({}, props, {
+      budget: {
+        _id: '59e409b032d1c0c0a9eefd64',
+        name: 'Budget 1',
+        resetType: 'MONTH',
+        resetDate: 1,
+        owner_id: '59e3fe71bce41056bf4deb7f',
+        categories: [
+          {
+            slug: 'food',
+            name: 'Food',
+            amount: 30
+          }
+        ],
+        reated_at: '2017-10-16T01:21:52.369Z',
+        updated_at: '2017-10-16T01:26:28.678Z'
+      }
+    })
     super(props);
     this.state = {
       name: '',
@@ -35,7 +53,7 @@ export default class NewCategory extends React.Component {
   async yButtonPress() {
     let { resp, error } = await API.build().post({
         //how do you get the Budget ID?
-        endpoint: '/budgets/{budgetID}/categories',
+        endpoint: `/budgets/${this.props.budget._id}/categories`,
         body: {
           name: this.state.name,
           amount: this.state.budgetAmount,

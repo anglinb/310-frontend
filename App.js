@@ -24,9 +24,9 @@ import AccountSetUp from './src/AccountSetUp';
 import AccountSettings from './src/AccountSettings';
 
 module.exports = StackNavigator({
+  Login: { screen: Login },
   NewTransaction: { screen: NewTransaction },
   EditTransaction: { screen: EditTransaction },
-  Login: { screen: Login },
   NotificationSettings: { screen: NotificationSettings },
   AccountSettings: { screen: AccountSettings },
   EditCategory: { screen: EditCategory },
