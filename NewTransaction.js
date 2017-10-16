@@ -16,6 +16,7 @@ import Store from './lib/Store'
 import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
+import StyledPicker from './components/StyledPicker'
 
 export default class NewTransaction extends React.Component {
 
@@ -53,13 +54,9 @@ export default class NewTransaction extends React.Component {
               labelText={`Amount`}
               value={this.state.amount}
               onChangeText={(amount) => this.setState({amount})} />
-          <Picker
-            style={{height:30, width:100}}
-            selectedValue={this.state.language}
-            onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
+          <StyledPicker
+              labelText={'HOORAY'}
+              />
           <StyledButton
               style={{marginTop: 20}}
               title={`Save Transaction`}

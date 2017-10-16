@@ -18,8 +18,10 @@ import EditTransaction from './src/EditTransaction';
 import EditCategory from './src/EditCategory';
 import Profile from './src/Profile';
 import Budget from './src/Budget';
+import NotificationSettings from './src/NotificationSettings';
 
 module.exports = StackNavigator({
+  NotificationSettings: { screen: NotificationSettings },
   NewTransaction: { screen: NewTransaction },
   EditTransaction: { screen: EditTransaction },
   EditCategory: { screen: EditCategory },
