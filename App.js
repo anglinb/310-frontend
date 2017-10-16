@@ -15,6 +15,8 @@ import Login from './src/Login';
 import Profile from './src/Profile';
 import Budget from './src/Budget';
 import LandingPageUI from './src/LandingPageUI';
+import BudgetsPage from './src/BudgetsPage';
+
 
 module.exports = StackNavigator({
   LandingPageUI: { screen: LandingPageUI },

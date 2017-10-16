@@ -16,7 +16,6 @@ export default class BudgetWidget extends React.Component {
   constructor(props) {
     super(props);
     this._onPressBudget = this._onPressBudget.bind(this)
-    //this.stringDate = this.stringDate.bind(this)
   }
 
 
@@ -27,58 +26,21 @@ export default class BudgetWidget extends React.Component {
   }
 
 
-  /*stringDate(date) {
-    return (date.getMonth()+1) + "/" + date.date
-  }*/
   render() {
 
-      //date resetter
-      let dateReset = new Date()
 
-      let currentDate = new Date()
-      let resetDateNumber = this.props.budget.item.resetDate
-      dateReset.setDate(resetDateNumber)
-      let dateBegin = new Date(dateReset)
-
-      if(currentDate.getDate()>resetDateNumber)
-        dateReset.setDate(dateReset.getMonth() + 1)
-
-      if(this.props.budget.item.resetType == 'WEEK') //weekly
-        dateBegin.setDate(dateReset.getDate() - 7)
-      else  //monthly
-        dateBegin.setDate(dateReset.getMonth() -1)
-
-      var result = this.props.budget.item.categories.reduce(function(accumulator, currentValue) {
-        let transactionsValue = currentValue.transactions.reduce(function(t_accumulator, t_currentValue) {
-          return t_accumulator + t_currentValue.amount;
-        }, 0);
-
-        let obj = accumulator
-        obj.totalBudget = obj.totalBudget + currentValue.amount
-        obj.transactionsValue = obj.transactionsValue + transactionsValue
-        obj.transactions = obj.transactions + currentValue.transactions.length
-        return obj
-    }, {"totalBudget":0, "transactionsValue":0, "transactions":0});
-
-
-    let totalValue_String = "$" + result.transactionsValue + "/" + result.totalBudget
-    let dateReset_String =   (dateReset.getMonth()+1) + "/" + dateReset.getDate()
-    let dateBegin_String =   (dateBegin.getMonth()+1) + "/" + dateBegin.getDate()
     return (
       <TouchableOpacity onPress={this._onPressBudget}>
         <View style={styles.budgetView}>
           <View style={styles.titleSection}>
-            <Text style={styles.title}> {this.props.budget.item.name}</Text>
+            <Text style={styles.title}> {this.props.budget.name}</Text>
           </View>
             <BudgetBanner
-              budgetRatio={totalValue_String}
-              resetDate={dateReset_String}
-              transactions={result.transactions}
+              budget={this.props.budget}
               />
 
             <BudgetStatusBar
-              leftLabel={dateBegin_String}
-              rightLabel={dateReset_String}
+              budget={this.props.budget}
               />
         </View>
       </TouchableOpacity>

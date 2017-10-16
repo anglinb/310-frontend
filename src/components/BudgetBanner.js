@@ -53,15 +53,15 @@ export default class BudgetBanner extends React.Component {
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
           <BudgetBannerItem
             topText={`$${budgetUsed}/$${budgetAmount}`}
-            bottomText={`Total Spent`} 
+            bottomText={`Total Spent`}
             />
           <BudgetBannerItem
             topText={nextResetDateText}
-            bottomText={`Next Reset Date`} 
+            bottomText={`Next Reset Date`}
             />
         </View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.darkerGreen}])}>
-          <Text style={styles.bannerBottomText}>{`${transactionCount} Transactions`}</Text>
+          <Text style={styles.bannerBottomText}>{`${transactionCount} Transaction(s)`}</Text>
         </View>
       </View>
     )

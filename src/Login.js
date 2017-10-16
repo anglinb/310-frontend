@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
@@ -43,20 +43,21 @@ export default class Login extends React.Component {
         { cancelable: false }
       )
     } else {
+      console.log(resp.authentication)
       let authStore = Store.authenticationStore()
       await authStore.setAuthenticationToken(resp.authentication)
-      this.props.navigation.navigate('Budget', {name: 'Lucy'})
+      this.props.navigation.navigate('BudgetsPage')
     }
   }
 
   render() {
     return (
       <Container avoidKeyboard={true} centerContent={true}>
-        <StyledTextInput 
+        <StyledTextInput
           labelText={`Email`}
           value={this.state.email}
           onChangeText={(email) => this.setState({email})} />
-        <StyledTextInput 
+        <StyledTextInput
           labelText={`Password`}
           value={this.state.password}
           secureTextEntry={true}

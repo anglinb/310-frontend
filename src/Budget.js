@@ -19,33 +19,11 @@ export default class Budget extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {'budget':this.props.navigation.state.params.budget}
   }
-
   async componentDidMount() {
 
-    let { resp, error } = await API.build().authenticated().get({
-      endpoint: '/budgets/59e44f476755474d3ae60bb8'
-    })
-
-    if (error) {
-      Alert.alert(
-        'Whoops!',
-        error.message,
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-    } else {
-      setTimeout(() => {
-      this.setState({
-        budget: resp
-      })
-
-      }, 1000)
-    }
-  } 
+  }
 
   render() {
 
@@ -53,7 +31,7 @@ export default class Budget extends React.Component {
     return (
       <Container style={{padding: 0}}>
         <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
+          <Text style={styles.headerText}>{this.state.budget.name}</Text>
           <Button onPress={()=> {}} title={`Edit`} />
         </View>
         <BudgetBanner
