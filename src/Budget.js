@@ -18,21 +18,14 @@ import config from './config'
 export default class Budget extends React.Component {
 
   constructor(props) {
-    super(props);
-    this.state = {
-    }
+    super(props)
+    this.state = {}
   }
 
   async componentDidMount() {
-    // This would happen in the login component
-    let authStore = Store.authenticationStore()
-
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWUzZmU3MWJjZTQxMDU2YmY0ZGViN2YiLCJpYXQiOjE1MDgxMjg5MzJ9.mhXVwZ888TPiOCS0YRh94NP2Wd6rs3spZauVQQtYUR8'
-    await authStore.setAuthenticationToken(token)
-
 
     let { resp, error } = await API.build().authenticated().get({
-      endpoint: '/budgets/59e409b032d1c0c0a9eefd64'
+      endpoint: '/budgets/59e44f476755474d3ae60bb8'
     })
 
     if (error) {
@@ -45,9 +38,12 @@ export default class Budget extends React.Component {
         { cancelable: false }
       )
     } else {
+      setTimeout(() => {
       this.setState({
         budget: resp
       })
+
+      }, 1000)
     }
   } 
 

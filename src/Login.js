@@ -12,6 +12,7 @@ import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import Container from './components/Container'
 import API from './lib/API'
+import Store from './lib/Store'
 
 export default class Login extends React.Component {
 
@@ -32,7 +33,7 @@ export default class Login extends React.Component {
         password: this.state.password,
       }
     })
-    if (error) {
+    if (error !== null) {
       Alert.alert(
         'Whoops!',
         error.message,
@@ -42,7 +43,9 @@ export default class Login extends React.Component {
         { cancelable: false }
       )
     } else {
-      console.log('SUCCESS!!!!!!!!!')
+      let authStore = Store.authenticationStore()
+      await authStore.setAuthenticationToken(resp.authentication)
+      this.props.navigation.navigate('Budget', {name: 'Lucy'})
     }
   }
 
