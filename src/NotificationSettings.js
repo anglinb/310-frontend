@@ -13,6 +13,7 @@ import Container from './components/Container'
 import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
+import EditingBanner from './components/EditingBanner'
 
 export default class NotificationSettings extends React.Component {
 
@@ -27,16 +28,30 @@ export default class NotificationSettings extends React.Component {
       eighty: false,
       ninety: true,
       hundred: true,
-      daily: false,
-      twiceWeekly: false,
-      weekly: true,
-      never: false,
+      //daily: false,
+      //twiceWeekly: false,
+      //weekly: true,
+      //never: false,
     }
+  }
+
+  //CONTROL BUTTONS
+  async xButtonPress() {
+    //navigate back a page
+    this.props.navigation.navigate('AccountSettings')
+  }
+  async yButtonPress() {
+
   }
 
   render() {
     return (
       <Container>
+      <EditingBanner
+        header = {'Notification Settings'}
+        xButtonPress={() => {this.xButtonPress()}}
+        yButtonPress={() => {this.yButtonPress()}}
+        />
         <Text style={styles.headerText}>{`Notification Threshold`}</Text>
         <View style={styles.leftRight}>
           <View style={styles.leftRight}>
@@ -78,35 +93,6 @@ export default class NotificationSettings extends React.Component {
           <Switch
             onValueChange={(value) => this.setState({hundred: value})}
             value={this.state.hundred}
-            onTintColor={config.lightGreen}/>
-        </View>
-        <Text style={styles.headerText}>{`Notification Frequency`}</Text>
-        <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{`Daily`}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({daily: value})}
-            value={this.state.daily}
-            onTintColor={config.lightGreen}/>
-        </View>
-        <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{`Twice Weekly`}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({twiceWeekly: value})}
-            value={this.state.twiceWeekly}
-            onTintColor={config.lightGreen}/>
-        </View>
-        <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{`Weekly`}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({weekly: value})}
-            value={this.state.weekly}
-            onTintColor={config.lightGreen}/>
-        </View>
-        <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{'Never'}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({never: value})}
-            value={this.state.never}
             onTintColor={config.lightGreen}/>
         </View>
       </Container>

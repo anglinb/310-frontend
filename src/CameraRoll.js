@@ -21,10 +21,17 @@ import CameraRollPicker from 'react-native-camera-roll-picker'
 export default class CameraRoll extends React.Component {
   getSelectedImages(image){
     if(image[0]){
-      //post the image to their Profile
-      //you will render the image back at the AccountSettings
+      //POST the image to their profile in backend
+      
       //navigate back to AccountSettings
       this.props.navigation.navigate('AccountSettings', {name: 'Lucy'})
     }
+  }
+  render(){
+    return(
+      <CameraRollPicker callback={this.getSelectedImages}
+      assetType='only photos' maximum={1} />
+    );
+
   }
 }

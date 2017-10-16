@@ -13,7 +13,7 @@ const globalConfig = {
 }
 
 const development = {
-  endpoint: 'http://192.168.1.97:3000'
+  endpoint: 'http://localhost:3000'
 }
 
 const test = {

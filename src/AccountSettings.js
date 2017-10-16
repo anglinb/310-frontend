@@ -22,7 +22,7 @@ export default class AccountSettings extends React.Component {
     this.state = {
       email: '',
       name: '',
-      img: './assets/Logo.png',
+      img: './assets/user_icon.png',
     }
     this.photoButtonPress = this.photoButtonPress.bind(this)
     this.notificationButtonPress = this.notificationButtonPress.bind(this)
@@ -70,11 +70,12 @@ export default class AccountSettings extends React.Component {
 
   //Used as a GET call for the accounts imgage
   getImg(){
-    //this.state.img =
+    //else
+    //this.state.img
   }
 
   render() {
-    getImg()
+    //this.state.img = this.getImg()
     return (
       <Container avoidKeyboard={true} centerContent={true}>
         <EditingBanner
@@ -82,7 +83,7 @@ export default class AccountSettings extends React.Component {
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <Image source={require(this.img)}
+        <Image source={require('./assets/user_icon.png')}
           style={{width: 120, height: 120, alignSelf: 'center', marginTop: 10}}/>
         <StyledButton
           style={{marginTop: 10, padding: 5}}
