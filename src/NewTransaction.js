@@ -30,6 +30,7 @@ export default class NewTransaction extends React.Component {
       budget: '',
       category: '',
       amount: '',
+      transactionCount: 0,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -78,7 +79,10 @@ export default class NewTransaction extends React.Component {
   }
 
   async anotherButtonPress(){
-
+    if(transactionCount < 25){
+      transactionCount = transactionCount + 1
+      console.log(transactionCount)
+    }
   }
 
   render() {
@@ -99,7 +103,7 @@ export default class NewTransaction extends React.Component {
             <StyledButton
               style={{marginTop: 10}}
               title={`+ Another Transaction`}
-              onPress={this.yButtonPress}
+              onPress={this.anotherButtonPress}
               />
             </View>
           </ScrollView>
