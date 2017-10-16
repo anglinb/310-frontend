@@ -48,8 +48,9 @@ export default class LandingPageUI extends React.Component {
         <View style={styles.leftRight}>
         </View>
         <LandingPage
-          budgetRatio={`fsdlkdsjlk`}
-          resetDate={`10/1`}
+          navigation={this.props.navigation}
+          budgetRatio={``}
+          resetDate={``}
           />
       </Container>
     )

@@ -58,7 +58,10 @@ export default class LandingPage extends React.Component {
                   bottomText={`Manage multiple budgets in one place and add custom spending categories.`}
                 />
             </View>
-          <StyledButton title={`Get Started`}/>
+          <StyledButton
+          title={`Get Started`}
+          onPress={() => this.props.navigation.navigate('Login')}
+          />
           <Text style={styles.bannerItemVeryBottom}>{'Tap the button above to get started.'}</Text>
          </View>
 
