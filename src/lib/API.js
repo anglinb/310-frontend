@@ -27,7 +27,6 @@ export default class API {
     if (this.authenticatedCount > 0 || this.authenticatedCount == -1){
       // Loads the authentication token from the store
       let token = await this.authenticationStore.getAuthenticationToken()
-      console.log('sldskkkkkkkkkkk', token)
       headers = {'Authorization': 'Bearer ' + token }
       if (this.authenticatedCount !== -1) {
         this.authenticatedCount--
@@ -35,7 +34,6 @@ export default class API {
     }
     // Add defaults, authentication, then user overrides
     let allHeaders = Object.assign({}, this.defaultHeaders, headers ||  {}, extraHeaders)
-    console.log('All headers', allHeaders)
     return allHeaders
   }
 
@@ -49,7 +47,6 @@ export default class API {
   }
 
   async request({ endpoint, headers, body, method }) {
-    console.log('trying with endpoint: ', endpoint)
     try {
       let completeResponse = await fetch(endpoint, {
         method,
