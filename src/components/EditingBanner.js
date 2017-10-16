@@ -17,9 +17,11 @@ export default class EditingBanner extends React.Component {
     return (
       <View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
-          <Button title={`X`} />
+          <Button title={`X`}
+          onPress={this.xButtonPress}/>
           <Text style={styles.headerText}>{ this.props.header }</Text>
-          <Button title={`Y`} />
+          <Button title={`Y`}
+          onPress={this.yButtonPress}/>
         </View>
       </View>
     )
