@@ -30,7 +30,6 @@ export default class NewTransaction extends React.Component {
   render() {
     return (
         <View style={{padding: 10}}>
-          <Text style={styles.headerText}>{'Transaction ${1}'}</Text>
           <StyledTextInput
             labelText={'Transaction Name'}
             value={this.state.name}

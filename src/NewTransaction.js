@@ -100,11 +100,6 @@ export default class NewTransaction extends React.Component {
         <ScrollView>
           <View style={{padding: 10}}>
             <TransactionEntry/>
-            <StyledButton
-              style={{marginTop: 10}}
-              title={`+ Another Transaction`}
-              onPress={this.anotherButtonPress}
-              />
             </View>
           </ScrollView>
       </Container>
