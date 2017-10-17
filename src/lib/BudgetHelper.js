@@ -26,6 +26,17 @@ export default class BudgetHelper {
     return returnValue
   }
 
+
+  budgetPercentage() {
+    const budgetUsed = this.budgetUsed()
+    const budgetAmount = this.budgetAmount()
+    if (budgetAmount > 0) {
+      return float(budgetUsed) / float(budgetAmount)
+    } else {
+      return 0
+    }
+  }
+
   transactionCount() {
     const returnValue =  this.budget.categories.reduce((accumulator, category) => {
       return accumulator + (category.transactions || []).length
@@ -59,6 +70,7 @@ export default class BudgetHelper {
   all() {
     const output =  {
       budgetAmount: this.budgetAmount(),
+      // budgetPercentage: this.budgetPercentage(),
       budgetUsed: this.budgetUsed(),
       transactionCount: this.transactionCount(),
       nextResetDate: this.nextResetDate(),

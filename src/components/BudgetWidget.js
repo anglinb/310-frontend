@@ -8,7 +8,7 @@ import {
   View, TouchableOpacity
 } from 'react-native';
 import BudgetBanner from './BudgetBanner'
-import BudgetStatusBar from './BudgetStatusBar'
+import BudgetStatusBar, { BudgetStatusBarDates } from './BudgetStatusBar'
 import Container from './Container'
 
 export default class BudgetWidget extends React.Component {
@@ -18,13 +18,10 @@ export default class BudgetWidget extends React.Component {
     this._onPressBudget = this._onPressBudget.bind(this)
   }
 
-
-
   async _onPressBudget() {
     const { navigate } = this.props.navigation
     navigate('Budget', { budget: this.props.budget})
   }
-
 
   render() {
     return (
@@ -37,7 +34,7 @@ export default class BudgetWidget extends React.Component {
               budget={this.props.budget}
               />
 
-            <BudgetStatusBar
+            <BudgetStatusBarDates
               budget={this.props.budget}
               />
         </View>
