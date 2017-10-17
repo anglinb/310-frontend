@@ -38,6 +38,17 @@ export default class NewTransaction extends React.Component {
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
     this.anotherButtonPress = this.anotherButtonPress.bind(this)
     this.makeTransactionFunc = this.makeTransactionFunc.bind(this)
+
+  }
+
+  //Select buttons
+  async budgetButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    console.log('pickBudget')
+    this.props.navigation.navigate('PickBudget', {returnBudget: this.returnBudget.bind(this)})
+  }
+  async categoryButtonPress(){
+    this.props.navigation.navigate('PickCategory', {returnCategory: this.returnCategory.bind(this)})
   }
 
   //CONTROLBANNER buttons
@@ -95,16 +106,18 @@ export default class NewTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        console.log("success")
         this.props.navigation.navigate('Budget', {budget: this.state.budget})
       }
   }
 
-  async anotherButtonPress(){
-    if(transactionCount < 25){
-      transactionCount = transactionCount + 1
-      console.log(transactionCount)
-    }
+  //Helper classes to receive selected Category/Budget
+  async returnBudget(budg) {
+    this.setState({budget: budg});
+    console.log(this.state.budget)
+  }
+  async returnCategory(cat) {
+    this.setState({category: cat});
+    console.log(this.state.category)
   }
 
   makeTransactionFunc(key, value) {

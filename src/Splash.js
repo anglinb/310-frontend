@@ -13,7 +13,7 @@ export default class Splash extends React.Component {
   async componentDidMount() {
     let authenticationStore = Store.authenticationStore()
     let token = await authenticationStore.getAuthenticationToken()
-    console.log(token)
+    console.log('TOKEN: ', token)
     if (!token) {
       this.props.navigation.navigate('UnautherWrapper')
     } else {

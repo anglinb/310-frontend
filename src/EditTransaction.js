@@ -43,10 +43,10 @@ export default class EditTransaction extends React.Component {
   async budgetButtonPress(){
     //this is a placeholder until we get Hamburger running
     console.log('pickBudget')
-    this.props.navigation.navigate('PickBudget')
+    this.props.navigation.navigate('PickBudget', {returnBudget: this.returnBudget.bind(this)})
   }
   async categoryButtonPress(){
-    this.props.navigation.navigate('PickCategory')
+    this.props.navigation.navigate('PickCategory', {returnCategory: this.returnCategory.bind(this)})
   }
 
   //CONTROLBANNER buttons
@@ -65,8 +65,8 @@ export default class EditTransaction extends React.Component {
   }
 
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
-        //get handle
+    let { resp, error } = await API.build().put({
+        //TODO: PUT handle and proper body verification
         endpoint: '',
         body: {
           name: this.state.name,
@@ -112,6 +112,16 @@ export default class EditTransaction extends React.Component {
       } else {
         this.props.navigation.navigate('Budget', {name: 'Lucy'})
       }
+  }
+
+  //Helper classes to receive selected Category/Budget
+  async returnBudget(budg) {
+    this.setState({budget: budg});
+    console.log(this.state.budget)
+  }
+  async returnCategory(cat) {
+    this.setState({category: cat});
+    console.log(this.state.category)
   }
 
   render() {

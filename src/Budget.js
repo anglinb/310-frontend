@@ -19,7 +19,7 @@ import ControlBanner from './components/ControlBanner'
 import TransactionRow from './components/TransactionRow'
 export default class Budget extends React.Component {
 
-  constructor(props) {
+   constructor(props) {
 
     super(props);
     this.state = {
@@ -38,6 +38,11 @@ export default class Budget extends React.Component {
   }
   async transactionButtonPress(){
     this.props.navigation.navigate('NewTransaction', { budget: this.state.budget})
+  }
+
+  async editButtonPress(){
+    console.log('EditingBudget')
+    this.props.navigation.navigate('EditBudget')
   }
 
    async componentDidMount() {
@@ -63,7 +68,6 @@ export default class Budget extends React.Component {
 
 
 
-
   render() {
     let transactions = this.state.budget.categories.map((category, index) => {
       return category.transactions.map((transaction, index) => {
@@ -81,7 +85,7 @@ export default class Budget extends React.Component {
           />
         <View style={styles.leftRight}>
           <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
-          <Button onPress={()=> {}} title={`Edit`} />
+          <Button onPress={this.editButtonPress} title={`Edit`} />
         </View>
         <BudgetBanner
           budget={this.state.budget}

@@ -96,7 +96,6 @@ export default class NewBudget extends React.Component {
             labelText={'Budget Name'}
             value={this.state.name}
             onChangeText={(name) => this.setState({name})} />
-
             <Text style={styles.headerText}>{`Reset Options:`}</Text>
             <Picker
               selectedValue={this.state.resetType.toString()}
@@ -109,7 +108,6 @@ export default class NewBudget extends React.Component {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   headerText: {
