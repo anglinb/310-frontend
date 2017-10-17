@@ -10,6 +10,7 @@ import NewTransaction from './NewTransaction';
 import EditTransaction from './EditTransaction';
 import EditCategory from './EditCategory';
 import Profile from './Profile';
+import EditBudget from './EditBudget';
 import Budget from './Budget';
 import BudgetsPage from './BudgetsPage';
 
@@ -53,6 +54,7 @@ const AuthenticatedNavigator = StackModalNavigator({
     EditTransaction: { screen: EditTransaction },
     NotificationSettings: { screen: NotificationSettings },
     AccountSetUp: { screen: AccountSetUp },
+    EditBudget: { screen: EditBudget },
     Profile: { screen: Profile },
   },{
     headerMode: "none",

@@ -30,6 +30,7 @@ export default class Budget extends React.Component {
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
     this.updateBudget = this.updateBudget.bind(this)
+    this.editButtonPress = this.editButtonPress.bind(this)
   }
 
 
@@ -43,7 +44,8 @@ export default class Budget extends React.Component {
 
   async editButtonPress(){
     console.log('EditingBudget')
-    this.props.navigation.navigate('EditBudget')
+    this.props.navigation.navigate('EditBudget', { budget: this.state.budget })
+    console.log('EditingBudget')
   }
 
   async updateBudget() {
@@ -89,6 +91,7 @@ export default class Budget extends React.Component {
         return <BudgetStatusBarCategory key={category.slug} category={category} />
       })
     }
+
     return (
       <Container style={{padding: 0}}>
         <ControlBanner

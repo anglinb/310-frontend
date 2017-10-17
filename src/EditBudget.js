@@ -8,7 +8,6 @@ import {
   View,
   Image,
   Picker,
-  Item,
   ScrollView,
   FlatList,
 } from 'react-native';
@@ -27,30 +26,13 @@ export default class EditBudget extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      budgetAmount: '',
-      resetType: '',
-      startDate: '',
-      categories: ['Food', 'Rent'],
+      budget: props.navigation.state.params.budget || null,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-  }
-
-  async componentDidMount() {
-    /*let { resp, error } = await API.build().authenticated().get({
-      endpoint: '/budgets'
-    })
-
-    const budgetsList = resp.map((obj) => {
-      obj.key = obj.name
-      return obj;
-    })
-
-    this.setState({'budgets':budgetsList})
-    this.handleButtonPress = this.handleButtonPress.bind(this)*/
+    this.newCategoryButtonPress = this.newCategoryButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -69,15 +51,10 @@ export default class EditBudget extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
+    let { resp, error } = await API.build().authenticated().post({
         //how do you get the Budget ID?
-        endpoint: `/budgets/${this.props.budget._id}/categories`,
-        body: {
-          name: this.state.name,
-          amount: this.state.budgetAmount,
-          resetType: this.state.resetType,
-          startDate: this.state.startDate,
-        }
+        endpoint: `/budgets/${this.state.budget._id}/categories`,
+        body: this.state.budget
       })
       if (error) {
         Alert.alert(
@@ -102,6 +79,13 @@ export default class EditBudget extends React.Component {
     console.log('New Category')
     this.props.navigation.navigate('NewCategory')
   }
+  /**
+
+              <StyledTextInput
+                labelText={`Budget Amount`}
+                value={this.state.budget.budgetAmount}
+                onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+  */
 
   render() {
     return (
@@ -119,22 +103,24 @@ export default class EditBudget extends React.Component {
           <ScrollView>
             <StyledTextInput
               labelText={'Budget Name'}
-              value={this.state.name}
-              onChangeText={(name) => this.setState({name})} />
-              <StyledTextInput
-                labelText={`Budget Amount`}
-                value={this.state.budgetAmount}
-                onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+              value={this.state.budget.name}
+              onChangeText={(name) => {
+                this.setState({ budget: Object.assign({}, this.state.budget, { name })})
+              }} />
               <StyledTextInput
                 labelText={'Start Date'}
-                value={this.state.startDate}
-                onChangeText={(startD) => this.setState({startD})} />
+                value={String(this.state.budget.resetDate)}
+                onChangeText={(resetDate) => {
+                    this.setState({
+                      budget: Object.assign({}, this.state.budget, { resetDate: parseInt(resetDate, 10) })
+                    })
+                  }}/>
               <View style={styles.container}>
                 <FlatList
-                  data={this.state.categories}
+                  data={this.state.budget.categories}
                   renderItem={(cat) =>  <StyledButton
                       style={{marginTop: 10}}
-                      title={'Dynamically Insert'}
+                      title={cat.name}
                       onPress={this.editCategoryButtonPress}
                       /> }
                 />
@@ -148,10 +134,12 @@ export default class EditBudget extends React.Component {
               <View>
                 <Picker
                   mode={'dropdown'}
-                  selectedValue={this.state.resetType}
-                  onValueChange={(resetT) => this.setState({resetType: resetT})}>
-                  <Item label='Weekly' value='WEEK' />
-                  <Item label='Monthly' value='MONTH' />
+                  selectedValue={this.state.budget.resetType}
+                  onValueChange={(resetType) => {
+                    this.setState({ budget: Object.assign({}, this.state.budget, { resetType })})
+                  }}>
+                  <Picker.Item label='Weekly' value='WEEK' />
+                  <Picker.Item label='Monthly' value='MONTH' />
                   </Picker>
                 </View>
             </ScrollView>
