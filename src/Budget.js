@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View,
+  ScrollView,
 } from 'react-native';
 import Hr from 'react-native-hr';
 
@@ -28,15 +29,16 @@ export default class Budget extends React.Component {
     }
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.updateBudget = this.updateBudget.bind(this)
   }
+
 
   //CONTROLBANNER buttons
   async hamburgerButtonPress(){
-    //this is a placeholder until we get Hamburger running
     this.props.navigation.navigate('HamburgerNavigation')
   }
   async transactionButtonPress(){
-    this.props.navigation.navigate('NewTransaction', { budget: this.state.budget})
+    this.props.navigation.navigate('NewTransaction', { budget: this.state.budget, updateBudget: this.updateBudget })
   }
 
   async editButtonPress(){
@@ -44,13 +46,8 @@ export default class Budget extends React.Component {
     this.props.navigation.navigate('EditBudget')
   }
 
-   async componentDidMount() {
-     var sleep = function sleep(ms) {
-       return new Promise(resolve => setTimeout(resolve, ms));
-     }
-     while(!this.state.budget) //forgive me -- i know this is not good
-        await sleep(200)
-     const endpoint = "/budgets/" + this.state.budget._id
+  async updateBudget() {
+    const endpoint = "/budgets/" + this.state.budget._id
     let { resp, error } = await API.build().authenticated().get({
       endpoint: endpoint
     })
@@ -64,20 +61,24 @@ export default class Budget extends React.Component {
         { cancelable: false }
       )
     } else {
-      this.setState({ budget: resp })
+      console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', resp)
+      this.setState({ budget: resp }, () => {
+        console.log('FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO upda')
+        setTimeout(() => {
 
+        })
+        this.forceUpdate()
+      })
     }
-
-
   }
 
-
+   async componentDidMount() {
+    this.updateBudget()
+  }
 
   render() {
     let categories = null
     let transactions = null
-    //console.log(this.state.budget.categories)
-    //console.log("hello")
     if(this.state.budget && this.state.budget.categories) {
       transactions = this.state.budget.categories.map((category, index) => {
         return category.transactions.map((transaction, index) => {
@@ -88,24 +89,23 @@ export default class Budget extends React.Component {
         return <BudgetStatusBarCategory key={category.slug} category={category} />
       })
     }
-    console.log("test")
-    console.log(this.props.navigation.state.params.budget)
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
-        <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
-          <Button onPress={this.editButtonPress} title={`Edit`} />
-        </View>
-        <BudgetBanner
-          budget={this.props.navigation.state.params.budget}
-          />
-        <BudgetStatusBarDates
-          budget={this.props.navigation.state.params.budget}
-          />
+        <ScrollView>
+          <View style={styles.leftRight}>
+            <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
+            <Button onPress={this.editButtonPress} title={`Edit`} />
+          </View>
+          <BudgetBanner
+            budget={this.state.budget}
+            />
+          <BudgetStatusBarDates
+            budget={this.state.budget}
+            />
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Categories`}</Text>
           <View>
@@ -114,6 +114,7 @@ export default class Budget extends React.Component {
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
           {(transactions)?transactions:null}
+        </ScrollView>
       </Container>
     )
   }

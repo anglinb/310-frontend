@@ -64,13 +64,12 @@ export default class NewTransaction extends React.Component {
   //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
-    this.props.navigation.navigate('Budget', {budget: this.state.budget})
+    // this.props.navigation.navigate('Budget', {budget: this.state.budget})
+    this.props.navigation.goBack()
   }
 
   async yButtonPress() {
-    console.log(JSON.stringify(this.state.category))
     if(this.state.category == undefined || this.state.budget == undefined || this.state.budget.name == "Select One" || this.state.category.name === "Select One") {
-      console.log("I am here")
       Alert.alert(
         'Invalid Request',
         'Please select a category!',
@@ -82,7 +81,6 @@ export default class NewTransaction extends React.Component {
       return;
     }
     let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
-    console.log(endpoint)
     let { resp, error } = await API.build().authenticated().post({
         //enter endpoint once configured
         //how to fill the body using a vector of entries
@@ -96,6 +94,7 @@ export default class NewTransaction extends React.Component {
 
         }
       })
+      console.log('UPPPPPPPPPPPPPPPPPPPPPPPPPPAAADDDDDDDDDDDDDDDDDD')
       if (error) {
         Alert.alert(
           'Whoops!',
@@ -106,18 +105,17 @@ export default class NewTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {budget: this.state.budget})
+        await this.props.navigation.state.params.updateBudget()
+        this.props.navigation.goBack()
       }
   }
 
   //Helper classes to receive selected Category/Budget
   async returnBudget(budg) {
     this.setState({budget: budg});
-    console.log(this.state.budget)
   }
   async returnCategory(cat) {
     this.setState({category: cat});
-    console.log(this.state.category)
   }
 
   makeTransactionFunc(key, value) {
@@ -126,7 +124,6 @@ export default class NewTransaction extends React.Component {
     this.setState(local_state)
 
   }
-
   render() {
     return (
       <Container style={{padding: 0}}>
