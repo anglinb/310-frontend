@@ -71,9 +71,9 @@ export default class EditBudget extends React.Component {
   }
 
   //other buttons
-  async editCategoryButtonPress(){
+  async editCategoryButtonPress(category){
     console.log('Edit Category')
-    this.props.navigation.navigate('EditCategory')
+    this.props.navigation.navigate('EditCategory', { category, budget: this.state.budget })
   }
   async newCategoryButtonPress(){
     console.log('New Category')
@@ -118,10 +118,10 @@ export default class EditBudget extends React.Component {
               <View style={styles.container}>
                 <FlatList
                   data={this.state.budget.categories}
-                  renderItem={(cat) =>  <StyledButton
+                  renderItem={(category) =>  <StyledButton
                       style={{marginTop: 10}}
-                      title={cat.name}
-                      onPress={this.editCategoryButtonPress}
+                      title={category.name}
+                      onPress={this.editCategoryButtonPress(category)}
                       /> }
                 />
                 </View>
