@@ -45,7 +45,7 @@ export default class EditCategory extends React.Component {
   //EDITINGBBANNER buttons
   async xButtonPress() {
     //navigate back a page
-    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+    this.props.navigation.goBack()
   }
 
   async yButtonPress() {

@@ -59,7 +59,7 @@ export default class AccountSettings extends React.Component {
   //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
-    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+    this.props.navigation.goBack()
   }
   async yButtonPress() {
     let { resp, error } = await API.build().post({
