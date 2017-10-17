@@ -7,10 +7,11 @@ import {
   Text,
   View
 } from 'react-native';
+import Hr from 'react-native-hr';
 
 import Container from './components/Container'
 import BudgetBanner from './components/BudgetBanner'
-import BudgetStatusBar, { BudgetStatusBarDates } from './components/BudgetStatusBar'
+import BudgetStatusBar, { BudgetStatusBarDates, BudgetStatusBarCategory } from './components/BudgetStatusBar'
 import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
@@ -22,10 +23,12 @@ export default class Budget extends React.Component {
 
     super(props);
     this.state = {
-      budget: props.navigation.state.params.budget || null
+      budget: props.navigation.state.params.budget || null,
+      isEditing: false,
     }
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.renderCategories = this.renderCategories.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -39,11 +42,32 @@ export default class Budget extends React.Component {
   }
 
    async componentDidMount() {
+    let token = await Store.authenticationStore().getAuthenticationToken()
+    console.log('TOKEN !!!!', token)
     let { resp, error } = await API.build().authenticated().get({
       endpoint: `/budgets/${this.state.budget._id}`
     })
+    console.log('TKELWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOKEN !!!!', token)
     this.setState({ budget: resp })
   }
+
+  renderCategories() {
+    return (
+      <View>
+        {this.state.budget.categories.map((category, index) => {
+          return <BudgetStatusBarCategory key={category.slug} category={category} />
+        })}
+      </View>
+    )
+  }
+
+  renderTransactions() {
+    return (
+      <View>
+        {this.state.bu}
+      </View>
+    )
+  } 
 
   render() {
     return (
@@ -62,6 +86,11 @@ export default class Budget extends React.Component {
         <BudgetStatusBarDates
           budget={this.state.budget}
           />
+          <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
+          <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Categories`}</Text>
+          {this.renderCategories()}
+          <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
+          <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
       </Container>
     )
   }

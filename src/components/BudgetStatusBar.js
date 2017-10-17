@@ -7,6 +7,7 @@ import {
 
 import config from '../config'
 import BudgetHelper from '../lib/BudgetHelper'
+import CategoryHelper from '../lib/CategoryHelper'
 
 
 export default class BudgetStatusBar extends React.Component {
@@ -65,6 +66,21 @@ export class BudgetStatusBarDates extends React.Component {
         percentageComplete={budgetPercentage}
         leftLabel={leftLabel}
         rightLabel={rightLabel}
+      />
+    )
+  }
+}
+
+export class BudgetStatusBarCategory extends React.Component {
+
+  render() {
+    let categoryHelper = new CategoryHelper(this.props.category)
+
+    return (
+      <BudgetStatusBar
+        style={{padding: 10}}
+        percentageComplete={categoryHelper.categoryBudgetPercentage()}
+        leftLabel={this.props.category.name}
       />
     )
   }
