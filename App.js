@@ -15,8 +15,10 @@ import {
 import UnautherWrapper from './src/UnauthedNavigator'
 import AuthenticatedWrapper from './src/AuthenticatedNavigator'
 import Splash from './src/Splash'
+import NewBudget from './src/NewBudget'
 
 module.exports = StackNavigator({
+    NewBudget: { screen: NewBudget },
     Splash: { screen: Splash },
     AuthenticatedWrapper: { screen: AuthenticatedWrapper},
     UnautherWrapper: { screen: UnautherWrapper}

@@ -7,6 +7,8 @@ import {
   Text,
   View,
   Image,
+  Picker,
+  Item
 } from 'react-native';
 
 import Container from './components/Container'
@@ -25,6 +27,7 @@ export default class NewCategory extends React.Component {
     this.state = {
       name: '',
       budgetAmount: '',
+      resetType: '',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -54,6 +57,7 @@ export default class NewCategory extends React.Component {
         body: {
           name: this.state.name,
           amount: this.state.budgetAmount,
+          resetType: this.state.resetType,
         }
       })
       if (error) {
@@ -78,24 +82,27 @@ export default class NewCategory extends React.Component {
           transactionButtonPress={() => {this.transactionButtonPress()}}
         />
         <EditingBanner
-          header = {'New Category'}
+          header = {'New Budget'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
           <StyledTextInput
-            labelText={'Category Name'}
+            labelText={'Budget Name'}
             value={this.state.name}
             onChangeText={(name) => this.setState({name})} />
             <StyledTextInput
               labelText={`Budget Amount`}
               value={this.state.budgetAmount}
               onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-              <StyledButton
-              style={{marginTop: 20}}
-              title={`Save Category`}
-              onPress={this.xButtonPress}
-            />
+            <Text style={styles.headerText}>{`Reset Options:`}</Text>
+            <Picker
+              mode={'dropdown'}
+              selectedValue={this.state.resetType}
+              onValueChange={(resetT) => this.setState({resetType: resetT})}>
+              <Item label='Weekly' value='WEEK' />
+              <Item label='Monthly' value='MONTH' />
+              </Picker>
         </View>
       </Container>
     )
@@ -104,4 +111,10 @@ export default class NewCategory extends React.Component {
 
 
 const styles = StyleSheet.create({
+  headerText: {
+    color: config.veryDarkText,
+    fontSize: 20,
+    marginTop: 30,
+    fontWeight: '600',
+  }
 });

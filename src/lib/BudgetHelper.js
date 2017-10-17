@@ -4,11 +4,10 @@ export default class BudgetHelper {
 
   constructor(budget) {
     this.budget = budget
-    this.logger = () => {} // Replace this with console.log to get messages
+    this.logger =  console.log //() => {} // Replace this with console.log to get messages
   }
 
   budgetAmount() {
-    console.log(this.budget)
     const returnValue =  this.budget.categories.reduce((accumulator, category) => {
       return accumulator + category.amount
     }, 0)
@@ -19,11 +18,22 @@ export default class BudgetHelper {
   budgetUsed() {
     const returnValue = this.budget.categories.reduce( (sum, category)  => {
       return sum + (category.transactions || []).reduce( (innerSum, transaction) => {
-        return innerSum + transaction.value
+        return innerSum + transaction.amount
       }, 0)
     },  0)
     this.logger('RETURN VALUE', returnValue)
     return returnValue
+  }
+
+
+  budgetPercentage() {
+    const budgetUsed = this.budgetUsed()
+    const budgetAmount = this.budgetAmount()
+    if (budgetAmount > 0) {
+      return (budgetUsed / budgetAmount) * 100
+    } else {
+      return 0
+    }
   }
 
   transactionCount() {
@@ -37,8 +47,6 @@ export default class BudgetHelper {
 
   nextResetDate() {
     let returnValue = this.getDateHelper().nextResetDate()
-    console.log("next reset date")
-    console.log(returnValue)
     this.logger('NEXT RESET', returnValue)
     return returnValue
   }
@@ -47,6 +55,14 @@ export default class BudgetHelper {
     let returnValue = this.getDateHelper().previousResetDate()
     this.logger('PREVISO RESET', returnValue)
     return returnValue
+  }
+
+  transactions() {
+    // let transactions = this.budget.categories.reduce((accumulator, category)  => {
+    //   let categoryTransactions =  
+    //   return accumulator.concat(category.transactions)
+    // })
+    
   }
 
   getDateHelper() {
@@ -59,6 +75,7 @@ export default class BudgetHelper {
   all() {
     const output =  {
       budgetAmount: this.budgetAmount(),
+      // budgetPercentage: this.budgetPercentage(),
       budgetUsed: this.budgetUsed(),
       transactionCount: this.transactionCount(),
       nextResetDate: this.nextResetDate(),

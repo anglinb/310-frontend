@@ -6,7 +6,8 @@ import {
   Button,
   Text,
   View,
-  Image,
+  Picker,
+  ScrollView
 } from 'react-native';
 
 import Container from './components/Container'
@@ -16,20 +17,38 @@ import Store from './lib/Store'
 import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
+import StyledPicker from './components/StyledPicker'
 import ControlBanner from './components/ControlBanner'
+import TransactionEntry from './components/TransactionEntry'
 
-export default class NewCategory extends React.Component {
+export default class NewTransaction extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      budgetAmount: '',
+      categories: [],
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+  }
+
+  async componentDidMount() {
+    //NEED TO WORK TO GET THE CATEGORIES!!
+
+
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets'
+    })
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList})
+    this.handleButtonPress = this.handleButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -38,7 +57,7 @@ export default class NewCategory extends React.Component {
     this.props.navigation.navigate('HamburgerNavigation')
   }
   async transactionButtonPress(){
-    console.log('navigate to transaction')
+    //already at transaction so leave empty
     this.props.navigation.navigate('NewTransaction')
   }
 
@@ -47,27 +66,9 @@ export default class NewCategory extends React.Component {
     //navigate back a page
     this.props.navigation.goBack()
   }
+
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
-        //how do you get the Budget ID?
-        endpoint: `/budgets/${this.props.budget._id}/categories`,
-        body: {
-          name: this.state.name,
-          amount: this.state.budgetAmount,
-        }
-      })
-      if (error) {
-        Alert.alert(
-          'Whoops!',
-          error.message,
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
-          { cancelable: false }
-        )
-      } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
-      }
+    //send over the category selection to the prop
   }
 
   render() {
@@ -76,32 +77,27 @@ export default class NewCategory extends React.Component {
         <ControlBanner
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
-        />
+          />
         <EditingBanner
-          header = {'New Category'}
+          header = {'Select Category'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <View style={{padding: 10}}>
-          <StyledTextInput
-            labelText={'Category Name'}
-            value={this.state.name}
-            onChangeText={(name) => this.setState({name})} />
-            <StyledTextInput
-              labelText={`Budget Amount`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-              <StyledButton
-              style={{marginTop: 20}}
-              title={`Save Category`}
-              onPress={this.xButtonPress}
-            />
-        </View>
+        <ScrollView>
+          <View style={{padding: 10}}>
+          <Picker
+              mode={'dropdown'}
+              selectedValue={this.state.language}
+              onValueChange={(lang) => this.setState({language: lang})}>
+              <Picker.Item label="blah" value="java" />
+              <Picker.Item label="J" value="js" />
+              </Picker>
+            </View>
+          </ScrollView>
       </Container>
     )
   }
 }
-
 
 const styles = StyleSheet.create({
 });

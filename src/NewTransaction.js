@@ -53,7 +53,6 @@ export default class NewTransaction extends React.Component {
   //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
-
     this.props.navigation.navigate('Budget', {budget: this.state.budget})
   }
 

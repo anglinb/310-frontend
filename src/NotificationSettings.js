@@ -14,6 +14,7 @@ import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
 import EditingBanner from './components/EditingBanner'
+import ControlBanner from './components/ControlBanner'
 
 export default class NotificationSettings extends React.Component {
 
@@ -33,12 +34,25 @@ export default class NotificationSettings extends React.Component {
       //weekly: true,
       //never: false,
     }
+    this.xButtonPress = this.xButtonPress.bind(this)
+    this.yButtonPress = this.yButtonPress.bind(this)
+    this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
+    this.transactionButtonPress = this.transactionButtonPress.bind(this)
+  }
+
+  //CONTROLBANNER buttons
+  async hamburgerButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    this.props.navigation.navigate('HamburgerNavigation')
+  }
+  async transactionButtonPress(){
+    this.props.navigation.navigate('NewTransaction')
   }
 
   //CONTROL BUTTONS
   async xButtonPress() {
     //navigate back a page
-    this.props.navigation.navigate('AccountSettings')
+    this.props.navigation.goBack()
   }
   async yButtonPress() {
     //PUT call to update the notifications
@@ -49,12 +63,17 @@ export default class NotificationSettings extends React.Component {
 
   render() {
     return (
-      <Container>
-      <EditingBanner
-        header = {'Notification Settings'}
-        xButtonPress={() => {this.xButtonPress()}}
-        yButtonPress={() => {this.yButtonPress()}}
-        />
+      <Container style={{padding: 0}}>
+        <ControlBanner
+          hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
+          transactionButtonPress={() => {this.transactionButtonPress()}}
+            />
+        <EditingBanner
+          header = {'Notification Settings'}
+          xButtonPress={() => {this.xButtonPress()}}
+          yButtonPress={() => {this.yButtonPress()}}
+          />
+        <View style={{padding: 10}}>
         <Text style={styles.headerText}>{`Notification Threshold`}</Text>
         <View style={styles.leftRight}>
           <View style={styles.leftRight}>
@@ -97,6 +116,7 @@ export default class NotificationSettings extends React.Component {
             onValueChange={(value) => this.setState({hundred: value})}
             value={this.state.hundred}
             onTintColor={config.lightGreen}/>
+        </View>
         </View>
       </Container>
     )
