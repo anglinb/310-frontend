@@ -26,10 +26,9 @@ export default class NewBudget extends React.Component {
     super(props);
     this.state = {
       name: '',
-      budgetAmount: '',
-      resetType: '',
-      startDate: '',
+      resetType: 'WEEK',
     }
+
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
@@ -52,14 +51,15 @@ export default class NewBudget extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
-        //how do you get the Budget ID?
-        endpoint: `/budgets/${this.props.budget._id}/categories`,
+    console.log(this.state)
+    let resetDate = new Date().getDate()
+    let { resp, error } = await API.build().authenticated().post({
+
+        endpoint: `/budgets/`,
         body: {
-          name: this.state.name,
-          amount: this.state.budgetAmount,
-          resetType: this.state.resetType,
-          startDate: this.state.startDate,
+          "name": this.state.name,
+          "resetType": this.state.resetType,
+          "resetDate": resetDate,
         }
       })
       if (error) {
@@ -72,7 +72,10 @@ export default class NewBudget extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        console.log("success")
+        console.log(resp)
+
+        this.props.navigation.navigate('Budget', {resp})
       }
   }
 
@@ -93,23 +96,13 @@ export default class NewBudget extends React.Component {
             labelText={'Budget Name'}
             value={this.state.name}
             onChangeText={(name) => this.setState({name})} />
-            <StyledTextInput
-              labelText={`Budget Amount`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-            <StyledTextInput
-              labelText={'Start Date'}
-              value={this.state.startDate}
-              onChangeText={(startD) => this.setState({startD})} />
             <Text style={styles.headerText}>{`Reset Options:`}</Text>
-            <View>
-              <Picker
-                selectedValue={this.state.resetType}
-                onValueChange={(resetT) => this.setState({resetType: resetT})}>
-                <Item label='Weekly' value='WEEK' />
-                <Item label='Monthly' value='MONTH' />
-                </Picker>
-            </View>
+            <Picker
+              selectedValue={this.state.resetType.toString()}
+              onValueChange={(resetT) => this.setState({resetType: resetT.toString()})}>
+              <Picker.Item label='Weekly' value='WEEK' />
+              <Picker.Item label='Monthly' value='MONTH' />
+              </Picker>
         </View>
       </Container>
     )

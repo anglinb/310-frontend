@@ -18,7 +18,6 @@ import Splash from './src/Splash'
 import EditBudget from './src/EditBudget'
 
 module.exports = StackNavigator({
-    EditBudget: { screen: EditBudget },
     Splash: { screen: Splash },
     AuthenticatedWrapper: { screen: AuthenticatedWrapper},
     UnautherWrapper: { screen: UnautherWrapper}

@@ -19,7 +19,7 @@ import Container from './components/Container'
 import API from './lib/API'
 import ControlBanner from './components/ControlBanner'
 
-export default class Login extends React.Component {
+export default class BudgetsPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,6 +28,7 @@ export default class Login extends React.Component {
     }
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.handleButtonPress = this.handleButtonPress.bind(this)
   }
 
 
@@ -46,12 +47,11 @@ export default class Login extends React.Component {
     })
 
     this.setState({'budgets':budgetsList})
-    this.handleButtonPress = this.handleButtonPress.bind(this)
   }
 
-  async handleButtonPress() {
-    console.log("button clicked")
-    this.props.navigation.navigate('NewBudget')
+  handleButtonPress() {
+    console.log("handled button press")
+   this.props.navigation.navigate('NewBudgetModal')
   }
 
   //CONTROLBANNER buttons
@@ -68,6 +68,7 @@ export default class Login extends React.Component {
     return (
       <Container avoidKeyboard={true} centerContent={true} padding={0}>
         <ControlBanner
+          style ={{flex: 1}}
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
@@ -78,8 +79,8 @@ export default class Login extends React.Component {
           />
           </View>
         <StyledButtonLight
-          onPress={this.handleButtonPress}
-          style={{marginTop: 20, marginLeft: 20, marginRight: 20, marginBottom: 20}}
+          onPress={()=> {this.handleButtonPress()}}
+          style={{marginTop: 20, marginLeft: 20, marginRight: 20, marginBottom: 20, flex: 0.5}}
           title={`+ Add a New Budget`}/>
       </Container>
     )
@@ -87,4 +88,7 @@ export default class Login extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 4
+  }
 });

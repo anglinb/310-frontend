@@ -27,16 +27,18 @@ export default class NewTransaction extends React.Component {
     super(props);
     this.state = {
       name: '',
-      budget: '',
-      category: '',
+      description: '',
+      category: undefined,
       amount: '',
+      budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-    this.categoryButtonPress = this.categoryButtonPress.bind(this)
-    this.budgetButtonPress = this.budgetButtonPress.bind(this)
+    this.anotherButtonPress = this.anotherButtonPress.bind(this)
+    this.makeTransactionFunc = this.makeTransactionFunc.bind(this)
+
   }
 
   //Select buttons
@@ -62,18 +64,36 @@ export default class NewTransaction extends React.Component {
   //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
-    this.props.navigation.goBack()
+    this.props.navigation.navigate('Budget', {budget: this.state.budget})
   }
 
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
-        //TODO: POST handle and proper body verification
-        endpoint: '',
+    console.log(JSON.stringify(this.state.category))
+    if(this.state.category == undefined || this.state.budget == undefined || this.state.budget.name == "Select One" || this.state.category.name === "Select One") {
+      console.log("I am here")
+      Alert.alert(
+        'Invalid Request',
+        'Please select a category!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+    let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
+    console.log(endpoint)
+    let { resp, error } = await API.build().authenticated().post({
+        //enter endpoint once configured
+        //how to fill the body using a vector of entries
+        endpoint: endpoint,
         body: {
-          name: this.state.name,
-          budget: this.state.budget,
-          category: this.state.category,
-          amount: this.state.amount,
+          "description": this.state.description,
+          "recurring": false,
+          "name":this.state.name,
+          "recurring_days": 0,
+          "amount": this.state.amount,
+
         }
       })
       if (error) {
@@ -86,8 +106,7 @@ export default class NewTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        //TODO: logic for category notificaitons
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        this.props.navigation.navigate('Budget', {budget: this.state.budget})
       }
   }
 
@@ -101,6 +120,13 @@ export default class NewTransaction extends React.Component {
     console.log(this.state.category)
   }
 
+  makeTransactionFunc(key, value) {
+    var local_state = {};
+    local_state[key] = value;
+    this.setState(local_state)
+
+  }
+
   render() {
     return (
       <Container style={{padding: 0}}>
@@ -108,33 +134,16 @@ export default class NewTransaction extends React.Component {
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
-          <EditingBanner
-            header = {'New Transaction'}
-            xButtonPress={() => {this.xButtonPress()}}
-            yButtonPress={() => {this.yButtonPress()}}
-            />
-          <ScrollView>
-            <View style={{padding: 10}}>
-            <StyledTextInput
-              labelText={'Transaction Name'}
-              value={this.state.name}
-              onChangeText={(name) => this.setState({name})} />
-            <StyledTextInput
-                labelText={`Amount`}
-                value={this.state.amount}
-                onChangeText={(amount) => this.setState({amount})} />
-            <StyledButton
-                style={{marginTop: 10}}
-                title={`Select Budget`}
-                onPress={this.budgetButtonPress}
-                />
-            <StyledButton
-                style={{marginTop: 10}}
-                title={`Select Category`}
-                onPress={this.categoryButtonPress}
-                />
-            </View>
-          </ScrollView>
+        <EditingBanner
+          header = {'New Transaction'}
+          xButtonPress={() => {this.xButtonPress()}}
+          yButtonPress={() => {this.yButtonPress()}}
+          />
+        <ScrollView>
+          <View style={{padding: 10}}>
+            <TransactionEntry budget= {this.state.budget} makeTransaction={this.makeTransactionFunc}/>
+          </View>
+        </ScrollView>
       </Container>
     )
   }

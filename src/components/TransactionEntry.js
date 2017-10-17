@@ -14,38 +14,84 @@ import config from '../config'
 import StyledTextInput from './StyledTextInput'
 import StyledButton from './StyledButton'
 import StyledPicker from './StyledPicker'
-
+import API from './../lib/API'
 export default class NewTransaction extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      budget: '',
-      category: '',
-      amount: '',
-    }
+
+    this.handleChangeText = this.handleChangeText.bind(this)
+    this.onValueChange = this.onValueChange.bind(this)
+    this.onValueChangeBudget = this.onValueChangeBudget.bind(this)
+    this.state = {budgets:undefined, selectedBudget:undefined}
+  }
+
+  async componentDidMount() {
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets'
+    })
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList, 'selectedBudget':undefined})
+  }
+
+  handleChangeText(value, key) {
+
+    this.props.makeTransaction(key, value)
+  }
+
+  onValueChange(value) {
+
+    this.props.makeTransaction("category",JSON.parse(value))
+  }
+
+  onValueChangeBudget(value) {
+    this.props.makeTransaction("budget",JSON.parse(value))
+    this.setState({"selectedBudget":JSON.parse(value)})
   }
 
   render() {
+    let selectOneObject = {"name": "Select One", "identifier":"dummy"}
+    const curr_budgets = this.state.budgets || [selectOneObject]
+
+    let curr_cats = (this.state.selectedBudget)?this.state.selectedBudget.categories:[selectOneObject]
+    if (curr_cats.length == 0)
+      curr_cats.push(selectOneObject)
+    if(!(curr_cats[0].identifier ==="dummy")) {
+      curr_cats.unshift(selectOneObject)
+    }
+
+    if(!(curr_budgets[0].identifier ==="dummy")) {
+      curr_budgets.unshift(selectOneObject)
+    }
+
     return (
         <View style={{padding: 10}}>
           <StyledTextInput
             labelText={'Transaction Name'}
-            value={this.state.name}
-            onChangeText={(name) => this.setState({name})} />
+            onChangeText={(name) => this.handleChangeText(name, "name")} />
           <StyledTextInput
-              labelText={`Budget`}
-              value={this.state.budget}
-              onChangeText={(budget) => this.setState({budget})} />
-          <StyledTextInput
-              labelText={`Category`}
-              value={this.state.category}
-              onChangeText={(category) => this.setState({category})} />
+              labelText={`Description`}
+              onChangeText={(description) => this.handleChangeText(description, "description")} />
           <StyledTextInput
               labelText={`Amount`}
-              value={this.state.amount}
-              onChangeText={(amount) => this.setState({amount})} />
+              onChangeText={(amount) => this.handleChangeText(amount, "amount")} />
+          <StyledPicker
+              labelText={`Budget`}
+              objects={curr_budgets}
+              onValueChange={this.onValueChangeBudget}
+               />
+          <StyledPicker
+              labelText={`Category`}
+              objects={curr_cats}
+              onValueChange={this.onValueChange}
+               />
+
+
         </View>
     )
   }
