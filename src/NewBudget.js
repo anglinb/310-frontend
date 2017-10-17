@@ -116,7 +116,6 @@ export default class NewBudget extends React.Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   headerText: {
     color: config.veryDarkText,

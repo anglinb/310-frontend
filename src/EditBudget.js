@@ -8,7 +8,9 @@ import {
   View,
   Image,
   Picker,
-  Item
+  Item,
+  ScrollView,
+  FlatList,
 } from 'react-native';
 
 import Container from './components/Container'
@@ -29,11 +31,26 @@ export default class EditBudget extends React.Component {
       budgetAmount: '',
       resetType: '',
       startDate: '',
+      categories: ['Food', 'Rent'],
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+  }
+
+  async componentDidMount() {
+    /*let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets'
+    })
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList})
+    this.handleButtonPress = this.handleButtonPress.bind(this)*/
   }
 
   //CONTROLBANNER buttons
@@ -76,6 +93,16 @@ export default class EditBudget extends React.Component {
       }
   }
 
+  //other buttons
+  async editCategoryButtonPress(){
+    console.log('Edit Category')
+    this.props.navigation.navigate('EditCategory')
+  }
+  async newCategoryButtonPress(){
+    console.log('New Category')
+    this.props.navigation.navigate('NewCategory')
+  }
+
   render() {
     return (
       <Container style={{padding: 0}}>
@@ -89,28 +116,45 @@ export default class EditBudget extends React.Component {
           yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
-          <StyledTextInput
-            labelText={'Budget Name'}
-            value={this.state.name}
-            onChangeText={(name) => this.setState({name})} />
+          <ScrollView>
             <StyledTextInput
-              labelText={`Budget Amount`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-            <StyledTextInput
-              labelText={'Start Date'}
-              value={this.state.startDate}
-              onChangeText={(startD) => this.setState({startD})} />
-            <Text style={styles.headerText}>{`Reset Options:`}</Text>
-            <View>
-              <Picker
-                mode={'dropdown'}
-                selectedValue={this.state.resetType}
-                onValueChange={(resetT) => this.setState({resetType: resetT})}>
-                <Item label='Weekly' value='WEEK' />
-                <Item label='Monthly' value='MONTH' />
-                </Picker>
-              </View>
+              labelText={'Budget Name'}
+              value={this.state.name}
+              onChangeText={(name) => this.setState({name})} />
+              <StyledTextInput
+                labelText={`Budget Amount`}
+                value={this.state.budgetAmount}
+                onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+              <StyledTextInput
+                labelText={'Start Date'}
+                value={this.state.startDate}
+                onChangeText={(startD) => this.setState({startD})} />
+              <View style={styles.container}>
+                <FlatList
+                  data={this.state.categories}
+                  renderItem={(cat) =>  <StyledButton
+                      style={{marginTop: 10}}
+                      title={'Dynamically Insert'}
+                      onPress={this.editCategoryButtonPress}
+                      /> }
+                />
+                </View>
+              <StyledButton
+                  style={{marginTop: 10}}
+                  title={`+ New Category`}
+                  onPress={this.newCategoryButtonPress}
+                  />
+              <Text style={styles.headerText}>{`Reset Options:`}</Text>
+              <View>
+                <Picker
+                  mode={'dropdown'}
+                  selectedValue={this.state.resetType}
+                  onValueChange={(resetT) => this.setState({resetType: resetT})}>
+                  <Item label='Weekly' value='WEEK' />
+                  <Item label='Monthly' value='MONTH' />
+                  </Picker>
+                </View>
+            </ScrollView>
         </View>
       </Container>
     )
