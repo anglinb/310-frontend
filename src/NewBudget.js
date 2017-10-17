@@ -20,7 +20,7 @@ import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import ControlBanner from './components/ControlBanner'
 
-export default class NewCategory extends React.Component {
+export default class NewBudget extends React.Component {
 
   constructor(props) {
     super(props);

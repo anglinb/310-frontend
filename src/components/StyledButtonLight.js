@@ -4,7 +4,7 @@ import {
   Text,
   Button,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native'
 
 import { LinearGradient } from 'expo';
@@ -19,14 +19,14 @@ export default class StyledButton extends React.Component {
 
   render() {
     return (
-      <TouchableHighlight style={this.props.style} onPress={this.props.onPress}>
+      <TouchableOpacity style={this.props.style} onPress={this.props.onPress}>
         <View style={buttonStyles.addBudget}>
             <Text
               style={buttonStyles.text}>
               { this.props.title }
             </Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     )
   }
 }
