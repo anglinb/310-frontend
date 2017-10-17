@@ -39,7 +39,7 @@ export default class Budget extends React.Component {
   }
 
 
-   componentDidMount() {
+   async componentDidMount() {
     let { resp, error } = await API.build().authenticated().get({
       endpoint: '/budgets/59e3ff07bce41056bf4deb81'
     })
