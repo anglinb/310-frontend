@@ -36,7 +36,7 @@ export default class NewTransaction extends React.Component {
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-    this.anotherButtonPress = this.anotherButtonPress.bind(this)
+
     this.makeTransactionFunc = this.makeTransactionFunc.bind(this)
 
   }

@@ -12,7 +12,6 @@ import EditCategory from './EditCategory';
 import Profile from './Profile';
 import Budget from './Budget';
 import BudgetsPage from './BudgetsPage';
-import NewBudget from './NewBudget'
 
 import NotificationSettings from './NotificationSettings';
 import AccountSetUp from './AccountSetUp';

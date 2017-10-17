@@ -28,7 +28,6 @@ export default class Budget extends React.Component {
     }
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-
   }
 
   //CONTROLBANNER buttons
@@ -46,7 +45,11 @@ export default class Budget extends React.Component {
   }
 
    async componentDidMount() {
-     await this.state.budget._id !=null
+     var sleep = function sleep(ms) {
+       return new Promise(resolve => setTimeout(resolve, ms));
+     }
+     while(!this.state.budget) //forgive me -- i know this is not good
+        await sleep(200)
      const endpoint = "/budgets/" + this.state.budget._id
     let { resp, error } = await API.build().authenticated().get({
       endpoint: endpoint
@@ -62,21 +65,31 @@ export default class Budget extends React.Component {
       )
     } else {
       this.setState({ budget: resp })
+
     }
+
 
   }
 
 
 
   render() {
-    let transactions = this.state.budget.categories.map((category, index) => {
-      return category.transactions.map((transaction, index) => {
-        return <TransactionRow transaction={transaction} />
+    let categories = null
+    let transactions = null
+    //console.log(this.state.budget.categories)
+    //console.log("hello")
+    if(this.state.budget && this.state.budget.categories) {
+      transactions = this.state.budget.categories.map((category, index) => {
+        return category.transactions.map((transaction, index) => {
+          return <TransactionRow transaction={transaction} />
+        })
       })
-    })
-    let categories = this.state.budget.categories.map((category, index) => {
-      return <BudgetStatusBarCategory key={category.slug} category={category} />
-    })
+      categories = this.state.budget.categories.map((category, index) => {
+        return <BudgetStatusBarCategory key={category.slug} category={category} />
+      })
+    }
+    console.log("test")
+    console.log(this.props.navigation.state.params.budget)
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
@@ -88,19 +101,19 @@ export default class Budget extends React.Component {
           <Button onPress={this.editButtonPress} title={`Edit`} />
         </View>
         <BudgetBanner
-          budget={this.state.budget}
+          budget={this.props.navigation.state.params.budget}
           />
         <BudgetStatusBarDates
-          budget={this.state.budget}
+          budget={this.props.navigation.state.params.budget}
           />
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Categories`}</Text>
           <View>
-            {categories}
+            {(categories)?categories:null}
           </View>
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
-          {transactions}
+          {(transactions)?transactions:null}
       </Container>
     )
   }

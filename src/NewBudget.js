@@ -51,7 +51,6 @@ export default class NewBudget extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    console.log(this.state)
     let resetDate = new Date().getDate()
     let { resp, error } = await API.build().authenticated().post({
 
@@ -75,7 +74,7 @@ export default class NewBudget extends React.Component {
         console.log("success")
         console.log(resp)
 
-        this.props.navigation.navigate('Budget', {resp})
+        this.props.navigation.navigate('Budget', {'budget':resp})
       }
   }
 
