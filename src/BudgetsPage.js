@@ -33,7 +33,7 @@ export default class Login extends React.Component {
 
   static navigationOptions = {
     headerLeft: null
-  } 
+  }
 
   async componentDidMount() {
     let { resp, error } = await API.build().authenticated().get({

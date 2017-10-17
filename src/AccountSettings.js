@@ -104,13 +104,6 @@ export default class AccountSettings extends React.Component {
           yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
-          <Image source={require('./assets/user_icon.png')}
-            style={{width: 100, height: 100, alignSelf: 'center', marginTop: 10}}/>
-          <StyledButton
-              style={{marginTop: 10, padding: 5}}
-              title={`Change Picture`}
-              onPress={this.photoButtonPress}
-              />
           <StyledTextInput
               labelText={`Name`}
               value={this.state.name}

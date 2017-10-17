@@ -35,7 +35,6 @@ export default class NewTransaction extends React.Component {
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-    this.anotherButtonPress = this.anotherButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -45,7 +44,7 @@ export default class NewTransaction extends React.Component {
   }
   async transactionButtonPress(){
     //already at transaction so leave empty
-    //this.props.navigation.navigate('NewTransaction')
+    this.props.navigation.navigate('NewTransaction')
   }
 
   //EDITINGBANNER buttons
@@ -55,33 +54,7 @@ export default class NewTransaction extends React.Component {
   }
 
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
-        //enter endpoint once configured
-        //how to fill the body using a vector of entries
-        endpoint: '',
-        body: {
-
-        }
-      })
-      if (error) {
-        Alert.alert(
-          'Whoops!',
-          error.message,
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
-          { cancelable: false }
-        )
-      } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
-      }
-  }
-
-  async anotherButtonPress(){
-    if(transactionCount < 25){
-      transactionCount = transactionCount + 1
-      console.log(transactionCount)
-    }
+    //send over the category selection to the prop
   }
 
   render() {
@@ -92,13 +65,19 @@ export default class NewTransaction extends React.Component {
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
         <EditingBanner
-          header = {'New Transaction'}
+          header = {'Select Category'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
         <ScrollView>
           <View style={{padding: 10}}>
-            <TransactionEntry/>
+          <Picker
+              mode={'dropdown'}
+              selectedValue={this.state.language}
+              onValueChange={(lang) => this.setState({language: lang})}>
+              <Picker.Item label="blah" value="java" />
+              <Picker.Item label="J" value="js" />
+              </Picker>
             </View>
           </ScrollView>
       </Container>

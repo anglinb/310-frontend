@@ -28,12 +28,8 @@ export default class AccountSetUp extends React.Component {
   render() {
     return (
       <Container avoidKeyboard={true} centerContent={true}>
-        <Image source={require('./assets/user_icon.png')}
+        <Image source={require('./assets/Logo.png')}
           style={{width: 100, height: 100, alignSelf: 'center'}}/>
-        <StyledButton
-          style={{marginTop: 20}}
-          title={`Change Picture`}
-          />
         <StyledTextInput
           labelText={`Name`}
           value={this.state.name}

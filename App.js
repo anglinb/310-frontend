@@ -15,8 +15,10 @@ import {
 import UnautherWrapper from './src/UnauthedNavigator'
 import AuthenticatedWrapper from './src/AuthenticatedNavigator'
 import Splash from './src/Splash'
+import EditTransaction from './src/EditTransaction'
 
 module.exports = StackNavigator({
+    EditTransaction: { screen: EditTransaction },
     Splash: { screen: Splash },
     AuthenticatedWrapper: { screen: AuthenticatedWrapper},
     UnautherWrapper: { screen: UnautherWrapper}
