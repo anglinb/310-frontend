@@ -3,20 +3,27 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  View,
+  View, Picker
 } from 'react-native'
 import config from '../config'
 
-export default class StyledTextInput extends React.Component {
+export default class StyledPicker extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      language: 'Java',
-    }
+
+    this.state = {current_name: {}}
+
     this.renderLabel = this.renderLabel.bind(this)
+    this.onValueChange = this.onValueChange.bind(this)
   }
 
+  onValueChange(itemValue, itemIndex) {
+    this.setState({current_name:itemValue})
+    this.props.onValueChange(itemValue)
+
+
+  }
   renderLabel() {
     if (this.props.labelText) {
       return (
@@ -27,15 +34,17 @@ export default class StyledTextInput extends React.Component {
   }
 
   render() {
+
+    const pickerItems = this.props.objects.map((obj) => {
+      return (<Picker.Item label={obj.name} key={obj.name} value={JSON.stringify(obj)}/>);
+    });
     return (
       <View style={textInputStyles.wrapper}>
         { this.renderLabel() }
         <Picker
-          style={{height:30, width:100}}
-          selectedValue={this.state.language}
-          onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
+          selectedValue={this.state.current_name}
+          onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue, itemIndex)}>
+          {pickerItems}
         </Picker>
       </View>
     )

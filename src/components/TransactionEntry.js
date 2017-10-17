@@ -19,33 +19,41 @@ export default class NewTransaction extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      budget: '',
-      category: '',
-      amount: '',
-    }
+
+    this.handleChangeText = this.handleChangeText.bind(this)
+    this.onValueChange = this.onValueChange.bind(this)
+  }
+  handleChangeText(value, key) {
+
+    this.props.makeTransaction(key, value)
+  }
+
+  onValueChange(value) {
+    this.props.makeTransaction("category",JSON.parse(value))
   }
 
   render() {
+    let selectOneObject = {"name": "Select One", "identifier":"dummy"}
+    let curr_objs = this.props.budget.categories
+    if(!(curr_objs[0].identifier ==="dummy")) {
+      curr_objs.unshift(selectOneObject)
+    }
     return (
         <View style={{padding: 10}}>
           <StyledTextInput
             labelText={'Transaction Name'}
-            value={this.state.name}
-            onChangeText={(name) => this.setState({name})} />
+            onChangeText={(name) => this.handleChangeText(name, "name")} />
           <StyledTextInput
-              labelText={`Budget`}
-              value={this.state.budget}
-              onChangeText={(budget) => this.setState({budget})} />
-          <StyledTextInput
+              labelText={`Description`}
+              onChangeText={(description) => this.handleChangeText(description, "description")} />
+          <StyledPicker
               labelText={`Category`}
-              value={this.state.category}
-              onChangeText={(category) => this.setState({category})} />
+              objects={curr_objs}
+              onValueChange={this.onValueChange}
+               />
           <StyledTextInput
               labelText={`Amount`}
-              value={this.state.amount}
-              onChangeText={(amount) => this.setState({amount})} />
+              onChangeText={(amount) => this.handleChangeText(amount, "amount")} />
         </View>
     )
   }
