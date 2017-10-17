@@ -19,7 +19,7 @@ import ControlBanner from './components/ControlBanner'
 
 export default class Budget extends React.Component {
 
-  constructor(props) {
+   constructor(props) {
 
     super(props);
     this.state = {
@@ -39,6 +39,10 @@ export default class Budget extends React.Component {
   async transactionButtonPress(){
     console.log('navigate to transaction')
     this.props.navigation.navigate('NewTransaction')
+  }
+
+  async editButtonPress(){
+    this.props.navigation.navigate('EditBudget')
   }
 
    async componentDidMount() {
@@ -67,7 +71,7 @@ export default class Budget extends React.Component {
         {this.state.bu}
       </View>
     )
-  } 
+  }
 
   render() {
     return (
@@ -78,7 +82,7 @@ export default class Budget extends React.Component {
           />
         <View style={styles.leftRight}>
           <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
-          <Button onPress={()=> {}} title={`Edit`} />
+          <Button onPress={this.editButtonPress} title={`Edit`} />
         </View>
         <BudgetBanner
           budget={this.state.budget}

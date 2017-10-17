@@ -21,12 +21,13 @@ import StyledPicker from './components/StyledPicker'
 import ControlBanner from './components/ControlBanner'
 import TransactionEntry from './components/TransactionEntry'
 
-export default class NewTransaction extends React.Component {
+export default class PickCategory extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
+      categories: ['TA Stipend','Work Study','Shits & Gigs'],
+      selectedCategory: '',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -36,9 +37,9 @@ export default class NewTransaction extends React.Component {
 
   async componentDidMount() {
     //NEED TO WORK TO GET THE CATEGORIES!!
+    //TODO: match the categories for the specified budget
 
-
-    let { resp, error } = await API.build().authenticated().get({
+    /*let { resp, error } = await API.build().authenticated().get({
       endpoint: '/budgets'
     })
 
@@ -48,7 +49,7 @@ export default class NewTransaction extends React.Component {
     })
 
     this.setState({'budgets':budgetsList})
-    this.handleButtonPress = this.handleButtonPress.bind(this)
+    this.handleButtonPress = this.handleButtonPress.bind(this)*/
   }
 
   //CONTROLBANNER buttons
@@ -69,9 +70,15 @@ export default class NewTransaction extends React.Component {
 
   async yButtonPress() {
     //send over the category selection to the prop
+    this.props.navigation.state.params.returnCategory(this.state.selectedCategory)
+    this.props.navigation.goBack()
   }
 
   render() {
+    let categoryItems = this.state.categories.map( (s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        })
+
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
@@ -87,10 +94,9 @@ export default class NewTransaction extends React.Component {
           <View style={{padding: 10}}>
           <Picker
               mode={'dropdown'}
-              selectedValue={this.state.language}
-              onValueChange={(lang) => this.setState({language: lang})}>
-              <Picker.Item label="blah" value="java" />
-              <Picker.Item label="J" value="js" />
+              selectedValue={this.state.selectedCategory}
+              onValueChange={(cat) => this.setState({selectedCategory: cat})}>
+              {categoryItems}
               </Picker>
             </View>
           </ScrollView>

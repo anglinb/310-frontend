@@ -21,12 +21,13 @@ import StyledPicker from './components/StyledPicker'
 import ControlBanner from './components/ControlBanner'
 import TransactionEntry from './components/TransactionEntry'
 
-export default class NewTransaction extends React.Component {
+export default class PickBudget extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      budgets: [],
+      budgets: ['TA Stipend','Work Study','Shits & Gigs'],
+      selectedBudget: '',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -35,7 +36,7 @@ export default class NewTransaction extends React.Component {
   }
 
   async componentDidMount() {
-    let { resp, error } = await API.build().authenticated().get({
+    /*let { resp, error } = await API.build().authenticated().get({
       endpoint: '/budgets'
     })
 
@@ -45,7 +46,7 @@ export default class NewTransaction extends React.Component {
     })
 
     this.setState({'budgets':budgetsList})
-    this.handleButtonPress = this.handleButtonPress.bind(this)
+    this.handleButtonPress = this.handleButtonPress.bind(this)*/
   }
 
   //CONTROLBANNER buttons
@@ -66,9 +67,15 @@ export default class NewTransaction extends React.Component {
 
   async yButtonPress() {
     //send over the budget selection to prop
+    this.props.navigation.state.params.returnBudget(this.state.selectedBudget)
+    this.props.navigation.goBack()
   }
 
   render() {
+    let budgetItems = this.state.budgets.map( (s, i) => {
+            return <Picker.Item key={i} value={s} label={s} />
+        })
+
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
@@ -84,10 +91,9 @@ export default class NewTransaction extends React.Component {
           <View style={{padding: 10}}>
           <Picker
               mode={'dropdown'}
-              selectedValue={this.state.language}
-              onValueChange={(lang) => this.setState({language: lang})}>
-
-              {this.state.budgets}
+              selectedValue={this.state.selectedBudget}
+              onValueChange={(budg) => this.setState({selectedBudget: budg})}>
+              {budgetItems}
               </Picker>
             </View>
           </ScrollView>

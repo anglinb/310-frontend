@@ -51,7 +51,7 @@ export default class Login extends React.Component {
 
   async handleButtonPress() {
     console.log("button clicked")
-    //TODO: Bring up create budget screen
+    this.props.navigation.navigate('NewBudget')
   }
 
   //CONTROLBANNER buttons

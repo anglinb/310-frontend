@@ -20,7 +20,7 @@ import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import ControlBanner from './components/ControlBanner'
 
-export default class NewBudget extends React.Component {
+export default class EditBudget extends React.Component {
 
   constructor(props) {
     super(props);
@@ -84,7 +84,7 @@ export default class NewBudget extends React.Component {
           transactionButtonPress={() => {this.transactionButtonPress()}}
         />
         <EditingBanner
-          header = {'New Budget'}
+          header = {'Edit Budget'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
@@ -104,12 +104,13 @@ export default class NewBudget extends React.Component {
             <Text style={styles.headerText}>{`Reset Options:`}</Text>
             <View>
               <Picker
+                mode={'dropdown'}
                 selectedValue={this.state.resetType}
                 onValueChange={(resetT) => this.setState({resetType: resetT})}>
                 <Item label='Weekly' value='WEEK' />
                 <Item label='Monthly' value='MONTH' />
                 </Picker>
-            </View>
+              </View>
         </View>
       </Container>
     )

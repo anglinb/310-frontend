@@ -35,7 +35,18 @@ export default class NewTransaction extends React.Component {
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-    this.anotherButtonPress = this.anotherButtonPress.bind(this)
+    this.categoryButtonPress = this.categoryButtonPress.bind(this)
+    this.budgetButtonPress = this.budgetButtonPress.bind(this)
+  }
+
+  //Select buttons
+  async budgetButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    console.log('pickBudget')
+    this.props.navigation.navigate('PickBudget', {returnBudget: this.returnBudget.bind(this)})
+  }
+  async categoryButtonPress(){
+    this.props.navigation.navigate('PickCategory', {returnCategory: this.returnCategory.bind(this)})
   }
 
   //CONTROLBANNER buttons
@@ -56,11 +67,13 @@ export default class NewTransaction extends React.Component {
 
   async yButtonPress() {
     let { resp, error } = await API.build().post({
-        //enter endpoint once configured
-        //how to fill the body using a vector of entries
+        //TODO: POST handle and proper body verification
         endpoint: '',
         body: {
-
+          name: this.state.name,
+          budget: this.state.budget,
+          category: this.state.category,
+          amount: this.state.amount,
         }
       })
       if (error) {
@@ -73,15 +86,19 @@ export default class NewTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
+        //TODO: logic for category notificaitons
         this.props.navigation.navigate('Budget', {name: 'Lucy'})
       }
   }
 
-  async anotherButtonPress(){
-    if(transactionCount < 25){
-      transactionCount = transactionCount + 1
-      console.log(transactionCount)
-    }
+  //Helper classes to receive selected Category/Budget
+  async returnBudget(budg) {
+    this.setState({budget: budg});
+    console.log(this.state.budget)
+  }
+  async returnCategory(cat) {
+    this.setState({category: cat});
+    console.log(this.state.category)
   }
 
   render() {
@@ -91,14 +108,31 @@ export default class NewTransaction extends React.Component {
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
-        <EditingBanner
-          header = {'New Transaction'}
-          xButtonPress={() => {this.xButtonPress()}}
-          yButtonPress={() => {this.yButtonPress()}}
-          />
-        <ScrollView>
-          <View style={{padding: 10}}>
-            <TransactionEntry/>
+          <EditingBanner
+            header = {'New Transaction'}
+            xButtonPress={() => {this.xButtonPress()}}
+            yButtonPress={() => {this.yButtonPress()}}
+            />
+          <ScrollView>
+            <View style={{padding: 10}}>
+            <StyledTextInput
+              labelText={'Transaction Name'}
+              value={this.state.name}
+              onChangeText={(name) => this.setState({name})} />
+            <StyledTextInput
+                labelText={`Amount`}
+                value={this.state.amount}
+                onChangeText={(amount) => this.setState({amount})} />
+            <StyledButton
+                style={{marginTop: 10}}
+                title={`Select Budget`}
+                onPress={this.budgetButtonPress}
+                />
+            <StyledButton
+                style={{marginTop: 10}}
+                title={`Select Category`}
+                onPress={this.categoryButtonPress}
+                />
             </View>
           </ScrollView>
       </Container>
