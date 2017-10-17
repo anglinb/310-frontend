@@ -42,13 +42,24 @@ export default class Budget extends React.Component {
   }
 
    async componentDidMount() {
-    let token = await Store.authenticationStore().getAuthenticationToken()
-    console.log('TOKEN !!!!', token)
+    /* ** commented out for now but note that this will only work in render because state has to update
+     const endpoint = "/budgets/" + this.state.budget._id
     let { resp, error } = await API.build().authenticated().get({
-      endpoint: `/budgets/${this.state.budget._id}`
+      endpoint: endpoint
     })
-    console.log('TKELWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOKEN !!!!', token)
-    this.setState({ budget: resp })
+    if (error) {
+      Alert.alert(
+        'Error',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.setState({ budget: resp })
+    }*/
+
   }
 
   renderCategories() {
@@ -67,7 +78,7 @@ export default class Budget extends React.Component {
         {this.state.bu}
       </View>
     )
-  } 
+  }
 
   render() {
     return (
@@ -88,7 +99,7 @@ export default class Budget extends React.Component {
           />
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Categories`}</Text>
-          {this.renderCategories()}
+          {this.renderCategories}
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
       </Container>
