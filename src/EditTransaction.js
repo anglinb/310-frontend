@@ -7,6 +7,8 @@ import {
   Text,
   View,
   ScrollView,
+  Picker,
+  Item
 } from 'react-native';
 
 import Container from './components/Container'
@@ -27,11 +29,24 @@ export default class EditTransaction extends React.Component {
       budget: '',
       category: '',
       amount: '',
+      language: 'java',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
+    this.categoryButtonPress = this.categoryButtonPress.bind(this)
+    this.budgetButtonPress = this.budgetButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+  }
+
+  //Select buttons
+  async budgetButtonPress(){
+    //this is a placeholder until we get Hamburger running
+    console.log('pickBudget')
+    this.props.navigation.navigate('PickBudget')
+  }
+  async categoryButtonPress(){
+    this.props.navigation.navigate('PickCategory')
   }
 
   //CONTROLBANNER buttons
@@ -118,27 +133,24 @@ export default class EditTransaction extends React.Component {
               value={this.state.name}
               onChangeText={(name) => this.setState({name})} />
             <StyledTextInput
-                labelText={`Budget`}
-                value={this.state.budget}
-                onChangeText={(budget) => this.setState({budget})} />
-            <StyledTextInput
-                labelText={`Category`}
-                value={this.state.category}
-                onChangeText={(category) => this.setState({category})} />
-            <StyledTextInput
                 labelText={`Amount`}
                 value={this.state.amount}
                 onChangeText={(amount) => this.setState({amount})} />
             <StyledButton
                 style={{marginTop: 10}}
-                title={`Save Transaction`}
-                onPress={this.yButtonPress}
-            />
+                title={`Select Budget`}
+                onPress={this.budgetButtonPress}
+                />
+            <StyledButton
+                style={{marginTop: 10}}
+                title={`Select Category`}
+                onPress={this.categoryButtonPress}
+                />
             <StyledButton
                 style={{marginTop: 10}}
                 title={`Delete Transaction`}
                 onPress={this.deleteButtonPress}
-            />
+                />
           </ScrollView>
         </View>
       </Container>
@@ -147,4 +159,5 @@ export default class EditTransaction extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
 });

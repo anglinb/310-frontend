@@ -6,8 +6,9 @@ import {
   Button,
   Text,
   View,
+  Image,
   Picker,
-  ScrollView
+  Item
 } from 'react-native';
 
 import Container from './components/Container'
@@ -17,25 +18,21 @@ import Store from './lib/Store'
 import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
-import StyledPicker from './components/StyledPicker'
 import ControlBanner from './components/ControlBanner'
-import TransactionEntry from './components/TransactionEntry'
 
-export default class NewTransaction extends React.Component {
+export default class NewCategory extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      budget: '',
-      category: '',
-      amount: '',
+      budgetAmount: '',
+      resetType: '',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-    this.anotherButtonPress = this.anotherButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -44,8 +41,8 @@ export default class NewTransaction extends React.Component {
     this.props.navigation.navigate('HamburgerNavigation')
   }
   async transactionButtonPress(){
-    //already at transaction so leave empty
-    //this.props.navigation.navigate('NewTransaction')
+    console.log('navigate to transaction')
+    this.props.navigation.navigate('NewTransaction')
   }
 
   //EDITINGBANNER buttons
@@ -53,14 +50,14 @@ export default class NewTransaction extends React.Component {
     //navigate back a page
     this.props.navigation.goBack()
   }
-
   async yButtonPress() {
     let { resp, error } = await API.build().post({
-        //enter endpoint once configured
-        //how to fill the body using a vector of entries
-        endpoint: '',
+        //how do you get the Budget ID?
+        endpoint: `/budgets/${this.props.budget._id}/categories`,
         body: {
-
+          name: this.state.name,
+          amount: this.state.budgetAmount,
+          resetType: this.state.resetType,
         }
       })
       if (error) {
@@ -77,34 +74,47 @@ export default class NewTransaction extends React.Component {
       }
   }
 
-  async anotherButtonPress(){
-    if(transactionCount < 25){
-      transactionCount = transactionCount + 1
-      console.log(transactionCount)
-    }
-  }
-
   render() {
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
-          />
+        />
         <EditingBanner
-          header = {'New Transaction'}
+          header = {'New Budget'}
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <ScrollView>
-          <View style={{padding: 10}}>
-            <TransactionEntry/>
-            </View>
-          </ScrollView>
+        <View style={{padding: 10}}>
+          <StyledTextInput
+            labelText={'Budget Name'}
+            value={this.state.name}
+            onChangeText={(name) => this.setState({name})} />
+            <StyledTextInput
+              labelText={`Budget Amount`}
+              value={this.state.budgetAmount}
+              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
+            <Text style={styles.headerText}>{`Reset Options:`}</Text>
+            <Picker
+              mode={'dropdown'}
+              selectedValue={this.state.resetType}
+              onValueChange={(resetT) => this.setState({resetType: resetT})}>
+              <Item label='Weekly' value='WEEK' />
+              <Item label='Monthly' value='MONTH' />
+              </Picker>
+        </View>
       </Container>
     )
   }
 }
 
+
 const styles = StyleSheet.create({
+  headerText: {
+    color: config.veryDarkText,
+    fontSize: 20,
+    marginTop: 30,
+    fontWeight: '600',
+  }
 });
