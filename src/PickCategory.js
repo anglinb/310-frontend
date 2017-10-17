@@ -26,15 +26,29 @@ export default class NewTransaction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      budget: '',
-      category: '',
-      amount: '',
+      categories: [],
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+  }
+
+  async componentDidMount() {
+    //NEED TO WORK TO GET THE CATEGORIES!!
+
+
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets'
+    })
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList})
+    this.handleButtonPress = this.handleButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
