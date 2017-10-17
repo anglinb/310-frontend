@@ -66,7 +66,8 @@ export default class NewCategory extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        //navigate back a page
+        this.props.navigation.goBack()
       }
   }
 

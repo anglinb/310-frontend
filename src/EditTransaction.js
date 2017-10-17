@@ -19,34 +19,23 @@ import config from './config'
 import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import ControlBanner from './components/ControlBanner'
+import TransactionEntry from './components/TransactionEntry'
 
 export default class EditTransaction extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      _id: '',
       name: '',
       budget: '',
       category: '',
       amount: '',
-      language: 'java',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
-    this.categoryButtonPress = this.categoryButtonPress.bind(this)
-    this.budgetButtonPress = this.budgetButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-  }
-
-  //Select buttons
-  async budgetButtonPress(){
-    //this is a placeholder until we get Hamburger running
-    console.log('pickBudget')
-    this.props.navigation.navigate('PickBudget', {returnBudget: this.returnBudget.bind(this)})
-  }
-  async categoryButtonPress(){
-    this.props.navigation.navigate('PickCategory', {returnCategory: this.returnCategory.bind(this)})
   }
 
   //CONTROLBANNER buttons
@@ -67,11 +56,12 @@ export default class EditTransaction extends React.Component {
   async yButtonPress() {
     let { resp, error } = await API.build().put({
         //TODO: PUT handle and proper body verification
-        endpoint: '',
+        endpoint: `/budgets/${this.state.budget._id}/categories/${this.state.category.slug}/transactions/${this.state._id}`,
         body: {
-          name: this.state.name,
-          budget: this.state.budget,
-          category: this.state.category,
+          description: this.state.description,
+          recurring: false,
+          name:this.state.name,
+          recurring_days: 0,
           amount: this.state.amount,
         }
       })
@@ -136,33 +126,11 @@ export default class EditTransaction extends React.Component {
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <View style={{padding: 10}}>
           <ScrollView>
-            <StyledTextInput
-              labelText={'Transaction Name'}
-              value={this.state.name}
-              onChangeText={(name) => this.setState({name})} />
-            <StyledTextInput
-                labelText={`Amount`}
-                value={this.state.amount}
-                onChangeText={(amount) => this.setState({amount})} />
-            <StyledButton
-                style={{marginTop: 10}}
-                title={`Select Budget`}
-                onPress={this.budgetButtonPress}
-                />
-            <StyledButton
-                style={{marginTop: 10}}
-                title={`Select Category`}
-                onPress={this.categoryButtonPress}
-                />
-            <StyledButton
-                style={{marginTop: 10}}
-                title={`Delete Transaction`}
-                onPress={this.deleteButtonPress}
-                />
+            <View style={{padding: 10}}>
+              <TransactionEntry budget= {this.state.budget} makeTransaction={this.makeTransactionFunc}/>
+            </View>
           </ScrollView>
-        </View>
       </Container>
     )
   }

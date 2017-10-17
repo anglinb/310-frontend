@@ -22,6 +22,7 @@ export default class EditCategory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      slug: '',
       name: '',
       budgetAmount: '',
     }
@@ -51,7 +52,7 @@ export default class EditCategory extends React.Component {
   async yButtonPress() {
     let { resp, error } = await API.build().post({
         //how do you get the Budget ID?
-        endpoint: '/budgets/{budgetId}/categories/{categorySlug}',
+        endpoint: `/budgets/${this.props.budget._id}/categories/${this.state.categorySlug}`,
         body: {
           name: this.state.name,
           amount: this.state.budgetAmount,
@@ -74,7 +75,7 @@ export default class EditCategory extends React.Component {
   async deleteButtonPress() {
     let { resp, error } = await API.build().post({
         //how do you get the Budget ID or CategorySlug?
-        endpoint: '/budgets/{budgetId}/categories/{categorySlug}',
+        endpoint: `/budgets/${this.props.budget._id}/categories/${this.state.categorySlug}`,
         body: {
           name: this.state.name,
           amount: this.state.budgetAmount,
@@ -90,7 +91,8 @@ export default class EditCategory extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        //navigate back a page
+        this.props.navigation.goBack()
       }
   }
 

@@ -86,12 +86,11 @@ export default class NewTransaction extends React.Component {
         //how to fill the body using a vector of entries
         endpoint: endpoint,
         body: {
-          "description": this.state.description,
-          "recurring": false,
-          "name":this.state.name,
-          "recurring_days": 0,
-          "amount": this.state.amount,
-
+          description: this.state.description,
+          recurring: false,
+          name:this.state.name,
+          recurring_days: 0,
+          amount: this.state.amount,
         }
       })
       console.log('UPPPPPPPPPPPPPPPPPPPPPPPPPPAAADDDDDDDDDDDDDDDDDD')

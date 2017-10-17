@@ -11,6 +11,7 @@ import config from './config'
 export default class Splash extends React.Component {
 
   async componentDidMount() {
+
     let authenticationStore = Store.authenticationStore()
     let token = await authenticationStore.getAuthenticationToken()
     console.log('TOKEN: ', token)
