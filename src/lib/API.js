@@ -27,13 +27,14 @@ export default class API {
     if (this.authenticatedCount > 0 || this.authenticatedCount == -1){
       // Loads the authentication token from the store
       let token = await this.authenticationStore.getAuthenticationToken()
-      headers = {'Authentication': 'Bearer ' + token }
+      headers = {'Authorization': 'Bearer ' + token }
       if (this.authenticatedCount !== -1) {
         this.authenticatedCount--
       }
     }
     // Add defaults, authentication, then user overrides
-    return Object.assign({}, this.defaultHeaders, headers ||  {}, extraHeaders)
+    let allHeaders = Object.assign({}, this.defaultHeaders, headers ||  {}, extraHeaders)
+    return allHeaders
   }
 
   authenticated() {

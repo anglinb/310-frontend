@@ -1,14 +1,15 @@
 import React from 'react';
-import { 
+import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Button,
-  Text, 
+  Text,
   View
 } from 'react-native';
 
 import config from '../config'
+import BudgetHelper from '../lib/BudgetHelper'
 
 class BudgetBannerItem extends React.Component {
   render() {
@@ -18,26 +19,49 @@ class BudgetBannerItem extends React.Component {
         <Text style={styles.bannerItemBottom}>{this.props.bottomText}</Text>
       </View>
     )
-  } 
+  }
 }
 
 export default class BudgetBanner extends React.Component {
 
   render() {
+    let budgetAmount
+    let budgetUsed
+    let transactionCount
+    let nextResetDate
+    let nextResetDateText
+    if (this.props.budget) {
+      let budgetHelper = new BudgetHelper(this.props.budget)
+
+      // TODO: For some reason all won't work
+      // ({ budgetAmount, budgetUsed, transactionCount, nextResetDate } = budgetHelper.all())
+      budgetAmount = budgetHelper.budgetAmount()
+      budgetUsed  = budgetHelper.budgetUsed()
+      transactionCount = budgetHelper.transactionCount()
+      nextResetDate = budgetHelper.nextResetDate()
+
+      nextResetDateText = nextResetDate.format('M/D')
+    } else {
+      budgetAmount = 0
+      budgetUsed = 0
+      transactionCount = 0
+      nextResetDateText = '...'
+    }
+
     return (
       <View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
           <BudgetBannerItem
-            topText={this.props.budgetRatio}
-            bottomText={`Total Spent`} 
+            topText={`$${budgetUsed}/$${budgetAmount}`}
+            bottomText={`Total Spent`}
             />
           <BudgetBannerItem
-            topText={this.props.resetDate}
-            bottomText={`Next Reset Date`} 
+            topText={nextResetDateText}
+            bottomText={`Next Reset Date`}
             />
         </View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.darkerGreen}])}>
-          <Text style={styles.bannerBottomText}>{`12 Transactions`}</Text>
+          <Text style={styles.bannerBottomText}>{`${transactionCount} Transaction(s)`}</Text>
         </View>
       </View>
     )
@@ -64,6 +88,8 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   bannerBottomText: {
-    color: '#fff'
+    color: '#fff',
+    fontFamily: config.font,
+    fontWeight: '600',
   }
 });

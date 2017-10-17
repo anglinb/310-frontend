@@ -5,7 +5,7 @@ import {
   Button,
   Text,
   View,
-  Image,
+  Image
 } from 'react-native';
 
 import {
@@ -19,6 +19,9 @@ import EditTransaction from './src/EditTransaction';
 import EditCategory from './src/EditCategory';
 import Profile from './src/Profile';
 import Budget from './src/Budget';
+import LandingPageUI from './src/LandingPageUI';
+import BudgetsPage from './src/BudgetsPage';
+
 import NotificationSettings from './src/NotificationSettings';
 import AccountSetUp from './src/AccountSetUp';
 import AccountSettings from './src/AccountSettings';
@@ -32,9 +35,11 @@ module.exports = StackNavigator({
   EditCategory: { screen: EditCategory },
   NewCategory: { screen: NewCategory },
   HamburgerNavigation: { screen: HamburgerNavigation },
-  Login: { screen: Login },
   EditTransaction: { screen: EditTransaction },
   NotificationSettings: { screen: NotificationSettings },
   AccountSetUp: { screen: AccountSetUp },
+  LandingPageUI: { screen: LandingPageUI },
+  BudgetsPage: { screen: BudgetsPage},
+  Login: { screen: Login },
   Profile: { screen: Profile },
 });
