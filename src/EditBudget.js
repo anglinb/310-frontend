@@ -77,7 +77,7 @@ export default class EditBudget extends React.Component {
   }
   async newCategoryButtonPress(){
     console.log('New Category')
-    this.props.navigation.navigate('NewCategory')
+    this.props.navigation.navigate('NewCategory', { budget: this.state.budget })
   }
   /**
 

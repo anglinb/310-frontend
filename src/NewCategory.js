@@ -48,7 +48,7 @@ export default class NewCategory extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
+    let { resp, error } = await API.build().authenticated().post({
         //how do you get the Budget ID?
         endpoint: `/budgets/${this.props.budget._id}/categories`,
         body: {
@@ -94,7 +94,7 @@ export default class NewCategory extends React.Component {
               <StyledButton
               style={{marginTop: 20}}
               title={`Save Category`}
-              onPress={this.xButtonPress}
+              onPress={this.yButtonPress}
             />
         </View>
       </Container>
