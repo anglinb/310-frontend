@@ -27,8 +27,6 @@ export default class BudgetWidget extends React.Component {
 
 
   render() {
-
-
     return (
       <TouchableOpacity onPress={this._onPressBudget}>
         <View style={styles.budgetView}>

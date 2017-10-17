@@ -44,10 +44,10 @@ export default class Login extends React.Component {
         { cancelable: false }
       )
     } else {
-      console.log(resp.authentication)
       let authStore = Store.authenticationStore()
       await authStore.setAuthenticationToken(resp.authentication)
-      this.props.navigation.navigate('BudgetsPage')
+      await this.props.screenProps.rootNavigator.goBack()
+      await this.props.screenProps.rootNavigator.navigate('AuthenticatedWrapper')
     }
   }
 

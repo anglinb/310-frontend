@@ -53,7 +53,10 @@ export default class HamburgerNavigation extends React.Component {
     this.props.navigation.navigate('AccountSettings')
   }
   async signOutButtonPress() {
-    this.props.navigation.navigate('Login')
+    let authStore = Store.authenticationStore()
+    await authStore.removeAuthenticationToken()
+    await this.props.screenProps.rootNavigator.goBack()
+    await this.props.screenProps.rootNavigator.navigate('UnautherWrapper')
   }
 
   render() {

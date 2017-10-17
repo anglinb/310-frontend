@@ -24,7 +24,9 @@ export default class LandingPageUI extends React.Component {
     }
   }
 
-  
+  static navigationOptions = {
+    headerLeft: null
+  } 
 
   render() {
     return (

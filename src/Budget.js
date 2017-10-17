@@ -22,6 +22,7 @@ export default class Budget extends React.Component {
 
     super(props);
     this.state = {
+      budget: props.navigation.state.params.budget || null
     }
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
@@ -35,16 +36,13 @@ export default class Budget extends React.Component {
   async transactionButtonPress(){
     console.log('navigate to transaction')
     this.props.navigation.navigate('NewTransaction')
-
   }
-
 
    async componentDidMount() {
     let { resp, error } = await API.build().authenticated().get({
-      endpoint: '/budgets/59e3ff07bce41056bf4deb81'
+      endpoint: `/budgets/${this.state.budget._id}`
     })
-    console.log('FLJEWLJFEWJL resp', resp)
-    console.log('FLJEWLJFEWJL error', error)
+    this.setState({ budget: resp })
   }
 
   render() {
@@ -55,7 +53,7 @@ export default class Budget extends React.Component {
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
         <View style={styles.leftRight}>
-          <Text style={styles.headerText}>{this.state.budget.name}</Text>
+          <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
           <Button onPress={()=> {}} title={`Edit`} />
         </View>
         <BudgetBanner
