@@ -27,15 +27,17 @@ export default class NewTransaction extends React.Component {
     super(props);
     this.state = {
       name: '',
-      budget: '',
-      category: '',
+      description: '',
+      category: {},
       amount: '',
+      budget: props.navigation.state.params.budget || null
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
     this.anotherButtonPress = this.anotherButtonPress.bind(this)
+    this.makeTransactionFunc = this.makeTransactionFunc.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -51,15 +53,35 @@ export default class NewTransaction extends React.Component {
   //EDITINGBANNER buttons
   async xButtonPress() {
     //navigate back a page
-    this.props.navigation.goBack()
+    this.props.navigation.navigate('Budget', {budget: this.state.budget})
   }
 
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
+    console.log(JSON.stringify(this.state.category))
+    if(JSON.stringify(this.state.category) == '{}' || this.state.category.name === "Select One") {
+      console.log("I am here")
+      Alert.alert(
+        'Invalid Request',
+        'Please select a category!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+    let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
+    console.log(endpoint)
+    let { resp, error } = await API.build().authenticated().post({
         //enter endpoint once configured
         //how to fill the body using a vector of entries
-        endpoint: '',
+        endpoint: endpoint,
         body: {
+          "description": this.state.description,
+          "recurring": false,
+          "name":this.state.name,
+          "recurring_days": 0,
+          "amount": this.state.amount,
 
         }
       })
@@ -73,7 +95,8 @@ export default class NewTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        console.log("success")
+        this.props.navigation.navigate('Budget', {budget: this.state.budget})
       }
   }
 
@@ -82,6 +105,13 @@ export default class NewTransaction extends React.Component {
       transactionCount = transactionCount + 1
       console.log(transactionCount)
     }
+  }
+
+  makeTransactionFunc(key, value) {
+    var local_state = {};
+    local_state[key] = value;
+    this.setState(local_state)
+
   }
 
   render() {
@@ -98,9 +128,9 @@ export default class NewTransaction extends React.Component {
           />
         <ScrollView>
           <View style={{padding: 10}}>
-            <TransactionEntry/>
-            </View>
-          </ScrollView>
+            <TransactionEntry budget= {this.state.budget} makeTransaction={this.makeTransactionFunc}/>
+          </View>
+        </ScrollView>
       </Container>
     )
   }

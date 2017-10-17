@@ -38,7 +38,7 @@ export default class Budget extends React.Component {
   }
   async transactionButtonPress(){
     console.log('navigate to transaction')
-    this.props.navigation.navigate('NewTransaction')
+    this.props.navigation.navigate('NewTransaction', { budget: this.state.budget})
   }
 
    async componentDidMount() {
