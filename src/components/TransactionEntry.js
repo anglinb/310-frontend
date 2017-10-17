@@ -14,7 +14,7 @@ import config from '../config'
 import StyledTextInput from './StyledTextInput'
 import StyledButton from './StyledButton'
 import StyledPicker from './StyledPicker'
-
+import API from './../lib/API'
 export default class NewTransaction extends React.Component {
 
   constructor(props) {
@@ -22,22 +22,53 @@ export default class NewTransaction extends React.Component {
 
     this.handleChangeText = this.handleChangeText.bind(this)
     this.onValueChange = this.onValueChange.bind(this)
+    this.onValueChangeBudget = this.onValueChangeBudget.bind(this)
+    this.state = {budgets:undefined, selectedBudget:undefined}
   }
+
+  async componentDidMount() {
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets'
+    })
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList, 'selectedBudget':undefined})
+  }
+
   handleChangeText(value, key) {
 
     this.props.makeTransaction(key, value)
   }
 
   onValueChange(value) {
+
     this.props.makeTransaction("category",JSON.parse(value))
+  }
+
+  onValueChangeBudget(value) {
+    this.props.makeTransaction("budget",JSON.parse(value))
+    this.setState({"selectedBudget":JSON.parse(value)})
   }
 
   render() {
     let selectOneObject = {"name": "Select One", "identifier":"dummy"}
-    let curr_objs = this.props.budget.categories
-    if(!(curr_objs[0].identifier ==="dummy")) {
-      curr_objs.unshift(selectOneObject)
+    const curr_budgets = this.state.budgets || [selectOneObject]
+
+    let curr_cats = (this.state.selectedBudget)?this.state.selectedBudget.categories:[selectOneObject]
+    if (curr_cats.length == 0)
+      curr_cats.push(selectOneObject)
+    if(!(curr_cats[0].identifier ==="dummy")) {
+      curr_cats.unshift(selectOneObject)
     }
+
+    if(!(curr_budgets[0].identifier ==="dummy")) {
+      curr_budgets.unshift(selectOneObject)
+    }
+
     return (
         <View style={{padding: 10}}>
           <StyledTextInput
@@ -46,14 +77,21 @@ export default class NewTransaction extends React.Component {
           <StyledTextInput
               labelText={`Description`}
               onChangeText={(description) => this.handleChangeText(description, "description")} />
-          <StyledPicker
-              labelText={`Category`}
-              objects={curr_objs}
-              onValueChange={this.onValueChange}
-               />
           <StyledTextInput
               labelText={`Amount`}
               onChangeText={(amount) => this.handleChangeText(amount, "amount")} />
+          <StyledPicker
+              labelText={`Budget`}
+              objects={curr_budgets}
+              onValueChange={this.onValueChangeBudget}
+               />
+          <StyledPicker
+              labelText={`Category`}
+              objects={curr_cats}
+              onValueChange={this.onValueChange}
+               />
+
+
         </View>
     )
   }
