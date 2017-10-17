@@ -18,6 +18,17 @@ exports[`renders without crashing 1`] = `
     ]
   }
 >
+  <Image
+    source={1}
+    style={
+      Object {
+        "alignSelf": "center",
+        "height": 40,
+        "marginTop": 10,
+        "width": 120,
+      }
+    }
+  />
   <View
     style={
       Object {
@@ -126,9 +137,7 @@ exports[`renders without crashing 1`] = `
         Object {
           "backgroundColor": "transparent",
         },
-        Object {
-          "marginTop": 20,
-        },
+        undefined,
       ]
     }
     testID={undefined}
@@ -149,6 +158,7 @@ exports[`renders without crashing 1`] = `
           Object {
             "alignItems": "center",
             "borderRadius": 5,
+            "marginTop": 20,
             "padding": 15,
           }
         }
