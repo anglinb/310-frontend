@@ -28,9 +28,9 @@ export default class NewTransaction extends React.Component {
     this.state = {
       name: '',
       description: '',
-      category: {},
+      category: undefined,
       amount: '',
-      budget: props.navigation.state.params.budget || null
+      budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -58,7 +58,7 @@ export default class NewTransaction extends React.Component {
 
   async yButtonPress() {
     console.log(JSON.stringify(this.state.category))
-    if(JSON.stringify(this.state.category) == '{}' || this.state.category.name === "Select One") {
+    if(this.state.category == undefined || this.state.budget == undefined || this.state.budget.name == "Select One" || this.state.category.name === "Select One") {
       console.log("I am here")
       Alert.alert(
         'Invalid Request',

@@ -11,7 +11,7 @@ export default class BudgetHelper {
     const returnValue =  this.budget.categories.reduce((accumulator, category) => {
       return accumulator + category.amount
     }, 0)
-    this.logger('BUDGET AMOUNT', returnValue)
+    //this.logger('BUDGET AMOUNT', returnValue)
     return returnValue
   }
 
@@ -21,7 +21,7 @@ export default class BudgetHelper {
         return innerSum + transaction.amount
       }, 0)
     },  0)
-    this.logger('RETURN VALUE', returnValue)
+    //this.logger('RETURN VALUE', returnValue)
     return returnValue
   }
 
@@ -40,29 +40,29 @@ export default class BudgetHelper {
     const returnValue =  this.budget.categories.reduce((accumulator, category) => {
       return accumulator + (category.transactions || []).length
     }, 0)
-    this.logger('TRANSACTION COUNT', returnValue)
+    //this.logger('TRANSACTION COUNT', returnValue)
     return returnValue
   }
 
 
   nextResetDate() {
     let returnValue = this.getDateHelper().nextResetDate()
-    this.logger('NEXT RESET', returnValue)
+    //this.logger('NEXT RESET', returnValue)
     return returnValue
   }
 
   previousResetDate() {
     let returnValue = this.getDateHelper().previousResetDate()
-    this.logger('PREVISO RESET', returnValue)
+    //this.logger('PREVISO RESET', returnValue)
     return returnValue
   }
 
   transactions() {
     // let transactions = this.budget.categories.reduce((accumulator, category)  => {
-    //   let categoryTransactions =  
+    //   let categoryTransactions =
     //   return accumulator.concat(category.transactions)
     // })
-    
+
   }
 
   getDateHelper() {

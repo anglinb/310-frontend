@@ -16,7 +16,7 @@ import API from './lib/API'
 import Store from './lib/Store'
 import config from './config'
 import ControlBanner from './components/ControlBanner'
-
+import TransactionRow from './components/TransactionRow'
 export default class Budget extends React.Component {
 
   constructor(props) {
@@ -28,7 +28,7 @@ export default class Budget extends React.Component {
     }
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-    this.renderCategories = this.renderCategories.bind(this)
+
   }
 
   //CONTROLBANNER buttons
@@ -37,39 +37,42 @@ export default class Budget extends React.Component {
     this.props.navigation.navigate('HamburgerNavigation')
   }
   async transactionButtonPress(){
-    console.log('navigate to transaction')
     this.props.navigation.navigate('NewTransaction', { budget: this.state.budget})
   }
 
    async componentDidMount() {
-    let token = await Store.authenticationStore().getAuthenticationToken()
-    console.log('TOKEN !!!!', token)
+     await this.state.budget._id !=null
+     const endpoint = "/budgets/" + this.state.budget._id
     let { resp, error } = await API.build().authenticated().get({
-      endpoint: `/budgets/${this.state.budget._id}`
+      endpoint: endpoint
     })
-    console.log('TKELWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWOKEN !!!!', token)
-    this.setState({ budget: resp })
+    if (error) {
+      Alert.alert(
+        'Error',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.setState({ budget: resp })
+    }
+
   }
 
-  renderCategories() {
-    return (
-      <View>
-        {this.state.budget.categories.map((category, index) => {
-          return <BudgetStatusBarCategory key={category.slug} category={category} />
-        })}
-      </View>
-    )
-  }
 
-  renderTransactions() {
-    return (
-      <View>
-        {this.state.bu}
-      </View>
-    )
-  } 
+
 
   render() {
+    let transactions = this.state.budget.categories.map((category, index) => {
+      return category.transactions.map((transaction, index) => {
+        return <TransactionRow transaction={transaction} />
+      })
+    })
+    let categories = this.state.budget.categories.map((category, index) => {
+      return <BudgetStatusBarCategory key={category.slug} category={category} />
+    })
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
@@ -88,9 +91,12 @@ export default class Budget extends React.Component {
           />
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Categories`}</Text>
-          {this.renderCategories()}
+          <View>
+            {categories}
+          </View>
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
+          {transactions}
       </Container>
     )
   }

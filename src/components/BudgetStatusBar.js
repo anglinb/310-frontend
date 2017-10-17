@@ -18,7 +18,7 @@ export default class BudgetStatusBar extends React.Component {
 
   render() {
     let percentageComplete = this.props.percentageComplete || 0
-    console.log('PERCENTAGE COMPLETE: ', percentageComplete)
+    //console.log('PERCENTAGE COMPLETE: ', percentageComplete)
     let indicatorWidth = { flex: percentageComplete }
     let indicatorSpacerWidth = { flex: 100 - percentageComplete }
 
@@ -53,7 +53,7 @@ export class BudgetStatusBarDates extends React.Component {
       let budgetHelper = new BudgetHelper(this.props.budget)
       let { nextResetDate, previousResetDate, budgetAmount, budgetUsed } = budgetHelper.all()
       budgetPercentage = budgetHelper.budgetPercentage()
-      console.log('BUDGET PERCENTAGE: ', budgetPercentage )
+      //console.log('BUDGET PERCENTAGE: ', budgetPercentage )
       leftLabel = previousResetDate.format('M/D')
       rightLabel = nextResetDate.format('M/D')
     } else {
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#D8D8D8',
   },
   indicatorBar: {
-    
+
     width: 100,
     backgroundColor: '#06AEC1'
 
