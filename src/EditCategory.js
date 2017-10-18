@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
   Button,
   Text,
-  View
+  View,
+  FlatList
 } from 'react-native';
 
 import Container from './components/Container'
@@ -22,15 +23,51 @@ export default class EditCategory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      slug: '',
-      name: '',
-      budgetAmount: '',
+      category: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.category,
+      budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
     }
+    console.log("DKKDKDKDKKDKKDKDKLDLKDLKDKLKLDSLKS", this.state, 'fdsjkldflsjkkljfdsjklfdsjkldfs', props.navigation.state.params)
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.editTransactionButtonPress = this.editTransactionButtonPress.bind(this)
     this.deleteButtonPress = this.deleteButtonPress.bind(this)
+    this.updateBudget = this.updateBudget.bind(this)
+  }
+
+  //update budget
+  async updateBudget() {
+    const endpoint = "/budgets/" + this.state.budget._id
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: endpoint
+    })
+    if (error) {
+      Alert.alert(
+        'Error',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', resp)
+      var category = this.state.category
+      for (var i = 0; i < resp.categories.length; i++) {
+          if (resp.categories[i].slug === this.state.category.slug) {
+            category = resp.categories[i]
+            break;
+          }
+      }
+      this.setState({ budget: resp, category }, () => {
+        console.log('FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO upda')
+        setTimeout(() => {
+
+        })
+        this.forceUpdate()
+      })
+    }
   }
 
   //CONTROLBANNER buttons
@@ -50,12 +87,12 @@ export default class EditCategory extends React.Component {
   }
 
   async yButtonPress() {
-    let { resp, error } = await API.build().post({
+    let { resp, error } = await API.build().authenticated().put({
         //how do you get the Budget ID?
-        endpoint: `/budgets/${this.props.budget._id}/categories/${this.state.categorySlug}`,
+        endpoint: `/budgets/${this.state.budget._id}/categories/${this.state.category.slug}`,
         body: {
-          name: this.state.name,
-          amount: this.state.budgetAmount,
+          name: this.state.category.name,
+          amount: this.state.category.amount,
         }
       })
       if (error) {
@@ -68,18 +105,15 @@ export default class EditCategory extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        await this.props.navigation.state.params.updateBudget()
+        this.props.navigation.goBack()
       }
   }
 
   async deleteButtonPress() {
-    let { resp, error } = await API.build().post({
+    let { resp, error } = await API.build().authenticated().delete({
         //how do you get the Budget ID or CategorySlug?
-        endpoint: `/budgets/${this.props.budget._id}/categories/${this.state.categorySlug}`,
-        body: {
-          name: this.state.name,
-          amount: this.state.budgetAmount,
-        }
+        endpoint: `/budgets/${this.state.budget._id}/categories/${this.state.category.slug}`,
       })
       if (error) {
         Alert.alert(
@@ -91,9 +125,21 @@ export default class EditCategory extends React.Component {
           { cancelable: false }
         )
       } else {
+        await this.props.navigation.state.params.updateBudget()
         //navigate back a page
         this.props.navigation.goBack()
       }
+  }
+
+  //other buttons
+  async editTransactionButtonPress(transaction){
+    console.log('Edit Transaction')
+    console.log('CAAAAAAAAAAAAAAAAAAAA', transaction)
+    this.props.navigation.navigate('EditTransaction', {
+      transaction,
+      category: this.state.category,
+      budget: this.state.budget,
+      updateBudget: this.updateBudget })
   }
 
   render() {
@@ -109,24 +155,41 @@ export default class EditCategory extends React.Component {
           yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
-          <StyledTextInput
-            labelText={'Category Name'}
-            value={this.state.name}
-            onChangeText={(name) => this.setState({name})} />
+            <StyledTextInput
+              labelText={'Category Name'}
+              value={this.state.category.name}
+              onChangeText={(name) => {
+                this.setState({ category: Object.assign({}, this.state.category, { name })})
+              }} />
             <StyledTextInput
               labelText={`Budget Amount`}
-              value={this.state.budgetAmount}
-              onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-              <StyledButton
-              style={{marginTop: 10}}
-              title={`Save Category`}
-              onPress={this.yButtonPress}
-            />
+              value={String(this.state.category.amount)}
+              onChangeText={(amount) => {
+                  this.setState({
+                    category: Object.assign({}, this.state.category, { amount: parseInt(amount, 10) })})
+                  }} />
+            <View style={styles.container}>
+                <FlatList
+                  data={this.state.category.transactions}
+                  keyExtractor={item => item._id}
+                  renderItem={(transaction) =>  {
+                  console.log("GOT TRAN", transaction)
+                  return (
+                    <StyledButton
+                        key={transaction.item._id}
+                        style={{marginTop: 10}}
+                        title={'Edit ' + transaction.item.name}
+                        onPress={() => this.editTransactionButtonPress(transaction.item)}
+                        />
+                    )
+                    }}
+                  />
+                </View>
             <StyledButton
-            style={{marginTop: 10}}
-            title={`Delete Category`}
-            onPress={this.deleteButtonPress}
-          />
+              style={{marginTop: 10}}
+              title={`Delete Category`}
+              onPress={this.deleteButtonPress}
+              />
         </View>
       </Container>
     )
