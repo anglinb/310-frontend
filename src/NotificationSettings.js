@@ -92,28 +92,25 @@ export default class NotificationSettings extends React.Component {
       }
   }
 
-  async getValues() {
+  /*async componentDidMount() {
+    console.log('ljdsfjkldfsjdfklsdsjkl')
     let { resp, error } = await API.build().authenticated().get({
-        endpoint: `/self/notifications`,
-      })
-      if (error) {
-        Alert.alert(
-          'Whoops!',
-          error.message,
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
-          { cancelable: false }
-        )
-      } else {
-        console.log(resp)
+      endpoint: '/self/notifications'
+    })
 
-        this.props.navigation.navigate('Budget', {'budget':resp})
-      }
-  }
+    if (error) {
+      console.log('EEREROE$OIRJOFIJOFJELWIJFOIEWJOIFHWEOIH', error)
+    }
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+console.log('kkfljkjflsdkljkfdsjldkflj', budgetsList)
+    this.setState({'budgets':budgetsList})
+  }*/
 
   render() {
-    //getValues()
 
     return (
       <Container style={{padding: 0}}>
