@@ -57,6 +57,7 @@ export default class HamburgerNavigation extends React.Component {
     await authStore.removeAuthenticationToken()
     await this.props.screenProps.rootNavigator.goBack()
     await this.props.screenProps.rootNavigator.navigate('UnautherWrapper')
+    //await this.props.navigation.navigate('Login')
   }
 
   render() {
