@@ -64,18 +64,16 @@ export default class Budget extends React.Component {
         { cancelable: false }
       )
     } else {
-      console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', resp)
       this.setState({ budget: resp }, () => {
-        console.log('FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO upda')
-        setTimeout(() => {
-
-        })
         this.forceUpdate()
       })
     }
   }
 
-   async componentDidMount() {
+  componentDidMount() {
+    
+     
+    // throw "ERROR"
     console.log('dkkkkkkkkkkkdkdkdklsfjjlsdj;flj;slajfepowihjafopehwpaoifihewopaihfepoiwhafpoi')
     this.updateBudget()
     let notifHelper = new NotificationsHelper({ buget: this.state.budget })

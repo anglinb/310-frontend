@@ -8,7 +8,6 @@ export default class NotificationsHelper {
 
   calculateThresholds() {
     // Should return any categories that are over a threshold
-    console.log('ISS RUNNNIGNOGLJDFSJLGDSLJKFLKJDSJLK')
   }
 
 }
