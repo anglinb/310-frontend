@@ -48,6 +48,11 @@ export default class BudgetBanner extends React.Component {
       nextResetDateText = '...'
     }
 
+    //making it show negative if over
+    if(budgetUsed > budgetAmount){
+      budgetUsed = budgetAmount - budgetUsed
+    }
+
     return (
       <View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>

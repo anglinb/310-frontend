@@ -44,7 +44,7 @@ export default class HamburgerNavigation extends React.Component {
   //navigation buttons
   async budgetsButtonPress() {
     //navigate back a page
-    this.props.navigation.navigate('Budget', {name: 'Lucy'})
+    this.props.navigation.navigate('BudgetsPage')
   }
   async archivesButtonPress() {
     this.props.navigation.navigate('NewCategory')
