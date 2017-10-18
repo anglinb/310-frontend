@@ -56,7 +56,7 @@ console.log('kkfljkjflsdkljkfdsjldkflj', budgetsList)
 
   handleButtonPress() {
     console.log("handled button press")
-   this.props.navigation.navigate('NewBudgetModal')
+    this.props.navigation.navigate('NewBudgetModal')
   }
 
   //CONTROLBANNER buttons

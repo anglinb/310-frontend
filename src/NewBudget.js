@@ -24,11 +24,12 @@ export default class NewBudget extends React.Component {
 
   constructor(props) {
     super(props);
+    let tempDate = new Date().getDate()
     this.state = {
       name: '',
       resetType: 'WEEK',
+      startDate: tempDate,
     }
-
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
@@ -51,14 +52,12 @@ export default class NewBudget extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    let resetDate = new Date().getDate()
     let { resp, error } = await API.build().authenticated().post({
-
         endpoint: `/budgets/`,
         body: {
           "name": this.state.name,
           "resetType": this.state.resetType,
-          "resetDate": resetDate,
+          "resetDate": this.state.startDate,
         }
       })
       if (error) {
@@ -95,6 +94,10 @@ export default class NewBudget extends React.Component {
             labelText={'Budget Name'}
             value={this.state.name}
             onChangeText={(name) => this.setState({name})} />
+          <StyledTextInput
+            labelText={'Day of Month to Start'}
+            value={String(this.state.startDate)}
+            onChangeText={(startDate) => this.setState({startDate})}/>
             <Text style={styles.headerText}>{`Reset Options:`}</Text>
             <Picker
               selectedValue={this.state.resetType.toString()}

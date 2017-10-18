@@ -111,13 +111,6 @@ export default class EditBudget extends React.Component {
     console.log('New Category')
     this.props.navigation.navigate('NewCategory', { budget: this.state.budget, updateBudget: this.updateBudget})
   }
-  /**
-
-              <StyledTextInput
-                labelText={`Budget Amount`}
-                value={this.state.budget.budgetAmount}
-                onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-  */
 
   render() {
     return (

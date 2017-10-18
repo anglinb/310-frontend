@@ -88,12 +88,17 @@ export class BudgetStatusBarCategory extends React.Component {
     }
     console.log('HhHhHHHHHHHHHHH' + categoryPercentage)
 
+    //making it show negative if over
+    if(amountSpent > this.props.category.amount){
+      amountSpent = this.props.category.amount - amountSpent
+    }
+
     return (
       <BudgetStatusBar
         style={{padding: 10}}
         percentageComplete={categoryPercentage}
         leftLabel={this.props.category.name}
-        rightLabel={String(amountSpent)+ '/' + this.props.category.amount}
+        rightLabel={String(amountSpent) + '/' + this.props.category.amount}
       />
     )
   }

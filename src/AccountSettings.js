@@ -120,7 +120,7 @@ export default class AccountSettings extends React.Component {
             />
           <StyledButton
             style={{marginTop: 7, padding: 5}}
-            title={`Change PIN`}
+            title={`Change Password`}
             onPress={this.pinButtonPress}
           />
         </View>
