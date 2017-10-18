@@ -19,8 +19,6 @@ import AccountSetUp from './AccountSetUp';
 import AccountSettings from './AccountSettings';
 import ControlBanner from './components/ControlBanner';
 import HamburgerNavigation from './HamburgerNavigation';
-import PickBudget from './PickBudget';
-import PickCategory from './PickCategory';
 
 import Analytics from './Analytics';
 
@@ -46,8 +44,6 @@ const StackModalNavigator = (routeConfigs, navigatorConfig) => {
 const AuthenticatedNavigator = StackModalNavigator({
     BudgetsPage: { screen: BudgetsPage},
     NewTransaction: { screen: NewTransaction },
-    PickBudget: { screen: PickBudget },
-    PickCategory: { screen: PickCategory },
     Budget: { screen: Budget },
     AccountSettings: { screen: AccountSettings },
     NewBudget: {screen: NewBudget},
