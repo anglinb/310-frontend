@@ -30,8 +30,8 @@ export default class PasswordToken extends React.Component {
   }
 
   async handleButtonPress() {
-    /*let { resp, error } = await API.build().post({
-      endpoint: '/authentication/reset/complete',
+    let { resp, error } = await API.build().post({
+      endpoint: '/authenticate/reset/complete',
       body: {
         username: this.state.email,
         passwordResetToken: this.state.passwordResetToken,
@@ -47,9 +47,9 @@ export default class PasswordToken extends React.Component {
         ],
         { cancelable: false }
       )
-    } else {*/
+    } else {
       await this.props.navigation.navigate('Login')
-    //}
+    }
   }
 
   async xButtonPress() {

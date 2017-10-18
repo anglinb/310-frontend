@@ -28,8 +28,8 @@ export default class ChangePassword extends React.Component {
   }
 
   async handleButtonPress() {
-    /*let { resp, error } = await API.build().post({
-      endpoint: '/authentication/reset/request',
+    let { resp, error } = await API.build().post({
+      endpoint: '/authenticate/reset/request',
       body: {
         username: this.state.email,
       }
@@ -43,9 +43,9 @@ export default class ChangePassword extends React.Component {
         ],
         { cancelable: false }
       )
-    } else {*/
+    } else {
       await this.props.navigation.navigate('PasswordToken', {email: this.state.email})
-    //}
+    }
   }
 
   async xButtonPress() {
