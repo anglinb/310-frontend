@@ -15,6 +15,7 @@ import BudgetBanner from './components/BudgetBanner'
 import BudgetStatusBar, { BudgetStatusBarDates, BudgetStatusBarCategory } from './components/BudgetStatusBar'
 import API from './lib/API'
 import Store from './lib/Store'
+import NotificationsHelper from './lib/NotificationsHelper'
 import config from './config'
 import ControlBanner from './components/ControlBanner'
 import TransactionRow from './components/TransactionRow'
@@ -68,19 +69,20 @@ export default class Budget extends React.Component {
         { cancelable: false }
       )
     } else {
-      console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', resp)
       this.setState({ budget: resp }, () => {
-        console.log('FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO upda')
-        setTimeout(() => {
-
-        })
         this.forceUpdate()
       })
     }
   }
 
-   async componentDidMount() {
+  componentDidMount() {
+
+
+    // throw "ERROR"
+    console.log('dkkkkkkkkkkkdkdkdklsfjjlsdj;flj;slajfepowihjafopehwpaoifihewopaihfepoiwhafpoi')
     this.updateBudget()
+    let notifHelper = new NotificationsHelper({ budget: this.state.budget })
+    notifHelper.calculateThresholds()
   }
 
   render() {
