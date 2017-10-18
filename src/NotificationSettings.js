@@ -68,10 +68,10 @@ export default class NotificationSettings extends React.Component {
     else if(this.state.weekly == true) this.state.frequency='WEEKLY'
     else this.state.frequency='MONTHLY'
 
-    let { resp, error } = await API.build().authenticated().post({
+    let { resp, error } = await API.build().authenticated().put({
         endpoint: `/self/notifications`,
         body: {
-          thresholds: this.state.thresholds
+          thresholds: this.state.thresholds,
           frequency: this.state.frequency
         }
       })
@@ -92,7 +92,7 @@ export default class NotificationSettings extends React.Component {
       }
   }
 
-  /*async componentDidMount() {
+  async componentDidMount() {
     console.log('ljdsfjkldfsjdfklsdsjkl')
     let { resp, error } = await API.build().authenticated().get({
       endpoint: '/self/notifications'
@@ -102,13 +102,40 @@ export default class NotificationSettings extends React.Component {
       console.log('EEREROE$OIRJOFIJOFJELWIJFOIEWJOIFHWEOIH', error)
     }
 
-    const budgetsList = resp.map((obj) => {
-      obj.key = obj.name
-      return obj;
+    // r = {
+    //   thresholds: [60, 90],
+    //   frequency: 'MONTHLY',
+    // }
+
+    let mapping = {
+      fifty: 50,
+      sixty: 60,
+      seventy: 70,
+      eighty: 80,
+      ninety: 90,
+      hundred: 100
+    }
+
+    let updatedState = {
+      daily: false,
+      weekly: false,
+      monthly: false,
+    }
+
+    Object.keys(mapping).forEach((key) => {
+      if (resp.thresholds.includes(mapping[key])) {
+        updatedState[key] = true
+      } else {
+        updatedState[key] = false
+      }
     })
-console.log('kkfljkjflsdkljkfdsjldkflj', budgetsList)
-    this.setState({'budgets':budgetsList})
-  }*/
+
+    if (resp.frequency === 'MONTHLY') updatedState['monthly'] = true
+    if (resp.frequency === 'WEEKLY') updatedState['weekly'] = true
+    if (resp.frequency === 'DAILY') updatedState['daily'] = true
+    console.log('UPDATED STATE', updatedState)
+    this.setState(updatedState)
+  }
 
   render() {
 
