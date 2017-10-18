@@ -35,12 +35,12 @@ export default class BudgetBanner extends React.Component {
 
       // TODO: For some reason all won't work
       // ({ budgetAmount, budgetUsed, transactionCount, nextResetDate } = budgetHelper.all())
-      budgetAmount = budgetHelper.budgetAmount()
-      budgetUsed  = budgetHelper.budgetUsed()
-      transactionCount = budgetHelper.transactionCount()
-      nextResetDate = budgetHelper.nextResetDate()
+      // budgetAmount = budgetHelper.budgetAmount()
+      // budgetUsed  = budgetHelper.budgetUsed()
+      // transactionCount = budgetHelper.transactionCount()
+      // nextResetDate = budgetHelper.nextResetDate()
 
-      nextResetDateText = nextResetDate.format('M/D')
+      //nextResetDateText = nextResetDate.format('M/D')
     } else {
       budgetAmount = 0
       budgetUsed = 0

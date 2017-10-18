@@ -15,8 +15,10 @@ import {
 import UnautherWrapper from './src/UnauthedNavigator'
 import AuthenticatedWrapper from './src/AuthenticatedNavigator'
 import Splash from './src/Splash'
+import Analytics from './src/Analytics'
 
 module.exports = StackNavigator({
+    // Analytics: { screen: Analytics }
     Splash: { screen: Splash },
     AuthenticatedWrapper: { screen: AuthenticatedWrapper},
     UnautherWrapper: { screen: UnautherWrapper}
@@ -26,5 +28,5 @@ module.exports = StackNavigator({
       gesturesEnabled: false
     },
     mode: 'modal'
-  }
+      }
 );

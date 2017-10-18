@@ -21,6 +21,9 @@ import ControlBanner from './components/ControlBanner';
 import HamburgerNavigation from './HamburgerNavigation';
 import PickBudget from './PickBudget';
 import PickCategory from './PickCategory';
+
+import Analytics from './Analytics';
+
 const StackModalNavigator = (routeConfigs, navigatorConfig) => {
   const CardStackNavigator = StackNavigator(routeConfigs, navigatorConfig);
   const modalRouteConfig = {};
@@ -56,6 +59,7 @@ const AuthenticatedNavigator = StackModalNavigator({
     AccountSetUp: { screen: AccountSetUp },
     EditBudget: { screen: EditBudget },
     Profile: { screen: Profile },
+    Analytics: { screen: Analytics },
   },{
     headerMode: "none",
   })
