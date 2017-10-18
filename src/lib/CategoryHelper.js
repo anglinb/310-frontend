@@ -11,6 +11,7 @@ export default class CategoryHelper {
   }
 
   categoryBudgetUsed() {
+    console.log('fdjlskjldfkljdjslffjdlksjklsdfkljfdsfdskljfdksljkljsdffdsjkl', this.category)
     return (this.category.transactions || []).reduce( (innerSum, transaction) => {
       return innerSum + transaction.amount
     }, 0)
