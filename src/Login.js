@@ -24,6 +24,7 @@ export default class Login extends React.Component {
       password: '',
     }
     this.handleButtonPress = this.handleButtonPress.bind(this)
+    this.passwordButtonPress = this.passwordButtonPress.bind(this)
   }
 
   async handleButtonPress() {
@@ -51,6 +52,10 @@ export default class Login extends React.Component {
     }
   }
 
+  async passwordButtonPress() {
+    await this.props.navigation.navigate('ChangePassword')
+  }
+
   render() {
     return (
       <Container avoidKeyboard={true} centerContent={true}>
@@ -69,6 +74,10 @@ export default class Login extends React.Component {
           style={{marginTop: 20}}
           title={`Login/Sign Up`}
           onPress={this.handleButtonPress}/>
+        <StyledButton
+          style={{marginTop: 20}}
+          title={`Change Password`}
+          onPress={this.passwordButtonPress}/>
       </Container>
     )
   }
