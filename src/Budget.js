@@ -119,10 +119,10 @@ export default class Budget extends React.Component {
           <View>
             {(categories)?categories:null}
           </View>
+          <Button onPress={this.analyticsButtonPress} title={`Analytics`} />
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
           {(transactions)?transactions:null}
-          <Button onPress={this.analyticsButtonPress} title={`Analytics`} />
         </ScrollView>
       </Container>
     )

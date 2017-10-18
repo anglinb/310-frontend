@@ -41,16 +41,12 @@ export default class Analytics extends React.Component {
 
   render() {
     return (
-     <Container style={{padding:0}}>
-     <ControlBanner
-       hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
-       transactionButtonPress={() => {this.transactionButtonPress()}}
-     />
+     <Container style={styles.middle}>
       <View>
       <AnalyticsChart
         budget={this.state.budget}/>
       </View>
-     </Container>
+      </Container>
    )
   }
 }

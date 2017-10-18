@@ -32,7 +32,6 @@ export default class AnalyticsChart extends React.Component {
 
     if(this.props.budget) {
       name = this.props.budget.name
-      if(typeof this.props.budget.categories !== 'undefined') {
         budgetHelper = new BudgetHelper(this.props.budget)
         totalAmount = budgetHelper.budgetAmount()
         length = this.props.budget.categories.length
@@ -43,15 +42,11 @@ export default class AnalyticsChart extends React.Component {
                 {this.props.budget.categories[i].name}: ${this.props.budget.categories[i].amount}
               </Text>
               <Text style={{color: colors[i], fontWeight: '600', fontSize: 13, right:-30}}>
-                {((this.props.budget.categories[i].amount/totalAmount)*100).toFixed(2)}%
+                {((this.props.budget.categories[i].amount/totalAmount)*100).toFixed(0)}%
               </Text>
           </View>)
         }
       }
-      else {
-        totalAmount = 0
-      }
-    }
     else {
       name = ''
     }
