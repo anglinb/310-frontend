@@ -20,22 +20,22 @@ import StyledTextInput from './components/StyledTextInput'
 import StyledButton from './components/StyledButton'
 import ControlBanner from './components/ControlBanner'
 import TransactionEntry from './components/TransactionEntry'
+import StyledPicker from './components/StyledPicker'
 
 export default class EditTransaction extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      _id: '',
-      name: '',
-      budget: '',
-      category: '',
-      amount: '',
+      transaction: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.transaction,
+      budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
+      category: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.category,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
+    this.deleteButtonPress = this.deleteButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -54,16 +54,10 @@ export default class EditTransaction extends React.Component {
   }
 
   async yButtonPress() {
-    let { resp, error } = await API.build().put({
-        //TODO: PUT handle and proper body verification
-        endpoint: `/budgets/${this.state.budget._id}/categories/${this.state.category.slug}/transactions/${this.state._id}`,
-        body: {
-          description: this.state.description,
-          recurring: false,
-          name:this.state.name,
-          recurring_days: 0,
-          amount: this.state.amount,
-        }
+
+    let { resp, error } = await API.build().authenticated().put({
+        endpoint: `/budgets/${this.state.budget._id}/categories/${this.state.category.slug}/transactions/${this.state.transaction._id}`,
+        body: this.state.transaction
       })
       if (error) {
         Alert.alert(
@@ -75,20 +69,15 @@ export default class EditTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        await this.props.navigation.state.params.updateBudget()
+        this.props.navigation.goBack()
       }
   }
 
   async deleteButtonPress() {
-    let { resp, error } = await API.build().post({
+    let { resp, error } = await API.build().authenticated().delete({
         //get handle
-        endpoint: '',
-        body: {
-          name: this.state.name,
-          budget: this.state.budget,
-          category: this.state.category,
-          amount: this.state.amount,
-        }
+        endpoint: `/budgets/${this.state.budget._id}/categories/${this.state.category.slug}/transactions/${this.state.transaction._id}`,
       })
       if (error) {
         Alert.alert(
@@ -100,22 +89,16 @@ export default class EditTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        cosole.log()
+        await this.props.navigation.state.params.updateBudget()
+        //navigate back a page
+        this.props.navigation.goBack()
       }
-  }
-
-  //Helper classes to receive selected Category/Budget
-  async returnBudget(budg) {
-    this.setState({budget: budg});
-    console.log(this.state.budget)
-  }
-  async returnCategory(cat) {
-    this.setState({category: cat});
-    console.log(this.state.category)
   }
 
   render() {
     return (
+
       <Container style={{padding: 0}}>
         <ControlBanner
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
@@ -128,8 +111,31 @@ export default class EditTransaction extends React.Component {
           />
           <ScrollView>
             <View style={{padding: 10}}>
-              <TransactionEntry budget= {this.state.budget} makeTransaction={this.makeTransactionFunc}/>
-            </View>
+              <StyledTextInput
+                labelText={'Transaction Name'}
+                value={this.state.transaction.name}
+                onChangeText={(name) => {
+                  this.setState({ transaction: Object.assign({}, this.state.transaction, { name })})
+                }} />
+              <StyledTextInput
+                  labelText={`Description`}
+                  value={this.state.transaction.description}
+                  onChangeText={(description) => {
+                    this.setState({ transaction: Object.assign({}, this.state.transaction, { description })})
+                  }} />
+              <StyledTextInput
+                  labelText={`Amount`}
+                  value={String(this.state.transaction.amount)}
+                  onChangeText={(amount) => {
+                      this.setState({
+                        transaction: Object.assign({}, this.state.transaction, { amount: parseInt(amount, 10) })})
+                      }} />
+              <StyledButton
+                  style={{marginTop: 10}}
+                  title={`Delete Transaction`}
+                  onPress={this.deleteButtonPress}
+                  />
+          </View>
           </ScrollView>
       </Container>
     )
