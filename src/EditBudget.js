@@ -30,9 +30,38 @@ export default class EditBudget extends React.Component {
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
+    this.editCategoryButtonPress = this.editCategoryButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
     this.newCategoryButtonPress = this.newCategoryButtonPress.bind(this)
+    this.updateBudget = this.updateBudget.bind(this)
+  }
+
+  //update budget
+  async updateBudget() {
+    const endpoint = "/budgets/" + this.state.budget._id
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: endpoint
+    })
+    if (error) {
+      Alert.alert(
+        'Error',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      console.log('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG', resp)
+      this.setState({ budget: resp }, () => {
+        console.log('FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO upda')
+        setTimeout(() => {
+
+        })
+        this.forceUpdate()
+      })
+    }
   }
 
   //CONTROLBANNER buttons
@@ -51,9 +80,9 @@ export default class EditBudget extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    let { resp, error } = await API.build().authenticated().post({
+    let { resp, error } = await API.build().authenticated().put({
         //how do you get the Budget ID?
-        endpoint: `/budgets/${this.state.budget._id}/categories`,
+        endpoint: `/budgets/${this.state.budget._id}`,
         body: this.state.budget
       })
       if (error) {
@@ -66,18 +95,21 @@ export default class EditBudget extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        await this.props.navigation.state.params.updateBudget()
+        //navigate back a page
+        this.props.navigation.goBack()
       }
   }
 
   //other buttons
   async editCategoryButtonPress(category){
     console.log('Edit Category')
-    this.props.navigation.navigate('EditCategory', { category, budget: this.state.budget })
+    console.log('CAAAAAAAAAAAAAAAAAAAA', category)
+    this.props.navigation.navigate('EditCategory', { category, budget: this.state.budget, updateBudget: this.updateBudget })
   }
   async newCategoryButtonPress(){
     console.log('New Category')
-    this.props.navigation.navigate('NewCategory', { budget: this.state.budget })
+    this.props.navigation.navigate('NewCategory', { budget: this.state.budget, updateBudget: this.updateBudget})
   }
   /**
 
@@ -118,11 +150,18 @@ export default class EditBudget extends React.Component {
               <View style={styles.container}>
                 <FlatList
                   data={this.state.budget.categories}
-                  renderItem={(category) =>  <StyledButton
-                      style={{marginTop: 10}}
-                      title={category.name}
-                      onPress={this.editCategoryButtonPress(category)}
-                      /> }
+                  keyExtractor={item => item.slug}
+                  renderItem={(category) =>  {
+                    console.log("GOT CATE", category)
+                    return (
+                      <StyledButton
+                        key={category.item.slug}
+                        style={{marginTop: 10}}
+                        title={'Edit ' + category.item.name}
+                        onPress={() => this.editCategoryButtonPress(category.item)}
+                        />
+                      )
+                    }}
                 />
                 </View>
               <StyledButton

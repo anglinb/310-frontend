@@ -25,6 +25,7 @@ export default class NewCategory extends React.Component {
     this.state = {
       name: '',
       budgetAmount: '',
+      budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -50,7 +51,7 @@ export default class NewCategory extends React.Component {
   async yButtonPress() {
     let { resp, error } = await API.build().authenticated().post({
         //how do you get the Budget ID?
-        endpoint: `/budgets/${this.props.budget._id}/categories`,
+        endpoint: `/budgets/${this.state.budget._id}/categories`,
         body: {
           name: this.state.name,
           amount: this.state.budgetAmount,
@@ -66,6 +67,7 @@ export default class NewCategory extends React.Component {
           { cancelable: false }
         )
       } else {
+        await this.props.navigation.state.params.updateBudget()
         //navigate back a page
         this.props.navigation.goBack()
       }
@@ -92,11 +94,6 @@ export default class NewCategory extends React.Component {
               labelText={`Budget Amount`}
               value={this.state.budgetAmount}
               onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
-              <StyledButton
-              style={{marginTop: 20}}
-              title={`Save Category`}
-              onPress={this.yButtonPress}
-            />
         </View>
       </Container>
     )
