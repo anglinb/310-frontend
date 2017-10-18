@@ -80,7 +80,8 @@ export default class AccountSettings extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        //navigate back a page
+        this.props.navigation.goBack()
       }
   }
 
@@ -104,10 +105,6 @@ export default class AccountSettings extends React.Component {
           yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
-          <StyledTextInput
-              labelText={`Name`}
-              value={this.state.name}
-              onChangeText={(name) => this.setState({name})} />
           <StyledTextInput
               labelText={`Email`}
               value={this.state.email}

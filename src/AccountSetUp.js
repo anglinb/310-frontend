@@ -31,10 +31,6 @@ export default class AccountSetUp extends React.Component {
         <Image source={require('./assets/Logo.png')}
           style={{width: 100, height: 100, alignSelf: 'center'}}/>
         <StyledTextInput
-          labelText={`Name`}
-          value={this.state.name}
-          onChangeText={(name) => this.setState({name})} />
-        <StyledTextInput
           labelText={`Email`}
           value={this.state.email}
           secureTextEntry={true}
