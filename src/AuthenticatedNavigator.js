@@ -23,6 +23,9 @@ import PickBudget from './PickBudget';
 import PickCategory from './PickCategory';
 
 import Analytics from './Analytics';
+import Archive from './Archive';
+import CategoryHistory from './CategoryHistory'
+
 
 const StackModalNavigator = (routeConfigs, navigatorConfig) => {
   const CardStackNavigator = StackNavigator(routeConfigs, navigatorConfig);
@@ -60,6 +63,8 @@ const AuthenticatedNavigator = StackModalNavigator({
     EditBudget: { screen: EditBudget },
     Profile: { screen: Profile },
     Analytics: { screen: Analytics },
+    Archive: { screen: Archive },
+    CategoryHistory: { screen: CategoryHistory }
   },{
     headerMode: "none",
   })

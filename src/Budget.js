@@ -32,6 +32,7 @@ export default class Budget extends React.Component {
     this.updateBudget = this.updateBudget.bind(this)
     this.editButtonPress = this.editButtonPress.bind(this)
     this.analyticsButtonPress = this.analyticsButtonPress.bind(this)
+    this.archiveButtonPress = this.archiveButtonPress.bind(this)
   }
 
 
@@ -51,6 +52,11 @@ export default class Budget extends React.Component {
   async analyticsButtonPress() {
     console.log('Analytics')
     this.props.navigation.navigate('Analytics', { budget: this.state.budget })
+  }
+
+  async archiveButtonPress() {
+    console.log('Archive')
+    this.props.navigation.navigate('Archive', { budget: this.state.budget })
   }
 
   async updateBudget() {
@@ -119,7 +125,10 @@ export default class Budget extends React.Component {
           <View>
             {(categories)?categories:null}
           </View>
-          <Button onPress={this.analyticsButtonPress} title={`Analytics`} />
+          <View style={{flexDirection: 'row', left:35}}>
+            <Button onPress={this.analyticsButtonPress} title={`Budget Breakdown`}/><Text>          </Text>
+            <Button onPress={this.archiveButtonPress} title={`History`} />
+          </View>
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>
           {(transactions)?transactions:null}
