@@ -104,7 +104,9 @@ export default class NewTransaction extends React.Component {
           { cancelable: false }
         )
       } else {
-        await this.props.navigation.state.params.updateBudget()
+        if(this.props.navigation.state.params && this.props.navigation.state.params.updateBudget !== undefined) {
+          await this.props.navigation.state.params.updateBudget()
+        }
         this.props.navigation.goBack()
       }
   }

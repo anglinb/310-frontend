@@ -29,10 +29,9 @@ export default class NotificationSettings extends React.Component {
       eighty: false,
       ninety: true,
       hundred: true,
-      //daily: false,
-      //twiceWeekly: false,
-      //weekly: true,
-      //never: false,
+      daily: false,
+      weekly: true,
+      monthly: false,
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -74,49 +73,71 @@ export default class NotificationSettings extends React.Component {
           yButtonPress={() => {this.yButtonPress()}}
           />
         <View style={{padding: 10}}>
-        <Text style={styles.headerText}>{`Notification Threshold`}</Text>
-        <View style={styles.leftRight}>
+          <Text style={styles.headerText}>{`Notification Threshold`}</Text>
           <View style={styles.leftRight}>
-            <Text style={styles.headerText}>{`50%`}</Text>
+            <View style={styles.leftRight}>
+              <Text style={styles.headerText}>{`50%`}</Text>
+              <Switch
+                onValueChange={(value) => this.setState({fifty: value})}
+                value={this.state.fifty}
+                onTintColor={config.lightGreen}/>
+            </View>
+            <Text style={styles.headerText}>{`80%`}</Text>
             <Switch
-              onValueChange={(value) => this.setState({fifty: value})}
-              value={this.state.fifty}
+              onValueChange={(value) => this.setState({eighty: value})}
+              value={this.state.eighty}
               onTintColor={config.lightGreen}/>
           </View>
-          <Text style={styles.headerText}>{`80%`}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({eighty: value})}
-            value={this.state.eighty}
-            onTintColor={config.lightGreen}/>
-        </View>
-        <View style={styles.leftRight}>
           <View style={styles.leftRight}>
-            <Text style={styles.headerText}>{`60%`}</Text>
+            <View style={styles.leftRight}>
+              <Text style={styles.headerText}>{`60%`}</Text>
+              <Switch
+                onValueChange={(value) => this.setState({sixty: value})}
+                value={this.state.sixty}
+                onTintColor={config.lightGreen}/>
+            </View>
+            <Text style={styles.headerText}>{`90%`}</Text>
             <Switch
-              onValueChange={(value) => this.setState({sixty: value})}
-              value={this.state.sixty}
+              onValueChange={(value) => this.setState({ninety: value})}
+              value={this.state.ninety}
               onTintColor={config.lightGreen}/>
           </View>
-          <Text style={styles.headerText}>{`90%`}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({ninety: value})}
-            value={this.state.ninety}
-            onTintColor={config.lightGreen}/>
-        </View>
-        <View style={styles.leftRight}>
           <View style={styles.leftRight}>
-            <Text style={styles.headerText}>{`70%`}</Text>
+            <View style={styles.leftRight}>
+              <Text style={styles.headerText}>{`70%`}</Text>
+              <Switch
+                onValueChange={(value) => this.setState({seventy: value})}
+                value={this.state.seventy}
+                onTintColor={config.lightGreen}/>
+            </View>
+            <Text style={styles.headerText}>{`100%`}</Text>
             <Switch
-              onValueChange={(value) => this.setState({seventy: value})}
-              value={this.state.seventy}
+              onValueChange={(value) => this.setState({hundred: value})}
+              value={this.state.hundred}
               onTintColor={config.lightGreen}/>
           </View>
-          <Text style={styles.headerText}>{`100%`}</Text>
-          <Switch
-            onValueChange={(value) => this.setState({hundred: value})}
-            value={this.state.hundred}
-            onTintColor={config.lightGreen}/>
-        </View>
+          <Text style={styles.headerText}>{`Notification Frequency`}</Text>
+            <View style={styles.leftRight}>
+              <Text style={styles.headerText}>{`Daily`}</Text>
+              <Switch
+                onValueChange={(value) => this.setState({daily: value})}
+                value={this.state.daily}
+                onTintColor={config.lightGreen}/>
+              </View>
+            <View style={styles.leftRight}>
+              <Text style={styles.headerText}>{`Weekly`}</Text>
+              <Switch
+                onValueChange={(value) => this.setState({weekly: value})}
+                value={this.state.weekly}
+                onTintColor={config.lightGreen}/>
+              </View>
+            <View style={styles.leftRight}>
+              <Text style={styles.headerText}>{`Monthly`}</Text>
+              <Switch
+                onValueChange={(value) => this.setState({monthly: value})}
+                value={this.state.monthly}
+                onTintColor={config.lightGreen}/>
+              </View>
         </View>
       </Container>
     )
@@ -130,7 +151,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   leftRight: {
-    padding: 10,
+    padding: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

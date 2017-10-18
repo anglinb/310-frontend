@@ -29,6 +29,7 @@ export default class BudgetsPage extends React.Component {
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
     this.handleButtonPress = this.handleButtonPress.bind(this)
+    this.updateBudget = this.updateBudget.bind(this)
   }
 
 
@@ -56,7 +57,7 @@ console.log('kkfljkjflsdkljkfdsjldkflj', budgetsList)
 
   handleButtonPress() {
     console.log("handled button press")
-    this.props.navigation.navigate('NewBudgetModal')
+    this.props.navigation.navigate('NewBudget', {updateBudget: this.updateBudget})
   }
 
   //CONTROLBANNER buttons
@@ -66,7 +67,28 @@ console.log('kkfljkjflsdkljkfdsjldkflj', budgetsList)
   }
   async transactionButtonPress(){
     console.log('navigate to transaction')
-    this.props.navigation.navigate('NewTransaction')
+    this.props.navigation.navigate('NewTransaction', {updateBudget: this.updateBudget })
+  }
+
+  async updateBudget() {
+    const endpoint = "/budgets"
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: endpoint
+    })
+    if (error) {
+      Alert.alert(
+        'Error',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.setState({ budgets: resp }, () => {
+        this.forceUpdate()
+      })
+    }
   }
 
   render() {

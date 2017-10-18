@@ -48,6 +48,7 @@ export default class NewBudget extends React.Component {
 
   //EDITINGBANNER buttons
   async xButtonPress() {
+    await this.props.navigation.state.params.updateBudget()
     //navigate back a page
     this.props.navigation.goBack()
   }

@@ -118,11 +118,6 @@ export default class AccountSettings extends React.Component {
             title={`Change Notifications`}
             onPress={this.notificationButtonPress}
             />
-          <StyledButton
-            style={{marginTop: 7, padding: 5}}
-            title={`Change Password`}
-            onPress={this.pinButtonPress}
-          />
         </View>
       </Container>
     )
