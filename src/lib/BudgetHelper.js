@@ -46,13 +46,25 @@ export default class BudgetHelper {
 
 
   nextResetDate() {
-    let returnValue = this.getDateHelper().nextResetDate()
-    //this.logger('NEXT RESET', returnValue)
+    let returnValue
+    if(this.budget.resetType == "MONTH"){
+      returnValue = this.getDateHelper().nextResetDateMonth()
+    }
+    else{
+      returnValue = this.getDateHelper().nextResetDateWeek()
+    }
+    //this.logger('PREVISO RESET', returnValue)
     return returnValue
   }
 
   previousResetDate() {
-    let returnValue = this.getDateHelper().previousResetDate()
+    let returnValue
+    if(this.budget.resetType == "MONTH"){
+      returnValue = this.getDateHelper().previousResetDateMonth()
+    }
+    else{
+      returnValue = this.getDateHelper().previousResetDateWeek()
+    }
     //this.logger('PREVISO RESET', returnValue)
     return returnValue
   }
