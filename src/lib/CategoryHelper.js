@@ -17,7 +17,13 @@ export default class CategoryHelper {
   }
 
   categoryBudgetPercentage() {
-    return this.categoryBudgetUsed() / this.categoryBudgetAmount()
+    const budgetUsed = this.categoryBudgetUsed()
+    const budgetAmount = this.categoryBudgetAmount()
+    if (budgetAmount > 0) {
+      return (budgetUsed / budgetAmount) * 100
+    } else {
+      return 0
+    }
   }
 
 }

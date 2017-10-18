@@ -80,9 +80,9 @@ export default class EditBudget extends React.Component {
     this.props.navigation.goBack()
   }
   async yButtonPress() {
-    let { resp, error } = await API.build().authenticated().post({
+    let { resp, error } = await API.build().authenticated().put({
         //how do you get the Budget ID?
-        endpoint: `/budgets/${this.state.budget._id}/categories`,
+        endpoint: `/budgets/${this.state.budget._id}`,
         body: this.state.budget
       })
       if (error) {
@@ -95,7 +95,9 @@ export default class EditBudget extends React.Component {
           { cancelable: false }
         )
       } else {
-        this.props.navigation.navigate('Budget', {name: 'Lucy'})
+        await this.props.navigation.state.params.updateBudget()
+        //navigate back a page
+        this.props.navigation.goBack()
       }
   }
 
