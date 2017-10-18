@@ -20,6 +20,8 @@ import StyledButton from './components/StyledButton'
 import StyledPicker from './components/StyledPicker'
 import ControlBanner from './components/ControlBanner'
 import TransactionEntry from './components/TransactionEntry'
+import NotificationsHelper from './lib/NotificationsHelper'
+import CategoryHelper from './lib/CategoryHelper'
 
 export default class NewTransaction extends React.Component {
 
@@ -80,6 +82,13 @@ export default class NewTransaction extends React.Component {
       )
       return;
     }
+    let notifHelper = new NotificationsHelper({ budget: this.state.budget })
+    let preThresh = notifHelper.calculateSingleThreshold(this.state.category)
+    let categoryBudget1 = new CategoryHelper(this.state.category);
+    let usePre = categoryBudget1.categoryBudgetUsed();
+
+    console.log('THE AMOUNT BEFORE', usePre);
+    console.log('PRE', preThresh);
     let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
     let { resp, error } = await API.build().authenticated().post({
         //enter endpoint once configured
@@ -94,6 +103,8 @@ export default class NewTransaction extends React.Component {
         }
       })
       console.log('UPPPPPPPPPPPPPPPPPPPPPPPPPPAAADDDDDDDDDDDDDDDDDD')
+
+
       if (error) {
         Alert.alert(
           'Whoops!',
@@ -109,6 +120,47 @@ export default class NewTransaction extends React.Component {
         }
         this.props.navigation.goBack()
       }
+      // let postThresh = notifHelper.calculateSingleThreshold(this.state.category)
+      // console.log('POST', postThresh);
+      let categoryBudget2 = new CategoryHelper(this.state.category);
+      let usePost = categoryBudget2.categoryBudgetUsed();
+      let totalBuj = categoryBudget2.categoryBudgetAmount();
+      let amt = this.state.amount
+      usePost=parseInt(usePost)+parseInt(amt);
+      //console.log('THE AMOUNT AFTER', usePost);
+      let newRat = 0;
+      let oldRat = categoryBudget2.categoryBudgetPercentage();
+      if (usePost > 0) {
+        newRat = (usePost / totalBuj)
+      }
+      oldRat=parseInt(oldRat)/100;
+
+      for (var i = notifHelper.getThreshHolds().length-1; i >=0 ; i--) {
+        if(newRat >= 1){
+          Alert.alert(
+            'Full Budget Limit Reached',
+            'You have exceeded your budget limitation by ' + (newRat-1)*100 + '% in your ' + this.state.category.name + ' Category!',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
+        }
+        if (newRat >= notifHelper.getThreshHolds()[i] && oldRat < notifHelper.getThreshHolds()[i]){
+          let pc = notifHelper.getThreshHolds()[i];
+          //console.log("SHOW A NOTIFICATION-THRESHOLD REACHED");
+          Alert.alert(
+            'Budget Threshold Reached',
+            'You have reached ' + notifHelper.getThreshHolds()[i]*100 + '% in your ' + this.state.category.name + ' Category!',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
+        }
+      }
+
+
   }
 
   //Helper classes to receive selected Category/Budget
