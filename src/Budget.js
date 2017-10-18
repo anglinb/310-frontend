@@ -45,7 +45,7 @@ export default class Budget extends React.Component {
 
   async editButtonPress(){
     console.log('EditingBudget')
-    this.props.navigation.navigate('EditBudget', { budget: this.state.budget })
+    this.props.navigation.navigate('EditBudget', { budget: this.state.budget,  updateBudget: this.updateBudget })
   }
 
   async analyticsButtonPress() {
