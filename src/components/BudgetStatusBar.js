@@ -91,7 +91,7 @@ export class BudgetStatusBarCategory extends React.Component {
     return (
       <BudgetStatusBar
         style={{padding: 10}}
-        percentage={categoryPercentage}
+        percentageComplete={categoryPercentage}
         leftLabel={this.props.category.name}
         rightLabel={String(amountSpent)+ '/' + this.props.category.amount}
       />
