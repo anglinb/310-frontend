@@ -32,6 +32,8 @@ export default class NotificationSettings extends React.Component {
       daily: false,
       weekly: true,
       monthly: false,
+      thresholds: [],
+      frequency: '',
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -53,14 +55,90 @@ export default class NotificationSettings extends React.Component {
     //navigate back a page
     this.props.navigation.goBack()
   }
-  async yButtonPress() {
-    //PUT call to update the notifications
 
-    //navigate back to Account Settings
-    this.props.navigation.navigate('AccountSettings')
+  async yButtonPress() {
+    if(this.state.fifty == true) this.state.thresholds.push(50)
+    if(this.state.sixty == true) this.state.thresholds.push(60)
+    if(this.state.seventy == true) this.state.thresholds.push(70)
+    if(this.state.eighty == true) this.state.thresholds.push(80)
+    if(this.state.ninety == true) this.state.thresholds.push(90)
+    if(this.state.hundred == true) this.state.thresholds.push(100)
+
+    if(this.state.daily == true) this.state.frequency='DAILY'
+    else if(this.state.weekly == true) this.state.frequency='WEEKLY'
+    else this.state.frequency='MONTHLY'
+
+    let { resp, error } = await API.build().authenticated().put({
+        endpoint: `/self/notifications`,
+        body: {
+          thresholds: this.state.thresholds,
+          frequency: this.state.frequency
+        }
+      })
+      if (error) {
+        Alert.alert(
+          'Whoops!',
+          error.message,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        )
+      } else {
+        console.log("success")
+        console.log(resp)
+        //navigate back a page
+        this.props.navigation.goBack()
+      }
+  }
+
+  async componentDidMount() {
+    console.log('ljdsfjkldfsjdfklsdsjkl')
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/self/notifications'
+    })
+
+    if (error) {
+      console.log('EEREROE$OIRJOFIJOFJELWIJFOIEWJOIFHWEOIH', error)
+    }
+
+    // r = {
+    //   thresholds: [60, 90],
+    //   frequency: 'MONTHLY',
+    // }
+
+    let mapping = {
+      fifty: 50,
+      sixty: 60,
+      seventy: 70,
+      eighty: 80,
+      ninety: 90,
+      hundred: 100
+    }
+
+    let updatedState = {
+      daily: false,
+      weekly: false,
+      monthly: false,
+    }
+
+    Object.keys(mapping).forEach((key) => {
+      if (resp.thresholds.includes(mapping[key])) {
+        updatedState[key] = true
+      } else {
+        updatedState[key] = false
+      }
+    })
+
+    if (resp.frequency === 'MONTHLY') updatedState['monthly'] = true
+    if (resp.frequency === 'WEEKLY') updatedState['weekly'] = true
+    if (resp.frequency === 'DAILY') updatedState['daily'] = true
+    console.log('UPDATED STATE', updatedState)
+    this.setState(updatedState)
   }
 
   render() {
+
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
@@ -120,21 +198,21 @@ export default class NotificationSettings extends React.Component {
             <View style={styles.leftRight}>
               <Text style={styles.headerText}>{`Daily`}</Text>
               <Switch
-                onValueChange={(value) => this.setState({daily: value})}
+                onValueChange={(value) => this.setState({daily: value, weekly: false, monthly: false})}
                 value={this.state.daily}
                 onTintColor={config.lightGreen}/>
               </View>
             <View style={styles.leftRight}>
               <Text style={styles.headerText}>{`Weekly`}</Text>
               <Switch
-                onValueChange={(value) => this.setState({weekly: value})}
+                onValueChange={(value) => this.setState({weekly: value, daily: false, monthly: false})}
                 value={this.state.weekly}
                 onTintColor={config.lightGreen}/>
               </View>
             <View style={styles.leftRight}>
               <Text style={styles.headerText}>{`Monthly`}</Text>
               <Switch
-                onValueChange={(value) => this.setState({monthly: value})}
+                onValueChange={(value) => this.setState({monthly: value, daily: false, weekly: false})}
                 value={this.state.monthly}
                 onTintColor={config.lightGreen}/>
               </View>
