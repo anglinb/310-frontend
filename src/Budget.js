@@ -71,12 +71,12 @@ export default class Budget extends React.Component {
   }
 
   componentDidMount() {
-    
-     
+
+
     // throw "ERROR"
     console.log('dkkkkkkkkkkkdkdkdklsfjjlsdj;flj;slajfepowihjafopehwpaoifihewopaihfepoiwhafpoi')
     this.updateBudget()
-    let notifHelper = new NotificationsHelper({ buget: this.state.budget })
+    let notifHelper = new NotificationsHelper({ budget: this.state.budget })
     notifHelper.calculateThresholds()
   }
 

@@ -41,6 +41,10 @@ export default class BudgetsPage extends React.Component {
       endpoint: '/budgets'
     })
 
+    if (error) {
+      console.log('EEREROE$OIRJOFIJOFJELWIJFOIEWJOIFHWEOIH', error)
+    }
+
     const budgetsList = resp.map((obj) => {
       obj.key = obj.name
       return obj;
