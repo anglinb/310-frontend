@@ -12,6 +12,9 @@ export default class TransactionRow extends React.Component {
   render() {
     let currDate = new Date(this.props.transaction.timestamp)
     let dateString = currDate.getMonth() + "/" + currDate.getDate()
+    if(this.props.transaction.timestamp == null) {
+      dateString = this.props.date
+    }
     return (
 
       <View style={{height:30, flexDirection:'row'}}>
