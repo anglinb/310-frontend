@@ -19,26 +19,47 @@ export default class BudgetStatusBar extends React.Component {
   render() {
     let percentageComplete = this.props.percentageComplete || 0
     //console.log('PERCENTAGE COMPLETE: ', percentageComplete)
-    let indicatorWidth = { flex: percentageComplete }
-    let indicatorSpacerWidth = { flex: 100 - percentageComplete }
+    if(percentageComplete == 0){
+      let indicatorSpacerWidth = { flex: 100 }
 
-    // let indicatorWidth = { flex: 70 }
-    // let indicatorSpacerWidth = { flex: 30 }
-    return (
-      <View style={{ padding: 10}}>
-        <View style={styles.leftRight}>
-          <Text style={styles.labelText}>{this.props.leftLabel}</Text>
-          <Text style={styles.labelText}>{this.props.rightLabel}</Text>
-        </View>
-        <View ref={`someView`}>
-          <View style={StyleSheet.flatten([styles.bar, styles.darkBar])}></View>
-          <View style={StyleSheet.flatten([styles.bar, {flexDirection: 'row', marginTop: -20 }])}>
-            <View style={StyleSheet.flatten([styles.indicatorBar, indicatorWidth])}></View>
-            <View style={StyleSheet.flatten([styles.indactorSpacer, indicatorSpacerWidth])}></View>
+      return (
+        <View style={{ padding: 10}}>
+          <View style={styles.leftRight}>
+            <Text style={styles.labelText}>{this.props.leftLabel}</Text>
+            <Text style={styles.labelText}>{this.props.rightLabel}</Text>
+          </View>
+          <View ref={`someView`}>
+            <View style={StyleSheet.flatten([styles.bar, styles.darkBar])}></View>
+            <View style={StyleSheet.flatten([styles.bar, {flexDirection: 'row', marginTop: -20 }])}>
+              <View style={StyleSheet.flatten([styles.indactorSpacer, indicatorSpacerWidth])}></View>
+            </View>
           </View>
         </View>
-      </View>
-    )
+      )
+    }
+    else{
+      let indicatorWidth = { flex: percentageComplete }
+      let indicatorSpacerWidth = { flex: 100 - percentageComplete }
+
+      // let indicatorWidth = { flex: 70 }
+      // let indicatorSpacerWidth = { flex: 30 }
+      return (
+        <View style={{ padding: 10}}>
+          <View style={styles.leftRight}>
+            <Text style={styles.labelText}>{this.props.leftLabel}</Text>
+            <Text style={styles.labelText}>{this.props.rightLabel}</Text>
+          </View>
+          <View ref={`someView`}>
+            <View style={StyleSheet.flatten([styles.bar, styles.darkBar])}></View>
+            <View style={StyleSheet.flatten([styles.bar, {flexDirection: 'row', marginTop: -20 }])}>
+              <View style={StyleSheet.flatten([styles.indicatorBar, indicatorWidth])}></View>
+              <View style={StyleSheet.flatten([styles.indactorSpacer, indicatorSpacerWidth])}></View>
+            </View>
+          </View>
+        </View>
+
+      )
+    }
   }
 }
 

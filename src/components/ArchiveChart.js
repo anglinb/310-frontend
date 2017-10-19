@@ -4,7 +4,8 @@ import {
   Button,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  ScrollView
 } from 'react-native';
 
 import Container from '../components/Container'
@@ -43,8 +44,9 @@ export default class ArchiveChart extends React.Component {
       <Container>
         <View>
           <Text style={styles.headerText}>{name}</Text>
+          <Text style={styles.dirText}>{'Click on the desired budget to see the transactions from that category.'}</Text>
         </View>
-        <View>{ categoryNames }</View>
+        <ScrollView>{ categoryNames }</ScrollView>
       </Container>
     )
 
@@ -59,15 +61,25 @@ export default class ArchiveChart extends React.Component {
 
 const styles = StyleSheet.create({
   headerText: {
-    color: config.textGreen,
+    color: config.darkerGreen,
     fontSize: 25,
     fontWeight: '500',
     padding:0
   },
+  dirText: {
+    color: config.textGreen,
+    fontSize: 14,
+    fontWeight: '300',
+    padding:0,
+    marginTop: 10,
+    marginBottom: 30,
+  },
   categoryText: {
     fontSize: 20,
     fontWeight: '400',
-    padding:0
+    padding:0,
+    marginTop: 10,
+    marginBottom: 10,
   },
   middle: {
     padding: 20,

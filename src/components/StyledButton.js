@@ -18,20 +18,22 @@ export default class StyledButton extends React.Component {
   }
 
   render() {
-    return (
-      <TouchableHighlight onPress={this.props.onPress}>
-        <View>
-          <LinearGradient
-            colors={config.greenGradient}
-            style={StyleSheet.flatten([buttonStyles.gradient, this.props.style])}>
-            <Text
-              style={buttonStyles.text}>
-              { this.props.title }
-            </Text>
-          </LinearGradient>
-        </View>
-      </TouchableHighlight>
-    )
+      return (
+        <TouchableHighlight onPress={this.props.onPress}>
+          <View>
+            <LinearGradient
+              colors={config.greenGradient}
+              style={StyleSheet.flatten([buttonStyles.gradient, this.props.style])}>
+              <Text
+                style={buttonStyles.text}>
+                { this.props.title }
+              </Text>
+            </LinearGradient>
+          </View>
+        </TouchableHighlight>
+      )
+
+
   }
 }
 

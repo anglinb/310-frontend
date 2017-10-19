@@ -19,6 +19,8 @@ import NotificationsHelper from './lib/NotificationsHelper'
 import config from './config'
 import ControlBanner from './components/ControlBanner'
 import TransactionRow from './components/TransactionRow'
+import StyledButton from './components/StyledButton'
+
 export default class Budget extends React.Component {
 
    constructor(props) {
@@ -127,9 +129,17 @@ export default class Budget extends React.Component {
           <View>
             {(categories)?categories:null}
           </View>
-          <View style={{flexDirection: 'row', left:35}}>
-            <Button onPress={this.analyticsButtonPress} title={`Budget Breakdown`}/><Text>          </Text>
-            <Button onPress={this.archiveButtonPress} title={`History`} />
+          <View style={styles.leftRight}>
+            <StyledButton
+              style={{marginTop: 5, width: 148}}
+              title={`Breakdown`}
+              onPress={this.analyticsButtonPress}
+              />
+            <StyledButton
+              style={{marginTop: 5, width: 148}}
+              title={`History`}
+              onPress={this.archiveButtonPress}
+              />
           </View>
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>
           <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Recent Transactions`}</Text>

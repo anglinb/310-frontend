@@ -27,9 +27,9 @@ export default class Analytics extends React.Component {
   render() {
     return (
      <Container style={styles.middle}>
-      <View>
-      <AnalyticsChart
-        budget={this.state.budget}/>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <AnalyticsChart
+          budget={this.state.budget}/>
       </View>
       </Container>
    )

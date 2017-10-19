@@ -61,8 +61,8 @@ export default class CategoryHistory extends React.Component {
     return(
       <Container>
         <View style={{padding:10}}/>
-        <View style={{flexDirection:'row', justifyContent: 'flex-start'}}>
-          <Text style={styles.title}>{budgetName} | </Text>
+        <View>
+          <Text style={styles.title}>{budgetName} </Text>
           <Text style={styles.subtitle}>{categoryName}</Text>
         </View>
         <ScrollView>
@@ -116,13 +116,13 @@ export default class CategoryHistory extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
+  subtitle: {
     color: config.textGreen,
     fontSize: 20,
     fontWeight: '500',
     padding:0
   },
-  subtitle: {
+  title: {
     color: config.darkerGreen,
     fontSize: 20,
     fontWeight: '500',
