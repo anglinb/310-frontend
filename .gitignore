@@ -1,3 +1,7 @@
 node_modules/
 .expo/
 npm-debug.*
+
+# Calabash iOS
+#
+ios/calabash.framework/
