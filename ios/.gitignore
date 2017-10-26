@@ -1,2 +1,5 @@
 Pods/**
 Podfile.lock
+screenshot*
+.irb-history
+calabash.framework
