@@ -2,9 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>EXPO_RUNTIME_VERSION</key>
-	<string>1.20.5</string>
-	<key>developmentUrl</key>
-	<string>exp180c06685a3e45bca9f3009dea6dadfe://zj-5uu.anglinb.310-frontend.exp.direct:80</string>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>B56386401DB9693800A0598C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

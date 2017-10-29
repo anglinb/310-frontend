@@ -1,6 +1,6 @@
 def get_first_element_with_label(arr, match)
   arr.each do |element|
-    if element["label"].match(match) 
+    if element["label"].match(match)
       return element
     end
   end
@@ -16,6 +16,11 @@ Given(/^the app has launched$/) do
     get_first_element_with_label(query("RCTView"), /^In progress Downloading/).nil?
   end
   sleep 1.5
+  # touch("RCTText marked:'Get Started'")
+  # sleep 1
+  # touch("RCTTextField index:0")
+  # sleep 1.5
+  # keyboard_enter_text("hello")
 end
 
 Then(/^I should see '(.*)'$/) do |expected_mark|
