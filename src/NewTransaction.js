@@ -82,6 +82,18 @@ export default class NewTransaction extends React.Component {
       )
       return;
     }
+    if(this.state.amount < 0) {
+      Alert.alert(
+        'Bad Request',
+        'Amount is negative',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+
     let notifHelper = new NotificationsHelper({ budget: this.state.budget })
     let preThresh = notifHelper.calculateSingleThreshold(this.state.category)
     let categoryBudget1 = new CategoryHelper(this.state.category);
@@ -189,7 +201,7 @@ export default class NewTransaction extends React.Component {
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <ScrollView>
+        <ScrollView accessible={true} accessibilityLabel={'transaction-entry-container'}>
           <View style={{padding: 10}}>
             <TransactionEntry budget= {this.state.budget} makeTransaction={this.makeTransactionFunc}/>
           </View>
