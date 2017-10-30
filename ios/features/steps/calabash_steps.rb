@@ -26,15 +26,24 @@ Then("I press back") do
   touch "* marked:'header-back'"
 end
 
+Then("I scroll custom scroll view up") do
+  scroll("RCTCustomScrollView index:0", :up)
+end
+
+Then("I scroll view up") do
+  scroll("*", :up)
+end
+
 Then("I scroll view down") do
   scroll("*", :down)
 end
+
 
 Given(/^the user '(.*)' is reset$/) do |username|
   uri = URI.parse("http://localhost:3000/_debug/user/reset")
 
   header = {'Content-Type': 'application/json'}
-  user = { username: username } 
+  user = { username: username }
 
   # Create the HTTP objects
   http = Net::HTTP.new(uri.host, uri.port)
