@@ -2,7 +2,7 @@ Feature: Session
 
 Scenario: Create Budget
   Given the app has launched
-  Then I should see "+ Add a New Budget"
+  Then I wait to see "+ Add a New Budget"
   And I touch "+ Add a New Budget"
   And I touch "budget-name"
   And enter in text box "School Budget"
@@ -14,10 +14,10 @@ Scenario: Create Budget
   And I scroll view down
   Then I wait for 1 seconds
   Then I wait to see "hamburger"
-  Then I touch view with label "hamburger"
+  Then I touch image view with label "hamburger"
   Then I wait to see "Budgets"
   Then I touch "Budgets"
   Then I wait for 1 seconds
   Then I scroll view down
   Then I wait for 1 seconds
-  Then I should see "School Budget"
+  Then I should see " School Budget"

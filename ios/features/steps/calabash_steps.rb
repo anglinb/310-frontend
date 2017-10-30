@@ -2,11 +2,14 @@ Then("enter in text box {string}") do |string|
   keyboard_enter_text(string)
 end
 
+
 Then("I touch view with label {string}") do |string|
-  touch("RCTImageView marked:'#{string}' index:1")
+  touch("view marked:'#{string}' index:1")
 end
 
-
+Then("I touch image view with label {string}") do |string|
+  touch("RCTImageView marked:'#{string}' index:1")
+end
 
 Then("I touch item {string} of picker number {int}") do |string, int|
 
