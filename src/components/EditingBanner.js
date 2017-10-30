@@ -20,14 +20,14 @@ export default class EditingBanner extends React.Component {
     return (
       <View>
         <View style={StyleSheet.flatten([styles.leftRight, {backgroundColor: config.lightGreen}])}>
-          <TouchableHighlight onPress={this.props.xButtonPress}>
+          <TouchableHighlight onPress={this.props.xButtonPress} accessible={true} accessibilityLabel={'editing-cancel'}>
             <Image
               style={{width: 20, height: 20, alignSelf: 'center'}}
               source={require('../assets/x.png')}
               />
           </TouchableHighlight>
           <Text style={styles.headerText}>{ this.props.header }</Text>
-          <TouchableHighlight onPress={this.props.yButtonPress}>
+          <TouchableHighlight onPress={this.props.yButtonPress} accessible={true} accessibilityLabel={'checkmark'}>
             <Image
               style={{width: 20, height: 20, alignSelf: 'center'}}
               source={require('../assets/checkmark.png')}
