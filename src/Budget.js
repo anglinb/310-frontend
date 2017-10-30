@@ -113,7 +113,7 @@ export default class Budget extends React.Component {
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
           />
-        <ScrollView>
+        <ScrollView accessible={true} accessibilityLabel={'budget-scroll'}>
           <View style={styles.leftRight}>
             <Text style={styles.headerText}>{this.state.budget ? this.state.budget.name : `Loading...`}</Text>
             <Button onPress={this.editButtonPress} title={`Edit`} />

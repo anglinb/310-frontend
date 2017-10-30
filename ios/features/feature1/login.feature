@@ -18,6 +18,22 @@ Scenario: New User Scenario
   Then I touch "Sign Out"
   Then I wait for 1 seconds
 
+Scenario: Reset Password
+  Given the app has launched
+  Then I should see "Get Started"
+  Then I touch "Get Started"
+  Then I wait for .5 second
+  Then I touch "Change Password"
+  Then I wait for .5 second
+  Then I touch text field number 1
+  Then enter in text box "falseemail"
+  Then I touch "checkmark"
+  Then I touch "OK"
+  Then I clear input field number 1
+  Then enter in text box "agga140@usc.edu"
+  Then I touch "checkmark"
+  Then I touch "editing-cancel"
+
 Scenario: Previous User Scenario
   Given the app has launched
   Then I should see "Get Started"
