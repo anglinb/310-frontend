@@ -73,13 +73,16 @@ export default class NewTransaction extends React.Component {
         <View style={{padding: 10}}>
           <StyledTextInput
             labelText={'Transaction Name'}
-            onChangeText={(name) => this.handleChangeText(name, "name")} />
+            onChangeText={(name) => this.handleChangeText(name, "name")}
+            accessible={true} accessibilityLabel={'name-transaction'} />
           <StyledTextInput
               labelText={`Description`}
-              onChangeText={(description) => this.handleChangeText(description, "description")} />
+              onChangeText={(description) => this.handleChangeText(description, "description")}
+              accessible={true} accessibilityLabel={'description-transaction'}/>
           <StyledTextInput
               labelText={`Amount`}
-              onChangeText={(amount) => this.handleChangeText(amount, "amount")} />
+              onChangeText={(amount) => this.handleChangeText(amount, "amount")}
+              accessible={true} accessibilityLabel={'amount-transaction'}/>
           <StyledPicker
               labelText={`Budget`}
               objects={curr_budgets}

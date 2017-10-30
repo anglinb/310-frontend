@@ -28,7 +28,7 @@ export default class ControlBanner extends React.Component {
         <Image source={require('../assets/Logo.png')}
           style={{width: 60, height: 20, alignSelf: 'center'}}/>
         <TouchableHighlight onPress={this.props.transactionButtonPress}>
-          <Image
+          <Image accessible={true} accessibilityLabel={'add-transaction'}
             style={{width: 30, height: 30, alignSelf: 'center'}}
             source={require('../assets/transaction.png')}
           />
