@@ -19,7 +19,7 @@ export default class TransactionRow extends React.Component {
 
       <View style={{height:30, flexDirection:'row'}}>
         <Text style={{flex: 1}}> {dateString} </Text>
-        <Text style={{flex: 3}}> {this.props.transaction.name} </Text>
+        <Text style={{flex: 3}}>{this.props.transaction.name}</Text>
         <Text style={{flex: 1}}> -${this.props.transaction.amount} </Text>
       </View>
     )
