@@ -86,3 +86,25 @@ Scenario: Create Budget
   Then I scroll view down
   Then I wait for 2 seconds
   Then I should see "Weekly Costs"
+
+Scenario: Create new category
+  Given the user 'banglin@usc.edu' is reset 
+  Given the app has launched
+  Then I wait to see "Personal Expenses"
+  Then I wait to see "budget-widget"
+  And I touch "budget-widget"
+  Then I wait to see "budget-edit"
+  And I touch "budget-edit"
+  Then I wait to see "+ New Category"
+  And I touch "+ New Category"
+  Then I touch text field number 1
+  Then enter in text box "Clothing"
+  Then I touch text field number 2
+  Then enter in text box "51"
+  Then I touch view with label "checkmark"
+  Then I wait to see "Edit Clothing"
+  Then I wait to see "editing-cancel"
+  Then I wait for 1 seconds
+  Then I touch "editing-cancel"
+  Then I scroll view down
+  Then I wait to see "Clothing"

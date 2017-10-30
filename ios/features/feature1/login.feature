@@ -32,6 +32,7 @@ Scenario: Reset Password
   Then I clear input field number 1
   Then enter in text box "agga140@usc.edu"
   Then I touch "checkmark"
+  Then I wait to see "editing-cancel"
   Then I touch "editing-cancel"
 
 Scenario: Previous User Scenario

@@ -161,6 +161,8 @@ export default class EditBudget extends React.Component {
               <StyledButton
                   style={{marginTop: 10}}
                   title={`+ New Category`}
+                  accessible={true}
+                  accessibilityLabel={'new-category'} 
                   onPress={this.newCategoryButtonPress}
                   />
               <Text style={styles.headerText}>{`Reset Options:`}</Text>

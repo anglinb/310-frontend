@@ -25,7 +25,7 @@ export default class BudgetWidget extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this._onPressBudget}>
+      <TouchableOpacity onPress={this._onPressBudget} accessible={true} accessibilityLabel={'budget-widget'} >
         <View style={styles.budgetView}>
           <View style={styles.titleSection}>
             <Text style={styles.title}>{this.props.budget.name}</Text>
