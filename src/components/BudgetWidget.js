@@ -28,7 +28,7 @@ export default class BudgetWidget extends React.Component {
       <TouchableOpacity onPress={this._onPressBudget}>
         <View style={styles.budgetView}>
           <View style={styles.titleSection}>
-            <Text style={styles.title}> {this.props.budget.name}</Text>
+            <Text style={styles.title}>{this.props.budget.name}</Text>
           </View>
             <BudgetBanner
               budget={this.props.budget}
