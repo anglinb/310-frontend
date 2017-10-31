@@ -172,6 +172,26 @@ Feature: Session
 #   Then I touch "Breakdown"
 #   Then I wait for 1 second
 #   Then I should see "Clothing: $51"
+
+Scenario: Delete Category
+  Given the user 'agga140@usc.edu' is reset
+  Given the app has launched
+  Then I wait to see "Personal Expenses"
+  Then I wait to see "budget-widget"
+  And I touch "budget-widget"
+  Then I wait to see "budget-edit"
+  And I touch "budget-edit"
+  Then I wait to see "Edit Food and Groceries"
+  And I touch "Edit Food and Groceries"
+  Then I wait to see "Delete Category"
+  Then I touch "Delete Category"
+  Then I wait for 1.5 seconds
+  Then I should not see "Edit Food and Groceries"
+  Then I wait to see "editing-cancel"
+  Then I touch "editing-cancel"
+  Then I wait for 1.5 seconds
+  Then I should not see "Food and Groceries"
+
 #
 #
 # Scenario: Check Default Categories
@@ -319,35 +339,35 @@ Feature: Session
 #     Then I press back
 #     Then I wait for 1 second
 
-Scenario: Transaction Limit Exceeded
-    Given the user 'agga140@usc.edu' is reset
-    Given the app has launched
-    Then I wait to see "Personal Expenses"
-    Then I touch "Personal Expenses"
-    Then I wait to see "add-transaction"
-    Then I wait for 1.5 second
-    Then I touch view with label "add-transaction"
-    Then I wait to see "name-transaction"
-    And I touch "name-transaction"
-    And enter in text box "Monthly Dues"
-    And I touch "description-transaction"
-    And enter in text box "for my apartment"
-    And I touch "amount-transaction"
-    And enter in text box "1300"
-    Then I touch done
-    Then I touch item "Personal Expenses" of picker number 1
-    Then I wait for 1 second
-    And I scroll view down
-    Then I wait to see "Rent"
-    Then I touch item "Rent" of picker number 2
-    Then I wait for 2 seconds
-    And I touch "checkmark"
-    Then I wait for 1 second
-    Then I touch "OK"
-    Then I wait for 1 second
-    Then I touch "OK"
-    Then I scroll view up
-    Then I wait to see "$-75/$1225"
-    And I scroll view down
-    Then I wait for 2 second
-    Then I wait to see "-300/1000"
+# Scenario: Transaction Limit Exceeded
+#     Given the user 'agga140@usc.edu' is reset
+#     Given the app has launched
+#     Then I wait to see "Personal Expenses"
+#     Then I touch "Personal Expenses"
+#     Then I wait to see "add-transaction"
+#     Then I wait for 1.5 second
+#     Then I touch view with label "add-transaction"
+#     Then I wait to see "name-transaction"
+#     And I touch "name-transaction"
+#     And enter in text box "Monthly Dues"
+#     And I touch "description-transaction"
+#     And enter in text box "for my apartment"
+#     And I touch "amount-transaction"
+#     And enter in text box "1300"
+#     Then I touch done
+#     Then I touch item "Personal Expenses" of picker number 1
+#     Then I wait for 1 second
+#     And I scroll view down
+#     Then I wait to see "Rent"
+#     Then I touch item "Rent" of picker number 2
+#     Then I wait for 2 seconds
+#     And I touch "checkmark"
+#     Then I wait for 1 second
+#     Then I touch "OK"
+#     Then I wait for 1 second
+#     Then I touch "OK"
+#     Then I scroll view up
+#     Then I wait to see "$-75/$1225"
+#     And I scroll view down
+#     Then I wait for 2 second
+#     Then I wait to see "-300/1000"
