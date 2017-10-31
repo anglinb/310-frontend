@@ -3,8 +3,9 @@ Feature: Login
 Scenario: New User Scenario
   Given the app has launched
   Then I wait to see "Get Started"
+  Then I wait for 2 seconds
   Then I touch "Get Started"
-  Then I wait for .5 second
+  Then I wait for 2 seconds
   Then I touch text field number 1
   Then enter in text box "cooneys@usc.edu"
   Then I touch text field number 2
@@ -21,10 +22,11 @@ Scenario: New User Scenario
 Scenario: Reset Password
   Given the app has launched
   Then I wait to see "Get Started"
+  Then I wait for 2 seconds
   Then I touch "Get Started"
-  Then I wait for .5 second
+  Then I wait for 2 seconds
   Then I touch "Change Password"
-  Then I wait for .5 second
+  Then I wait for 2 seconds
   Then I touch text field number 1
   Then enter in text box "falseemail"
   Then I touch "checkmark"
@@ -38,8 +40,9 @@ Scenario: Reset Password
 Scenario: Previous User Scenario
   Given the app has launched
   Then I wait to see "Get Started"
+  Then I wait for 2 seconds
   Then I touch "Get Started"
-  Then I wait for .5 second
+  Then I wait for 2 seconds
   Then I touch text field number 1
   Then enter in text box "agga140@usc.edu"
   Then I touch text field number 2
@@ -49,7 +52,8 @@ Scenario: Previous User Scenario
   Then I touch "OK"
   Then I touch text field number 2
   Then I clear input field number 2
-  Then enter in text box "swaggerrocks!"
+  Then enter in text box "12345"
   Then I touch "Login/Sign Up"
   Then I wait for 5 seconds
   Then I should see "+ Add a New Budget"
+

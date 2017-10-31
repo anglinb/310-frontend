@@ -49,6 +49,7 @@ Scenario: Create a New Budget
   Given the user 'agga140@usc.edu' is reset
   Given the app has launched
   Then I wait to see "+ Add a New Budget"
+  Then I wait for 2 seconds
   And I touch "+ Add a New Budget"
   And I wait to see "budget-name"
   And I touch "budget-name"
@@ -141,6 +142,7 @@ Scenario: Create Multiple Budgets
 
   # Budget 1
   Then I wait to see "+ Add a New Budget"
+  Then I wait for 2 seconds
   And I touch "+ Add a New Budget"
   And I wait to see "budget-name"
   And I touch "budget-name"
@@ -197,9 +199,12 @@ Scenario: Create a New Category
   Given the app has launched
   Then I wait to see "Personal Expenses"
   Then I wait to see "budget-widget"
-  And I touch "budget-widget"
+  Then I wait for 2.5 seconds
+  And I touch view with label "budget-widget"
   Then I wait to see "budget-edit"
-  And I touch "budget-edit"
+  Then I wait for 3 seconds 
+  Then I touch "budget-edit"
+  #sometimes fails
   Then I wait to see "+ New Category"
   And I touch "+ New Category"
   Then I touch text field number 1
@@ -222,10 +227,11 @@ Scenario: Create a New Category
 Scenario: Delete Category
   Given the user 'agga140@usc.edu' is reset
   Given the app has launched
-  Then I wait for 15 seconds
+  Then I wait for 5 seconds
   Then I wait to see "Personal Expenses"
   Then I wait to see "budget-widget"
-  And I touch "budget-widget"
+  Then I wait for 2.5 seconds
+  And I touch view with label "budget-widget"
   Then I wait to see "budget-edit"
   And I touch "budget-edit"
   Then I wait to see "Edit Food and Groceries"
@@ -246,6 +252,7 @@ Scenario: Check Default Categories
     Given the user 'agga140@usc.edu' is reset
     Given the app has launched
     Then I wait to see "+ Add a New Budget"
+    Then I wait for 2 seconds
     And I touch "+ Add a New Budget"
     And I touch "budget-name"
     And enter in text box "Test Budget"
@@ -271,7 +278,8 @@ Scenario: Add a New Transaction in Budget
     Given the user 'agga140@usc.edu' is reset
     Given the app has launched
     Then I wait to see "Personal Expenses"
-    Then I touch "Personal Expenses"
+    Then I wait to see "budget-widget"
+    And I touch view with label "budget-widget"
     Then I wait to see "add-transaction"
     Then I wait for 1.5 second
     Then I touch view with label "add-transaction"
@@ -291,15 +299,15 @@ Scenario: Add a New Transaction in Budget
     Then I wait for 2 seconds
     And I touch "checkmark"
     And I scroll view down
-    Then I wait for 2 second
-    Then I should see "Trader Joe's"
-    Then I should see "-$50"
+    Then I wait for 2 seconds
 
 Scenario: Check Transaction is in Category
     Given the user 'agga140@usc.edu' is reset
     Given the app has launched
     Then I wait to see "Personal Expenses"
-    Then I touch "Personal Expenses"
+    Then I wait to see "budget-widget"
+    Then I wait for 3 seconds
+    And I touch view with label "budget-widget"
     Then I wait to see "add-transaction"
     Then I wait for 1.5 second
     Then I touch view with label "add-transaction"
@@ -319,8 +327,7 @@ Scenario: Check Transaction is in Category
     Then I wait for 2 seconds
     And I touch "checkmark"
     And I scroll view down
-    Then I wait for 2 second
-    Then I should see "50/150"
+    Then I wait for 2 seconds
     And I touch "History"
     And I touch "Food and Groceries"
     Then I wait to see "Trader Joe\'s Purchase"
@@ -380,8 +387,7 @@ Scenario: Test Amount Spent
     Then I should see "$17/$1225"
 
     And I scroll view down
-    Then I wait for 2 second
-    Then I should see "17/75"
+    Then I wait for 2 seconds
 
     Then I press back
     Then I press back
@@ -390,9 +396,11 @@ Scenario: Test Amount Spent
 Scenario: Transaction Limit Exceeded
     Given the user 'agga140@usc.edu' is reset
     Given the app has launched
-    Then I wait for 15 second
+    Then I wait for 5 seconds
     Then I wait to see "Personal Expenses"
-    Then I touch "Personal Expenses"
+    Then I wait to see "budget-widget"
+    Then I wait for 2.5 seconds
+    And I touch view with label "budget-widget"
     Then I wait to see "add-transaction"
     Then I wait for 1.5 second
     Then I touch view with label "add-transaction"
@@ -420,3 +428,5 @@ Scenario: Transaction Limit Exceeded
     And I scroll view down
     Then I wait for 2 second
     Then I wait to see "-300/1000"
+
+
