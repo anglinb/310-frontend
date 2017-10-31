@@ -38,6 +38,11 @@ Then("I scroll view down") do
   scroll("*", :down)
 end
 
+Then("I check if date is weekly") do
+  curr_date = Date.parse(Time.now.to_s)
+  curr_date = curr_date + 7
+  macro "I should see \"#{curr_date.strftime("%m/%e").split(" ").join("")}\""
+end
 
 Given(/^the user '(.*)' is reset$/) do |username|
   uri = URI.parse("http://localhost:3000/_debug/user/reset")

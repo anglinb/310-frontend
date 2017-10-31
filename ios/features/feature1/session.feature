@@ -1,4 +1,49 @@
+
+
 Feature: Session
+
+
+Scenario: Change Budget Period
+    Given the user 'agga140@usc.edu' is reset
+    Given the app has launched
+    Then I wait to see "+ Add a New Budget"
+    Then I wait for 1.5 seconds
+    And I touch "+ Add a New Budget"
+    And I wait to see "budget-name"
+    And I touch "budget-name"
+    And enter in text box "Test Budget 1"
+    And I touch "budget-date"
+    Then I touch done
+    Then I touch item "Monthly" of picker number 1
+    Then I wait for 1 second
+    And I touch "checkmark"
+    Then I should see "Test Budget 1"
+    And I scroll view down
+    Then I wait for 1 seconds
+    Then I wait to see "hamburger"
+    Then I touch image view with label "hamburger"
+    Then I wait to see "Budgets"
+    Then I touch "Budgets"
+    Then I wait for 1 seconds
+    Then I scroll view down
+    Then I wait for 1 seconds
+    Then I should see "Test Budget 1"
+    # Given the user 'agga140@usc.edu' is reset
+    # Given the app has launched
+    Then I wait to see "Test Budget 1"
+    And I touch "Test Budget 1"
+    Then I wait to see "budget-edit"
+    And I touch view with label "budget-edit"
+    
+    Then I wait for 2 second
+    Then I scroll view down
+    Then I wait for 2 second
+    Then I touch item "Weekly" of picker number 1
+    Then I wait for 1 second
+    And I touch "checkmark"
+    Then I wait for 1 second
+    Then I check if date is weekly
+
 
 Scenario: Create a New Budget
   Given the user 'agga140@usc.edu' is reset
@@ -173,6 +218,7 @@ Scenario: Create a New Category
   Then I wait for 1 second
   Then I should see "Clothing: $51"
 
+
 Scenario: Delete Category
   Given the user 'agga140@usc.edu' is reset
   Given the app has launched
@@ -192,6 +238,7 @@ Scenario: Delete Category
   Then I touch "editing-cancel"
   Then I wait for 1.5 seconds
   Then I should not see "Food and Groceries"
+
 
 
 
