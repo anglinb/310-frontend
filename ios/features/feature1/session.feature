@@ -260,7 +260,66 @@ Feature: Session
 #     Then I press back
 #     Then I wait for 1 second
 
-Scenario: Test Amount Spent
+# Scenario: Test Amount Spent
+#     Given the user 'agga140@usc.edu' is reset
+#     Given the app has launched
+#     Then I wait to see "Personal Expenses"
+#     Then I touch "Personal Expenses"
+#     Then I wait to see "add-transaction"
+#     Then I wait for 1.5 second
+#     Then I touch view with label "add-transaction"
+#     Then I wait to see "name-transaction"
+#     And I touch "name-transaction"
+#     And enter in text box "Movie Tickets"
+#     And I touch "description-transaction"
+#     And enter in text box "AlphaGo Documentary"
+#     Then I touch done
+#     Then I touch item "Personal Expenses" of picker number 1
+#     Then I wait for 1 second
+#     And I scroll view down
+#     Then I wait to see "Entertainment"
+#     Then I touch item "Entertainment" of picker number 2
+#     Then I wait for 1 second
+#     And I scroll custom scroll view up
+#
+#     # test for error on string
+#     Then I wait for 1 seconds
+#     Then I touch "amount-transaction"
+#     And enter in text box "text instead of a number"
+#     Then I wait for .5 seconds
+#     And I touch "checkmark"
+#     Then I should see "OK"
+#     Then I touch "OK"
+#
+#     # test for error on negative number
+#     Then I clear input field number 3
+#     And enter in text box "-17"
+#     Then I wait for .5 seconds
+#     And I touch "checkmark"
+#     Then I should see "OK"
+#     Then I touch "OK"
+#
+#
+#     # should succeed with positive number
+#     Then I clear input field number 3
+#     And enter in text box "17"
+#     Then I touch done
+#     Then I wait for .5 seconds
+#     And I touch "checkmark"
+#     Then I wait for .5 seconds
+#     And I scroll view up
+#     Then I wait for 1 second
+#     Then I should see "$17/$1225"
+#
+#     And I scroll view down
+#     Then I wait for 2 second
+#     Then I should see "17/75"
+#
+#     Then I press back
+#     Then I press back
+#     Then I wait for 1 second
+
+Scenario: Transaction Limit Exceeded
     Given the user 'agga140@usc.edu' is reset
     Given the app has launched
     Then I wait to see "Personal Expenses"
@@ -270,51 +329,25 @@ Scenario: Test Amount Spent
     Then I touch view with label "add-transaction"
     Then I wait to see "name-transaction"
     And I touch "name-transaction"
-    And enter in text box "Movie Tickets"
+    And enter in text box "Monthly Dues"
     And I touch "description-transaction"
-    And enter in text box "AlphaGo Documentary"
+    And enter in text box "for my apartment"
+    And I touch "amount-transaction"
+    And enter in text box "1300"
     Then I touch done
     Then I touch item "Personal Expenses" of picker number 1
     Then I wait for 1 second
     And I scroll view down
-    Then I wait to see "Entertainment"
-    Then I touch item "Entertainment" of picker number 2
+    Then I wait to see "Rent"
+    Then I touch item "Rent" of picker number 2
+    Then I wait for 2 seconds
+    And I touch "checkmark"
     Then I wait for 1 second
-    And I scroll custom scroll view up
-
-    # test for error on string
-    Then I wait for 1 seconds
-    Then I touch "amount-transaction"
-    And enter in text box "text instead of a number"
-    Then I wait for .5 seconds
-    And I touch "checkmark"
-    Then I should see "OK"
     Then I touch "OK"
-
-    # test for error on negative number
-    Then I clear input field number 3
-    And enter in text box "-17"
-    Then I wait for .5 seconds
-    And I touch "checkmark"
-    Then I should see "OK"
-    Then I touch "OK"
-
-
-    # should succeed with positive number
-    Then I clear input field number 3
-    And enter in text box "17"
-    Then I touch done
-    Then I wait for .5 seconds
-    And I touch "checkmark"
-    Then I wait for .5 seconds
-    And I scroll view up
     Then I wait for 1 second
-    Then I should see "$17/$1225"
-
+    Then I touch "OK"
+    Then I scroll view up
+    Then I wait to see "$-75/$1225"
     And I scroll view down
     Then I wait for 2 second
-    Then I should see "17/75"
-
-    Then I press back
-    Then I press back
-    Then I wait for 1 second
+    Then I wait to see "-300/1000"
