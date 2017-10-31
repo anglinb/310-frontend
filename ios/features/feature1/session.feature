@@ -1,4 +1,45 @@
+
+
 Feature: Session
+
+Scenario: Change Budget Period
+    Given the user 'agga140@usc.edu' is reset
+    Given the app has launched
+    Then I wait to see "+ Add a New Budget"
+    And I touch "+ Add a New Budget"
+    And I wait to see "budget-name"
+    And I touch "budget-name"
+    And enter in text box "Test Budget 1"
+    And I touch "budget-date"
+    Then I touch done
+    Then I touch item "Monthly" of picker number 1
+    Then I wait for 1 second
+    And I touch "checkmark"
+    Then I should see "Test Budget 1"
+    And I scroll view down
+    Then I wait for 1 seconds
+    Then I wait to see "hamburger"
+    Then I touch image view with label "hamburger"
+    Then I wait to see "Budgets"
+    Then I touch "Budgets"
+    Then I wait for 1 seconds
+    Then I scroll view down
+    Then I wait for 1 seconds
+    Then I should see "Test Budget 1"
+    # Given the user 'agga140@usc.edu' is reset
+    # Given the app has launched
+    Then I wait to see "Test Budget 1"
+    And I touch "Test Budget 1"
+    Then I wait to see "budget-edit"
+    # And I touch "budget-edit"
+    # Then I scroll view down
+    # Then I wait for 1 second
+    # Then I touch item "Weekly" of picker number 1
+    # Then I wait for 1 second
+    # And I touch "checkmark"
+    # Then I wait for 1 second
+    # Then I check if date is weekly
+
 
 # Scenario: Create a New Budget
 #   Given the user 'agga140@usc.edu' is reset
@@ -260,61 +301,61 @@ Feature: Session
 #     Then I press back
 #     Then I wait for 1 second
 
-Scenario: Test Amount Spent
-    Given the user 'agga140@usc.edu' is reset
-    Given the app has launched
-    Then I wait to see "Personal Expenses"
-    Then I touch "Personal Expenses"
-    Then I wait to see "add-transaction"
-    Then I wait for 1.5 second
-    Then I touch view with label "add-transaction"
-    Then I wait to see "name-transaction"
-    And I touch "name-transaction"
-    And enter in text box "Movie Tickets"
-    And I touch "description-transaction"
-    And enter in text box "AlphaGo Documentary"
-    Then I touch done
-    Then I touch item "Personal Expenses" of picker number 1
-    Then I wait for 1 second
-    And I scroll view down
-    Then I wait to see "Entertainment"
-    Then I touch item "Entertainment" of picker number 2
-    Then I wait for 1 second
-    And I scroll custom scroll view up
+# Scenario: Test Amount Spent
+#     Given the user 'agga140@usc.edu' is reset
+#     Given the app has launched
+#     Then I wait to see "Personal Expenses"
+#     Then I touch "Personal Expenses"
+#     Then I wait to see "add-transaction"
+#     Then I wait for 1.5 second
+#     Then I touch view with label "add-transaction"
+#     Then I wait to see "name-transaction"
+#     And I touch "name-transaction"
+#     And enter in text box "Movie Tickets"
+#     And I touch "description-transaction"
+#     And enter in text box "AlphaGo Documentary"
+#     Then I touch done
+#     Then I touch item "Personal Expenses" of picker number 1
+#     Then I wait for 1 second
+#     And I scroll view down
+#     Then I wait to see "Entertainment"
+#     Then I touch item "Entertainment" of picker number 2
+#     Then I wait for 1 second
+#     And I scroll custom scroll view up
 
-    # test for error on string
-    Then I wait for 1 seconds
-    Then I touch "amount-transaction"
-    And enter in text box "text instead of a number"
-    Then I wait for .5 seconds
-    And I touch "checkmark"
-    Then I should see "OK"
-    Then I touch "OK"
+#     # test for error on string
+#     Then I wait for 1 seconds
+#     Then I touch "amount-transaction"
+#     And enter in text box "text instead of a number"
+#     Then I wait for .5 seconds
+#     And I touch "checkmark"
+#     Then I should see "OK"
+#     Then I touch "OK"
 
-    # test for error on negative number
-    Then I clear input field number 3
-    And enter in text box "-17"
-    Then I wait for .5 seconds
-    And I touch "checkmark"
-    Then I should see "OK"
-    Then I touch "OK"
+#     # test for error on negative number
+#     Then I clear input field number 3
+#     And enter in text box "-17"
+#     Then I wait for .5 seconds
+#     And I touch "checkmark"
+#     Then I should see "OK"
+#     Then I touch "OK"
 
 
-    # should succeed with positive number
-    Then I clear input field number 3
-    And enter in text box "17"
-    Then I touch done
-    Then I wait for .5 seconds
-    And I touch "checkmark"
-    Then I wait for .5 seconds
-    And I scroll view up
-    Then I wait for 1 second
-    Then I should see "$17/$1225"
+#     # should succeed with positive number
+#     Then I clear input field number 3
+#     And enter in text box "17"
+#     Then I touch done
+#     Then I wait for .5 seconds
+#     And I touch "checkmark"
+#     Then I wait for .5 seconds
+#     And I scroll view up
+#     Then I wait for 1 second
+#     Then I should see "$17/$1225"
 
-    And I scroll view down
-    Then I wait for 2 second
-    Then I should see "17/75"
+#     And I scroll view down
+#     Then I wait for 2 second
+#     Then I should see "17/75"
 
-    Then I press back
-    Then I press back
-    Then I wait for 1 second
+#     Then I press back
+#     Then I press back
+#     Then I wait for 1 second
