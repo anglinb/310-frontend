@@ -100,7 +100,6 @@ export default class NewTransaction extends React.Component {
               onValueChange={this.onValueChange}
                />
 
-
         </View>
     )
   }

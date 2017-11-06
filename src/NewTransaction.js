@@ -22,6 +22,7 @@ import ControlBanner from './components/ControlBanner'
 import TransactionEntry from './components/TransactionEntry'
 import NotificationsHelper from './lib/NotificationsHelper'
 import CategoryHelper from './lib/CategoryHelper'
+import TransactionRow from './components/TransactionRow'
 
 export default class NewTransaction extends React.Component {
 
@@ -33,13 +34,25 @@ export default class NewTransaction extends React.Component {
       category: undefined,
       amount: '',
       budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
+      transactions: [{
+        description: 'test',
+        recurring: false,
+        name: 'name',
+        recurring_days: 0,
+        amount: 10,
+      //  budget: this.state.budget,
+      //  category: this.state.category.slug,
+      }],
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
-
-    this.makeTransactionFunc = this.makeTransactionFunc.bind(this)
+    this.addAnotherTransaction = this.addAnotherTransaction.bind(this)
+    this.validate = this.validate.bind(this)
+    this.renderTransactionEntry = this.renderTransactionEntry.bind(this)
+    this.onValueChange = this.onValueChange.bind(this)
+    this.onValueChangeBudget = this.onValueChangeBudget.bind(this)
 
   }
 
@@ -71,28 +84,8 @@ export default class NewTransaction extends React.Component {
   }
 
   async yButtonPress() {
-    if(this.state.category == undefined || this.state.budget == undefined || this.state.budget.name == "Select One" || this.state.category.name === "Select One") {
-      Alert.alert(
-        'Invalid Request',
-        'Please select a category!',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-      return;
-    }
-    if(this.state.amount < 0) {
-      Alert.alert(
-        'Bad Request',
-        'Amount is negative',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-      return;
-    }
+
+    this.validate()
 
     let notifHelper = new NotificationsHelper({ budget: this.state.budget })
     let preThresh = notifHelper.calculateSingleThreshold(this.state.category)
@@ -175,6 +168,44 @@ export default class NewTransaction extends React.Component {
 
   }
 
+  async componentDidMount() {
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: '/budgets'
+    })
+
+    const budgetsList = resp.map((obj) => {
+      obj.key = obj.name
+      return obj;
+    })
+
+    this.setState({'budgets':budgetsList, 'selectedBudget':undefined})
+  }
+
+  validate() {
+    if(this.state.category == undefined || this.state.budget == undefined || this.state.budget.name == "Select One" || this.state.category.name === "Select One") {
+      Alert.alert(
+        'Invalid Request',
+        'Please select a category!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+    if(this.state.amount < 0) {
+      Alert.alert(
+        'Bad Request',
+        'Amount is negative',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+  }
+
   //Helper classes to receive selected Category/Budget
   async returnBudget(budg) {
     this.setState({budget: budg});
@@ -183,13 +214,112 @@ export default class NewTransaction extends React.Component {
     this.setState({category: cat});
   }
 
-  makeTransactionFunc(key, value) {
-    var local_state = {};
-    local_state[key] = value;
-    this.setState(local_state)
+  addAnotherTransaction() {
+    let transactionObject = {
+      description: this.state.description,
+      recurring: false,
+      name:this.state.name,
+      recurring_days: 0,
+      amount: this.state.amount,
+      budget: this.state.budget,
+      category: this.state.category.slug,
+    }
+
+    let newTransactions = this.state.transactions
+    newTransactions.push(transactionObject)
+
+    this.setState({
+      transactions:newTransactions,
+      description: '',
+      name: '',
+      amount: '',
+      budget: undefined,
+      cateogry: undefined,
+    })
 
   }
+
+  onValueChange(value) {
+
+    this.setState({
+      category:JSON.parse(value)
+    })
+  }
+
+  onValueChangeBudget(value) {
+
+    this.setState({
+      budget:JSON.parse(value)
+    })
+    let parsedValue = JSON.parse(value)
+
+    let selectedBudget = undefined;
+    if (parsedValue.identifier !== 'dummy') {
+      selectedBudget = parsedValue
+    }
+    this.setState({"selectedBudget": selectedBudget})
+  }
+
+  renderTransactionEntry() {
+      let selectOneObject = {"name": "Select One", "identifier":"dummy"}
+      const curr_budgets = this.state.budgets || [selectOneObject]
+
+      let curr_cats = (this.state.selectedBudget) ? this.state.selectedBudget.categories : [selectOneObject]
+      if (curr_cats.length == 0)
+        curr_cats.push(selectOneObject)
+      if(!(curr_cats[0].identifier ==="dummy")) {
+        curr_cats.unshift(selectOneObject)
+      }
+
+      if(!(curr_budgets[0].identifier ==="dummy")) {
+        curr_budgets.unshift(selectOneObject)
+      }
+
+      return (
+          <View style={{padding: 10}}>
+            <StyledTextInput
+              labelText={'Transaction Name'}
+              value={this.state.name}
+              onChangeText={(name) => {this.setState({ name })}}
+              accessible={true} accessibilityLabel={'name-transaction'} />
+            <StyledTextInput
+                labelText={`Description`}
+                value={this.state.description}
+                onChangeText={(description) => {this.setState({ description })}}
+                accessible={true} accessibilityLabel={'description-transaction'}/>
+            <StyledTextInput
+                labelText={`Amount`}
+                value={this.state.amount}
+                onChangeText={(amount) => {this.setState({ amount })}}
+                accessible={true} accessibilityLabel={'amount-transaction'}/>
+            <StyledPicker
+                labelText={`Budget`}
+                objects={curr_budgets}
+                onValueChange={this.onValueChangeBudget}
+                 />
+            <StyledPicker
+                labelText={`Category`}
+                objects={curr_cats}
+                onValueChange={this.onValueChange}
+                 />
+
+          </View>
+      )
+  }
+
+  renderTransactions() {
+    return (
+      <View>
+      {this.state.transactions.map((transaction) => {
+        return <TransactionRow  key={`${transaction.name}${transaction.description}${transaction.amount}`} transaction={transaction}/>
+      })}
+      </View>
+
+    )
+  }
+
   render() {
+
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
@@ -202,8 +332,11 @@ export default class NewTransaction extends React.Component {
           yButtonPress={() => {this.yButtonPress()}}
           />
         <ScrollView accessible={true} accessibilityLabel={'transaction-entry-container'}>
+        <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Added Transactions`}</Text>
+        {this.renderTransactions()}
           <View style={{padding: 10}}>
-            <TransactionEntry budget= {this.state.budget} makeTransaction={this.makeTransactionFunc}/>
+            {this.renderTransactionEntry()}
+            <StyledButton title={`Add Another Transaction`} onPress={this.addAnotherTransaction}/>
           </View>
         </ScrollView>
       </Container>
@@ -212,4 +345,9 @@ export default class NewTransaction extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  headerText: {
+    color: config.veryDarkText,
+    fontSize: 20,
+    fontWeight: '600',
+  },
 });
