@@ -20,7 +20,7 @@ export default class ControlBanner extends React.Component {
     return (
       <View style={StyleSheet.flatten([styles.leftRight, {marginTop: 0, marginBottom: 0}])}>
         <TouchableHighlight onPress={this.props.hamburgerButtonPress}>
-          <Image
+          <Image accessible={true} accessibilityLabel={'hamburger'}
             style={{width: 20, height: 20, alignSelf: 'center'}}
             source={require('../assets/hamburger.png')}
           />
@@ -28,7 +28,7 @@ export default class ControlBanner extends React.Component {
         <Image source={require('../assets/Logo.png')}
           style={{width: 60, height: 20, alignSelf: 'center'}}/>
         <TouchableHighlight onPress={this.props.transactionButtonPress}>
-          <Image
+          <Image accessible={true} accessibilityLabel={'add-transaction'}
             style={{width: 30, height: 30, alignSelf: 'center'}}
             source={require('../assets/transaction.png')}
           />

@@ -90,10 +90,15 @@ export default class NewCategory extends React.Component {
           <StyledTextInput
             labelText={'Category Name'}
             value={this.state.name}
+            accessible={true}
+            accessibilityLabel={'category-name'} 
             onChangeText={(name) => this.setState({name})} />
+
             <StyledTextInput
               labelText={`Budget Amount`}
               value={this.state.budgetAmount}
+              accessible={true}
+              accessibilityLabel={'budget-amount'} 
               onChangeText={(budgetAmount) => this.setState({budgetAmount})} />
         </View>
       </Container>

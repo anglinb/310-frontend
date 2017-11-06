@@ -94,10 +94,12 @@ export default class NewBudget extends React.Component {
           <StyledTextInput
             labelText={'Budget Name'}
             value={this.state.name}
+            accessible={true} accessibilityLabel={'budget-name'}
             onChangeText={(name) => this.setState({name})} />
           <StyledTextInput
             labelText={'Day of Month to Start'}
             value={String(this.state.startDate)}
+            accessible={true} accessibilityLabel={'budget-date'}
             onChangeText={(startDate) => this.setState({startDate})}/>
             <Text style={styles.headerText}>{`Reset Options:`}</Text>
             <Picker
