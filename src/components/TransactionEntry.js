@@ -51,14 +51,20 @@ export default class NewTransaction extends React.Component {
 
   onValueChangeBudget(value) {
     this.props.makeTransaction("budget",JSON.parse(value))
-    this.setState({"selectedBudget":JSON.parse(value)})
+    let parsedValue = JSON.parse(value)
+
+    let selectedBudget = undefined;
+    if (parsedValue.identifier !== 'dummy') {
+      selectedBudget = parsedValue
+    }
+    this.setState({"selectedBudget": selectedBudget})
   }
 
   render() {
     let selectOneObject = {"name": "Select One", "identifier":"dummy"}
     const curr_budgets = this.state.budgets || [selectOneObject]
 
-    let curr_cats = (this.state.selectedBudget)?this.state.selectedBudget.categories:[selectOneObject]
+    let curr_cats = (this.state.selectedBudget) ? this.state.selectedBudget.categories : [selectOneObject]
     if (curr_cats.length == 0)
       curr_cats.push(selectOneObject)
     if(!(curr_cats[0].identifier ==="dummy")) {
