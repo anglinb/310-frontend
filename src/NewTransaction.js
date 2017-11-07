@@ -23,6 +23,7 @@ import TransactionEntry from './components/TransactionEntry'
 import NotificationsHelper from './lib/NotificationsHelper'
 import CategoryHelper from './lib/CategoryHelper'
 import TransactionRow from './components/TransactionRow'
+import MultipleTransactionRow from './components/MultipleTransactionRow'
 
 export default class NewTransaction extends React.Component {
 
@@ -35,13 +36,13 @@ export default class NewTransaction extends React.Component {
       amount: '',
       budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
       transactions: [{
-        description: 'test',
-        recurring: false,
-        name: 'name',
-        recurring_days: 0,
-        amount: 10,
-      //  budget: this.state.budget,
-      //  category: this.state.category.slug,
+        // description: 'test',
+        // recurring: false,
+        // name: 'name',
+        // recurring_days: 0,
+        // amount: 10,
+        // budget: ' ',
+        // category: ' ',
       }],
     }
     this.xButtonPress = this.xButtonPress.bind(this)
@@ -221,8 +222,8 @@ export default class NewTransaction extends React.Component {
       name:this.state.name,
       recurring_days: 0,
       amount: this.state.amount,
-      budget: this.state.budget,
-      category: this.state.category.slug,
+      budget: this.state.budget.name,
+      category: this.state.category.name,
     }
 
     let newTransactions = this.state.transactions
@@ -234,10 +235,12 @@ export default class NewTransaction extends React.Component {
       name: '',
       amount: '',
       budget: undefined,
-      cateogry: undefined,
+      category: undefined,
     })
 
   }
+
+
 
   onValueChange(value) {
 
@@ -259,6 +262,26 @@ export default class NewTransaction extends React.Component {
     }
     this.setState({"selectedBudget": selectedBudget})
   }
+
+  onAmountChanged(text){
+  let newText = '';
+  let numbers = '0123456789.';
+
+  if(text.length < 1){
+     this.setState({ amount: '' });
+   }
+
+  for (var i=0; i < text.length; i++) {
+       if(numbers.indexOf(text[i]) > -1 ) {
+            newText = newText + text[i];
+       }
+       else {
+             // your call back function
+             alert("please enter numbers only");
+        }
+       this.setState({ amount: newText });
+   }
+}
 
   renderTransactionEntry() {
       let selectOneObject = {"name": "Select One", "identifier":"dummy"}
@@ -289,8 +312,9 @@ export default class NewTransaction extends React.Component {
                 accessible={true} accessibilityLabel={'description-transaction'}/>
             <StyledTextInput
                 labelText={`Amount`}
-                value={this.state.amount}
-                onChangeText={(amount) => {this.setState({ amount })}}
+                value = {this.state.amount}
+                keyboardType = 'numeric'
+                onChangeText = {(amount)=> this.onAmountChanged(amount)}
                 accessible={true} accessibilityLabel={'amount-transaction'}/>
             <StyledPicker
                 labelText={`Budget`}
@@ -311,7 +335,7 @@ export default class NewTransaction extends React.Component {
     return (
       <View>
       {this.state.transactions.map((transaction) => {
-        return <TransactionRow  key={`${transaction.name}${transaction.description}${transaction.amount}`} transaction={transaction}/>
+        return <MultipleTransactionRow  key={`${transaction.name}${transaction.description}${transaction.amount}`} transaction={transaction}/>
       })}
       </View>
 
