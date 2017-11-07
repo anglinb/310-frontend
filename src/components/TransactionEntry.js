@@ -6,7 +6,8 @@ import {
   Button,
   Text,
   View,
-  Picker
+  Picker,
+  Switch
 } from 'react-native';
 
 
@@ -17,8 +18,17 @@ import StyledPicker from './StyledPicker'
 import API from './../lib/API'
 export default class NewTransaction extends React.Component {
 
+  //need to change the state to here for each transaction
   constructor(props) {
     super(props);
+    this.state = {
+      name: '',
+      description: '',
+      category: undefined,
+      amount: '',
+      recurring: false,
+      //budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
+    }
 
     this.handleChangeText = this.handleChangeText.bind(this)
     this.onValueChange = this.onValueChange.bind(this)
@@ -89,6 +99,13 @@ export default class NewTransaction extends React.Component {
               labelText={`Amount`}
               onChangeText={(amount) => this.handleChangeText(amount, "amount")}
               accessible={true} accessibilityLabel={'amount-transaction'}/>
+          <View style={styles.leftRight}>
+            <Text style={styles.headerText}>{`Recur Monthly:`}</Text>
+            <Switch
+              onValueChange={(value) => this.setState({recurring: value})}
+              value={this.state.recurring}
+              onTintColor={config.lightGreen}/>
+          </View>
           <StyledPicker
               labelText={`Budget`}
               objects={curr_budgets}
@@ -111,5 +128,12 @@ const styles = StyleSheet.create({
     color: config.veryDarkText,
     fontSize: 20,
     fontWeight: '600',
+  },
+
+  leftRight: {
+    padding: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   }
 });
