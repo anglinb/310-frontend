@@ -32,7 +32,7 @@ export default class NewTransaction extends React.Component {
     this.state = {
       name: '',
       description: '',
-      category: undefined,
+      category: '',
       amount: '',
       budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
       transactions: [{
@@ -216,6 +216,9 @@ export default class NewTransaction extends React.Component {
   }
 
   addAnotherTransaction() {
+
+
+
     let transactionObject = {
       description: this.state.description,
       recurring: false,
@@ -229,13 +232,15 @@ export default class NewTransaction extends React.Component {
     let newTransactions = this.state.transactions
     newTransactions.push(transactionObject)
 
+
+
     this.setState({
       transactions:newTransactions,
       description: '',
       name: '',
       amount: '',
-      budget: undefined,
-      category: undefined,
+      budget: this.state.budget.name,
+      category: this.state.category.name,
     })
 
   }
