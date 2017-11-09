@@ -35,15 +35,7 @@ export default class NewTransaction extends React.Component {
       category: undefined,
       amount: '',
       budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
-      transactions: [{
-        // description: 'test',
-        // recurring: false,
-        // name: 'name',
-        // recurring_days: 0,
-        // amount: 10,
-        // budget: ' ',
-        // category: ' ',
-      }],
+      transactions: [],
     }
     this.xButtonPress = this.xButtonPress.bind(this)
     this.yButtonPress = this.yButtonPress.bind(this)
@@ -54,7 +46,8 @@ export default class NewTransaction extends React.Component {
     this.renderTransactionEntry = this.renderTransactionEntry.bind(this)
     this.onValueChange = this.onValueChange.bind(this)
     this.onValueChangeBudget = this.onValueChangeBudget.bind(this)
-
+    this.submitMultipleTransactions = this.submitMultipleTransactions.bind(this)
+    this.submitSingleTransaction = this.submitSingleTransaction.bind(this)
   }
 
   //Select buttons
@@ -84,17 +77,31 @@ export default class NewTransaction extends React.Component {
     this.props.navigation.goBack()
   }
 
+
+
   async yButtonPress() {
+    console.log('GOT Y BUTTON fjldsjfldksl', this.state.transactions)
+    if (this.state.transactions.length === 0) {
+      this.validate()
+      return this.submitSingleTransaction()
+    } else  {
+      return this.submitMultipleTransactions()
+    }
+  }
 
-    this.validate()
+  async submitMultipleTransactions() {
+    // TODO
 
+  }
+
+  async submitSingleTransaction() {
+    console.log('GOT TO SINGLE Transaction')
     let notifHelper = new NotificationsHelper({ budget: this.state.budget })
     let preThresh = notifHelper.calculateSingleThreshold(this.state.category)
     let categoryBudget1 = new CategoryHelper(this.state.category);
     let usePre = categoryBudget1.categoryBudgetUsed();
 
-    console.log('THE AMOUNT BEFORE', usePre);
-    console.log('PRE', preThresh);
+
     let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
     let { resp, error } = await API.build().authenticated().post({
         //enter endpoint once configured
@@ -165,8 +172,6 @@ export default class NewTransaction extends React.Component {
           )
         }
       }
-
-
   }
 
   async componentDidMount() {
