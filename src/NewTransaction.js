@@ -239,8 +239,7 @@ export default class NewTransaction extends React.Component {
       description: '',
       name: '',
       amount: '',
-      budget: this.state.budget.name,
-      category: this.state.category.name,
+      selectedBudget: undefined,
     })
 
   }
@@ -266,6 +265,7 @@ export default class NewTransaction extends React.Component {
       selectedBudget = parsedValue
     }
     this.setState({"selectedBudget": selectedBudget})
+
   }
 
   onAmountChanged(text){
@@ -286,6 +286,7 @@ export default class NewTransaction extends React.Component {
         }
        this.setState({ amount: newText });
    }
+
 }
 
   renderTransactionEntry() {
