@@ -93,7 +93,28 @@ export default class NewTransaction extends React.Component {
 
   async submitMultipleTransactions() {
     // TODO
-
+    let endpoint = "/budgets_batch"
+    let { resp, error } = await API.build().authenticated().post({
+      endpoint,
+      body: {
+        data: this.state.transactions
+      } 
+    })
+    if (error) {
+      Alert.alert(
+        'Whoops!',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      if(this.props.navigation.state.params && this.props.navigation.state.params.updateBudget !== undefined) {
+        await this.props.navigation.state.params.updateBudget()
+      }
+      this.props.navigation.goBack()
+    }
   }
 
   async submitSingleTransaction() {
@@ -236,8 +257,8 @@ export default class NewTransaction extends React.Component {
       name:this.state.name,
       recurring_days: 0,
       amount: this.state.amount,
-      budget: this.state.budget.name,
-      category: this.state.category.name,
+      budget_id: this.state.budget._id,
+      category_slug: this.state.category.slug,
     }
 
     let newTransactions = this.state.transactions
