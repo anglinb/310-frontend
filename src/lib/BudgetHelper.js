@@ -9,7 +9,7 @@ export default class BudgetHelper {
 
   budgetAmount() {
     const returnValue =  this.budget.categories.reduce((accumulator, category) => {
-      return accumulator + category.amount  + (category.rolloverStatus && category.rolloverStatus  === 'ACTIVE' ? category.rollover : 0)
+      return accumulator + category.amount
     }, 0)
     //this.logger('BUDGET AMOUNT', returnValue)
     return returnValue

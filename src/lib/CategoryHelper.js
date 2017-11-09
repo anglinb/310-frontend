@@ -7,28 +7,20 @@ export default class CategoryHelper {
   }
 
   categoryBudgetAmount() {
-    if (!this.category) {
-      return 0
-    }
-    let rollover = this.category.rolloverStatus === 'ACTIVE' ? (this.category.rollover || 0) : 0
-    return this.category.amount  + rollover
+    return this.category.amount
   }
 
   categoryBudgetUsed() {
-    if (!this.category) {
-      return 0
-    }
+    console.log('fdjlskjldfkljdjslffjdlksjklsdfkljfdsfdskljfdksljkljsdffdsjkl', this.category)
     return (this.category.transactions || []).reduce( (innerSum, transaction) => {
       return innerSum + transaction.amount
     }, 0)
   }
 
   categoryBudgetPercentage() {
-    if (!this.category) {
-      return 0
-    }
     const budgetUsed = this.categoryBudgetUsed()
     const budgetAmount = this.categoryBudgetAmount()
+    console.log('CATEOGRY BUGE', budgetUsed, budgetAmount)
     if (budgetAmount > 0) {
       return (budgetUsed / budgetAmount) * 100
     } else {

@@ -38,6 +38,7 @@ export default class BudgetsPage extends React.Component {
   }
 
   async componentDidMount() {
+    console.log('ljdsfjkldfsjdfklsdsjkl')
     let { resp, error } = await API.build().authenticated().get({
       endpoint: '/budgets'
     })
@@ -50,6 +51,7 @@ export default class BudgetsPage extends React.Component {
       obj.key = obj.name
       return obj;
     })
+console.log('kkfljkjflsdkljkfdsjldkflj', budgetsList)
     this.setState({'budgets':budgetsList})
   }
 
