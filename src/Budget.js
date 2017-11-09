@@ -83,12 +83,13 @@ export default class Budget extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
 
     // throw "ERROR"
     console.log('dkkkkkkkkkkkdkdkdklsfjjlsdj;flj;slajfepowihjafopehwpaoifihewopaihfepoiwhafpoi')
-    this.updateBudget()
+    await this.updateBudget()
+
     // let notifHelper = new NotificationsHelper({ budget: this.state.budget })
     // notifHelper.calculateThresholds()
   }
@@ -139,6 +140,18 @@ export default class Budget extends React.Component {
               style={{marginTop: 5, width: 148}}
               title={`History`}
               onPress={this.archiveButtonPress}
+              />
+          </View>
+          <View style={styles.leftRight}>
+            <StyledButton
+              style={{marginTop: 5, width: 148}}
+              title={`Rollover`}
+              onPress={() => {
+                this.props.navigation.navigate('RolloverSelection', {
+                  budget: this.state.budget,
+                  updateBudget: this.updateBudget
+                })
+              }}
               />
           </View>
           <View  style={{marginTop: 10, marginBottom: 10, height: 1, backgroundColor: config.darkText }}></View>

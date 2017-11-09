@@ -95,31 +95,13 @@ export class BudgetStatusBarDates extends React.Component {
 export class BudgetStatusBarCategory extends React.Component {
 
   render() {
-    let categoryPercentage
-    if (this.props.category) {
-      let categoryHelper = new CategoryHelper(this.props.category)
-      categoryPercentage = categoryHelper.categoryBudgetPercentage()
-    } else {
-      budgetPercentage = 0
-    }
-
-    var amountSpent = 0;
-    for (var i = 0; i < this.props.category.transactions.length; i++) {
-        amountSpent += this.props.category.transactions[i].amount
-    }
-    console.log('HhHhHHHHHHHHHHH' + categoryPercentage)
-
-    //making it show negative if over
-    if(amountSpent > this.props.category.amount){
-      amountSpent = this.props.category.amount - amountSpent
-    }
-
+    let categoryHelper = new CategoryHelper(this.props.category)
     return (
       <BudgetStatusBar
         style={{padding: 10}}
-        percentageComplete={categoryPercentage}
+        percentageComplete={categoryHelper.categoryBudgetPercentage()}
         leftLabel={this.props.category.name}
-        rightLabel={String(amountSpent) + '/' + this.props.category.amount}
+        rightLabel={`${categoryHelper.categoryBudgetUsed()}/${categoryHelper.categoryBudgetAmount()}`}
       />
     )
   }

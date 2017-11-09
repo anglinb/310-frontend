@@ -23,6 +23,7 @@ import HamburgerNavigation from './HamburgerNavigation';
 import Analytics from './Analytics';
 import Archive from './Archive';
 import CategoryHistory from './CategoryHistory'
+import RolloverSelection from './RolloverSelection'
 
 
 const StackModalNavigator = (routeConfigs, navigatorConfig) => {
@@ -60,7 +61,8 @@ const AuthenticatedNavigator = StackModalNavigator({
     Profile: { screen: Profile },
     Analytics: { screen: Analytics },
     Archive: { screen: Archive },
-    CategoryHistory: { screen: CategoryHistory }
+    CategoryHistory: { screen: CategoryHistory },
+    RolloverSelection: { screen: RolloverSelection },
   },{
     headerMode: "none",
   })
