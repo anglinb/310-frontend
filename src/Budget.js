@@ -62,6 +62,28 @@ export default class Budget extends React.Component {
     this.props.navigation.navigate('Archive', { budget: this.state.budget })
   }
 
+  async ignoreRollover(categories) {
+    console.log("NO PRESSED: LFJEWLKJFELKW")
+    let updates = categories.filter((category) => {
+      console.log('FILTEREING ', category, ( category.rolloverStatus && category.rolloverStatus === 'UNKNOWN'))
+      return category.rolloverStatus && category.rolloverStatus === 'UNKNOWN'
+    }).map((category) => {
+      return {
+        categorySlug: category.slug,
+        rolloverStatus: 'INACTIVE',
+      }
+    })
+    let { resp, error } = await API.build().authenticated().post({
+      endpoint: `/budgets/${this.state.budget._id}/rollover/_batch`,
+      body: {
+        data: updates
+      }
+    })
+    this.setState({ budget: resp }, () => {
+      this.forceUpdate()
+    })
+  }
+
   async updateBudget() {
     const endpoint = "/budgets/" + this.state.budget._id
     let { resp, error } = await API.build().authenticated().get({
@@ -77,6 +99,32 @@ export default class Budget extends React.Component {
         { cancelable: false }
       )
     } else {
+      for(let categoryIndex in resp.categories) {
+        let category = resp.categories[categoryIndex]
+        console.log('CHECEFLKDSLFJDSLKJ', category)
+        if (category.rolloverStatus && category.rolloverStatus === 'UNKNOWN') {
+          Alert.alert(
+            'Unused Funds',
+            'Would you like to rollover funds from the previous cycle?',
+            [
+              {text: 'No', onPress: () => {
+                console.log('GOT NO PRESS')
+                this.ignoreRollover(resp.categories)
+                console.log('AFTER GOT NO PRESS')
+              }},
+              {text: 'Yes', onPress: () => {
+                this.props.navigation.navigate('RolloverSelection', {
+                  budget: this.state.budget,
+                  updateBudget: this.updateBudget
+                })
+              }},
+            ],
+            { cancelable: false }
+          )
+          break;
+        }
+      }
+
       this.setState({ budget: resp }, () => {
         this.forceUpdate()
       })

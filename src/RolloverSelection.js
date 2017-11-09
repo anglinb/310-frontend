@@ -33,9 +33,21 @@ class MyListItem extends React.PureComponent {
 export default class RolloverSelection extends React.Component {
   constructor(props) {
     super(props)
+    let budget =  props.navigation.state.params.budget
+    let selected = (new Map(): Map<string, boolean>)
+    const categories = budget.categories.filter((category) => {
+      return category.rolloverStatus && category.rollover !== 0
+    })
+    categories.forEach((category) => {
+      if (category.rolloverStatus === 'INACTIVE') {
+        selected.set(category.slug, false)
+      } else {
+        selected.set(category.slug, true)
+      }
+    })
     this.state = {
       budget: props.navigation.state.params.budget,
-      selected: (new Map(): Map<string, boolean>)
+      selected: selected,
     }
     this._allApply = this._allApply.bind(this)
     this._allIgnore = this._allIgnore.bind(this)
@@ -58,9 +70,13 @@ export default class RolloverSelection extends React.Component {
   };
 
   _allApply() {
+
+    const categories = this.state.budget.categories.filter((category) => {
+      return category.rolloverStatus && category.rollover !== 0
+    })
     this.setState((state) => {
       const selected = new Map(state.selected);
-      this.props.data.forEach((category) => {
+      categories.forEach((category) => {
         selected.set(category.slug, true)
       })
       return {selected};
@@ -68,10 +84,12 @@ export default class RolloverSelection extends React.Component {
   }
 
   _allIgnore() {
-    console.log()
+    const categories = this.state.budget.categories.filter((category) => {
+      return category.rolloverStatus && category.rollover !== 0
+    })
     this.setState((state) => {
       const selected = new Map(state.selected);
-      this.props.data.forEach((category) => {
+      categories.forEach((category) => {
         selected.set(category.slug, false)
       })
       return {selected};

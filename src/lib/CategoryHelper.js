@@ -18,7 +18,6 @@ export default class CategoryHelper {
     if (!this.category) {
       return 0
     }
-    console.log('fdjlskjldfkljdjslffjdlksjklsdfkljfdsfdskljfdksljkljsdffdsjkl', this.category)
     return (this.category.transactions || []).reduce( (innerSum, transaction) => {
       return innerSum + transaction.amount
     }, 0)
@@ -30,7 +29,6 @@ export default class CategoryHelper {
     }
     const budgetUsed = this.categoryBudgetUsed()
     const budgetAmount = this.categoryBudgetAmount()
-    console.log('CATEOGRY BUGE', budgetUsed, budgetAmount)
     if (budgetAmount > 0) {
       return (budgetUsed / budgetAmount) * 100
     } else {
