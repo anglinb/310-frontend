@@ -10,15 +10,10 @@ import config from '../config'
 export default class MultipleTransactionRow extends React.Component {
 
   render() {
-    let currDate = new Date(this.props.transaction.timestamp)
-    let dateString = currDate.getMonth() + "/" + currDate.getDate()
-    if(this.props.transaction.timestamp == null) {
-      dateString = this.props.date
-    }
     return (
 
-      <View style={{height:30, flexDirection:'row'}}>
-        <Text style={{flex: 1}}> {dateString} </Text>
+      <View style={{height:40, flexDirection:'row'}}>
+        <Text style={{flex: 1}}/>
         <Text style={{flex: 3}}>{this.props.transaction.name}</Text>
         <Text style={{flex: 3}}>{this.props.transaction.budget}</Text>
         <Text style={{flex: 3}}>{this.props.transaction.category}</Text>

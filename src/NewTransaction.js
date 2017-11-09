@@ -197,7 +197,7 @@ export default class NewTransaction extends React.Component {
         ],
         { cancelable: false }
       )
-      return;
+      return false;
     }
     if(this.state.amount < 0) {
       Alert.alert(
@@ -208,8 +208,10 @@ export default class NewTransaction extends React.Component {
         ],
         { cancelable: false }
       )
-      return;
+      return false;
     }
+
+    return true;
   }
 
   //Helper classes to receive selected Category/Budget
@@ -221,6 +223,11 @@ export default class NewTransaction extends React.Component {
   }
 
   addAnotherTransaction() {
+
+    if(this.validate() == false) {
+      return;
+    }
+
     let transactionObject = {
       description: this.state.description,
       recurring: false,
@@ -239,9 +246,9 @@ export default class NewTransaction extends React.Component {
       description: '',
       name: '',
       amount: '',
-      budget: undefined,
-      category: undefined,
     })
+
+    this.refs.scroll.scrollTo({x:0, y:0, animated:true})
 
   }
 
@@ -282,7 +289,7 @@ export default class NewTransaction extends React.Component {
        }
        else {
              // your call back function
-             alert("please enter numbers only");
+             alert("Please enter numbers only.");
         }
        this.setState({ amount: newText });
    }
@@ -360,7 +367,7 @@ export default class NewTransaction extends React.Component {
           xButtonPress={() => {this.xButtonPress()}}
           yButtonPress={() => {this.yButtonPress()}}
           />
-        <ScrollView accessible={true} accessibilityLabel={'transaction-entry-container'}>
+        <ScrollView ref={'scroll'} accessible={true} accessibilityLabel={'transaction-entry-container'}>
         <Text style={StyleSheet.flatten([styles.headerText, { padding: 10 }])}>{`Added Transactions`}</Text>
         {this.renderTransactions()}
           <View style={{padding: 10}}>
