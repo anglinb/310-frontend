@@ -154,7 +154,7 @@ export default class NewTransaction extends React.Component {
         if(newRat >= 1){
           Alert.alert(
             'Full Budget Limit Reached',
-            'You have exceeded your budget limitation by ' + (newRat-1)*100 + '% in your ' + this.state.category.name + ' Category!',
+            'You have exceeded your budget limitation by ' + ((newRat-1)*100).toFixed(2) + '% in your ' + this.state.category.name + ' Category!',
             [
               {text: 'OK', onPress: () => console.log('OK Pressed')},
             ],

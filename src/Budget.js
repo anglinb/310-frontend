@@ -180,19 +180,19 @@ export default class Budget extends React.Component {
           </View>
           <View style={styles.leftRight}>
             <StyledButton
-              style={{marginTop: 5, width: 148}}
+              style={{marginTop: 5, width: 154}}
               title={`Breakdown`}
               onPress={this.analyticsButtonPress}
               />
             <StyledButton
-              style={{marginTop: 5, width: 148}}
+              style={{marginTop: 5, width: 154}}
               title={`History`}
               onPress={this.archiveButtonPress}
               />
           </View>
           <View style={styles.leftRight}>
             <StyledButton
-              style={{marginTop: 5, width: 148}}
+              style={{marginTop: 5, width: 354}}
               title={`Rollover`}
               onPress={() => {
                 this.props.navigation.navigate('RolloverSelection', {
