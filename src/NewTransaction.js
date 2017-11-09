@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Alert,
   StyleSheet,
+  Switch,
   KeyboardAvoidingView,
   Button,
   Text,
@@ -33,6 +34,7 @@ export default class NewTransaction extends React.Component {
       name: '',
       description: '',
       category: undefined,
+      recurring: false,
       amount: '',
       budget: (props.navigation.state.params === undefined)?undefined:props.navigation.state.params.budget,
       transactions: [],
@@ -109,7 +111,7 @@ export default class NewTransaction extends React.Component {
         endpoint: endpoint,
         body: {
           description: this.state.description,
-          recurring: false,
+          recurring: this.state.recurring,
           name:this.state.name,
           recurring_days: 0,
           amount: this.state.amount,
@@ -230,7 +232,7 @@ export default class NewTransaction extends React.Component {
 
     let transactionObject = {
       description: this.state.description,
-      recurring: false,
+      recurring: this.state.recurring,
       name:this.state.name,
       recurring_days: 0,
       amount: this.state.amount,
@@ -328,6 +330,13 @@ export default class NewTransaction extends React.Component {
                 keyboardType = 'numeric'
                 onChangeText = {(amount)=> this.onAmountChanged(amount)}
                 accessible={true} accessibilityLabel={'amount-transaction'}/>
+          <View style={styles.leftRight}>
+           <Text style={styles.headerText}>{`Recur Monthly:`}</Text>
+           <Switch
+             onValueChange={(recurring) => this.setState({recurring})}
+             value={this.state.recurring}
+             onTintColor={config.lightGreen}/>
+         </View>
             <StyledPicker
                 labelText={`Budget`}
                 objects={curr_budgets}
@@ -386,4 +395,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
+    leftRight: {
+    padding: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });
