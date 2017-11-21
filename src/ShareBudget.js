@@ -67,6 +67,32 @@ export default class ShareBudget extends React.Component {
 
   async yButtonPress() {
     console.log('GOT Y BUTTON fjldsjfldksl', this.state.transactions)
+    this.validate()
+    let { resp, error } = await API.build().authenticated().post({
+      //how do you get the Budget ID?
+      endpoint: `/budgets/`,
+      body: {
+        name: this.state.budget.name,
+        resetType: this.state.budget.resetType,
+        resetDate: this.state.budget.resetDate,
+        usernames: [this.state.name],
+      }
+    })
+    if (error) {
+      Alert.alert(
+        'Whoops',
+        'Make sure to have a valid user and budget!',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      //await this.props.navigation.state.params.updateBudget()
+      //navigate back a page
+      this.props.navigation.goBack()
+    }
   }
 
   async componentDidMount() {
