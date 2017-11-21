@@ -19,6 +19,7 @@ import AccountSetUp from './AccountSetUp';
 import AccountSettings from './AccountSettings';
 import ControlBanner from './components/ControlBanner';
 import HamburgerNavigation from './HamburgerNavigation';
+import ShareBudget from './ShareBudget';
 
 import Analytics from './Analytics';
 import Archive from './Archive';
@@ -63,6 +64,7 @@ const AuthenticatedNavigator = StackModalNavigator({
     Archive: { screen: Archive },
     CategoryHistory: { screen: CategoryHistory },
     RolloverSelection: { screen: RolloverSelection },
+    ShareBudget: {screen: ShareBudget},
   },{
     headerMode: "none",
   })

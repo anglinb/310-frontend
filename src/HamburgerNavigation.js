@@ -7,6 +7,7 @@ import {
   Text,
   View,
   Image,
+  ScrollView,
 } from 'react-native';
 
 import Container from './components/Container'
@@ -30,6 +31,7 @@ export default class HamburgerNavigation extends React.Component {
     this.archivesButtonPress = this.archivesButtonPress.bind(this)
     this.accountButtonPress = this.accountButtonPress.bind(this)
     this.signOutButtonPress = this.signOutButtonPress.bind(this)
+    this.shareBudgetButtonPress = this.shareBudgetButtonPress.bind(this)
   }
 
   //CONTROLBANNER buttons
@@ -52,6 +54,9 @@ export default class HamburgerNavigation extends React.Component {
   async accountButtonPress() {
     this.props.navigation.navigate('AccountSettings')
   }
+  async shareBudgetButtonPress() {
+    this.props.navigation.navigate('ShareBudget')
+  }
   async signOutButtonPress() {
     let authStore = Store.authenticationStore()
     await authStore.removeAuthenticationToken()
@@ -66,7 +71,7 @@ export default class HamburgerNavigation extends React.Component {
           hamburgerButtonPress={() => {this.hamburgerButtonPress()}}
           transactionButtonPress={() => {this.transactionButtonPress()}}
         />
-        <View style={{padding: 10}}>
+        <ScrollView style={{padding: 10}}>
             <Text style={styles.headerText}>{`Navigation Menu`}</Text>
             <StyledButton
               style={{marginTop: 20}}
@@ -85,10 +90,15 @@ export default class HamburgerNavigation extends React.Component {
             />
             <StyledButton
               style={{marginTop: 20}}
+              title={`Share a Budget`}
+              onPress={this.shareBudgetButtonPress}
+            />
+            <StyledButton
+              style={{marginTop: 20}}
               title={`Sign Out`}
               onPress={this.signOutButtonPress}
             />
-        </View>
+        </ScrollView>
       </Container>
     )
   }
