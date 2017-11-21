@@ -125,17 +125,24 @@ export default class NewTransaction extends React.Component {
     let usePre = categoryBudget1.categoryBudgetUsed();
 
 
-    let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
+    let endpoint = "/budgets_batch"
+    // let endpoint = "/budgets/" + this.state.budget._id + "/categories/" + this.state.category.slug + "/transactions"
     let { resp, error } = await API.build().authenticated().post({
         //enter endpoint once configured
         //how to fill the body using a vector of entries
         endpoint: endpoint,
         body: {
-          description: this.state.description,
-          recurring: this.state.recurring,
-          name:this.state.name,
-          recurring_days: 0,
-          amount: this.state.amount,
+          data: [
+            {
+              description: this.state.description,
+              recurring: this.state.recurring,
+              name:this.state.name,
+              recurring_days: 0,
+              amount: this.state.amount,
+              budget_id: this.state.budget._id,
+              category_slug: this.state.category.slug,
+            }
+          ]
         }
       })
       console.log('UPPPPPPPPPPPPPPPPPPPPPPPPPPAAADDDDDDDDDDDDDDDDDD')
