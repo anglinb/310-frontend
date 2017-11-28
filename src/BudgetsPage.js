@@ -45,11 +45,13 @@ export default class BudgetsPage extends React.Component {
     if (error) {
       console.log('EEREROE$OIRJOFIJOFJELWIJFOIEWJOIFHWEOIH', error)
     }
+      console.log('GOT BUDGETS', resp.map((budget) => { return budget._id }))
 
     const budgetsList = resp.map((obj) => {
       obj.key = obj.name
       return obj;
     })
+    this.synchronize()
     this.setState({'budgets':budgetsList})
   }
 
@@ -69,6 +71,7 @@ export default class BudgetsPage extends React.Component {
   }
 
   async updateBudget() {
+    console.log("GELWTJL")
     const endpoint = "/budgets"
     let { resp, error } = await API.build().authenticated().get({
       endpoint: endpoint
@@ -83,9 +86,59 @@ export default class BudgetsPage extends React.Component {
         { cancelable: false }
       )
     } else {
+      console.log('GOT BUDGETS', resp)
       this.setState({ budgets: resp }, () => {
         this.forceUpdate()
       })
+    }
+  }
+
+  async respondToInvite(invite, accept) {
+    const endpoint = `/budgets/${invite.budget_id}/invites/respond` 
+    const body = { accept }
+    let { resp, error } = await API.build().authenticated().post({
+      endpoint,
+      body,
+    })
+    if (error) {
+      Alert.alert(
+        'Error',
+        error.message,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.updateBudget()
+    }
+  }
+
+  async alertAndRespondInvite(invite) {
+    Alert.alert(
+      'Received New Invite',
+      `Would you like to accept an invite to join '${invite.budget_name}' from user '${invite.inviter_username}'?`,
+      [
+        {text: 'Yes', onPress: () => this.respondToInvite(invite, true)},
+        {text: 'No', onPress: () => this.respondToInvite(invite, false)},
+      ],
+      { cancelable: false }
+    )
+  }
+
+  async synchronize() {
+    const endpoint = "/sync"
+    let { resp, error } = await API.build().authenticated().get({
+      endpoint: endpoint
+    })
+    if (!error) {
+      console.log('SYNCHRONIZE RESPONSE', resp)
+      // Could add more here in the future
+      if (resp.invites && resp.invites.length > 0)  {
+        await resp.invites.forEach(async (invite) => {
+          return this.alertAndRespondInvite(invite)
+        })
+      }
     }
   }
 

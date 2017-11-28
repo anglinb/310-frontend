@@ -70,12 +70,9 @@ export default class ShareBudget extends React.Component {
     this.validate()
     let { resp, error } = await API.build().authenticated().post({
       //how do you get the Budget ID?
-      endpoint: `/budgets/`,
+      endpoint: `/budgets/${this.state.selectedBudget._id}/invites`,
       body: {
-        name: this.state.budget.name,
-        resetType: this.state.budget.resetType,
-        resetDate: this.state.budget.resetDate,
-        usernames: [this.state.name],
+        username: this.state.name,
       }
     })
     if (error) {
