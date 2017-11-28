@@ -97,4 +97,15 @@ export default class API {
       body: JSON.stringify(body)
     })
   }
+
+  async upload({ endpoint, headers, formData }) {
+    return this.request({
+      endpoint: ENDPOINT + endpoint,
+      method: 'POST',
+      headers: await this.headers(Object.assign({}, {
+        'Content-Type': 'multipart/form-data',
+      }, headers)),
+      body: formData
+    })
+  }
 }
