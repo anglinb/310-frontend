@@ -50,6 +50,8 @@ export default class NewTransaction extends React.Component {
     this.onValueChangeBudget = this.onValueChangeBudget.bind(this)
     this.submitMultipleTransactions = this.submitMultipleTransactions.bind(this)
     this.submitSingleTransaction = this.submitSingleTransaction.bind(this)
+    this.scanReceipt = this.scanReceipt.bind(this)
+    this.scanReceiptDidFinish = this.scanReceiptDidFinish.bind(this)
   }
 
   //Select buttons
@@ -282,8 +284,6 @@ export default class NewTransaction extends React.Component {
 
   }
 
-
-
   onValueChange(value) {
 
     this.setState({
@@ -325,6 +325,16 @@ export default class NewTransaction extends React.Component {
    }
 }
 
+scanReceipt() {
+  this.props.navigation.navigate('UploadReceipt', {
+    scanReceiptDidFinish: this.scanReceiptDidFinish
+  })
+}
+
+scanReceiptDidFinish(result) {
+  this.onAmountChanged(result.amount)
+}
+
   renderTransactionEntry() {
       let selectOneObject = {"name": "Select One", "identifier":"dummy"}
       const curr_budgets = this.state.budgets || [selectOneObject]
@@ -342,6 +352,7 @@ export default class NewTransaction extends React.Component {
 
       return (
           <View style={{padding: 10}}>
+            <StyledButton title={`Scan Receipt`} onPress={this.scanReceipt}/>
             <StyledTextInput
               labelText={'Transaction Name'}
               value={this.state.name}
@@ -387,12 +398,10 @@ export default class NewTransaction extends React.Component {
         return <MultipleTransactionRow  key={`${transaction.name}${transaction.description}${transaction.amount}`} transaction={transaction}/>
       })}
       </View>
-
     )
   }
 
   render() {
-
     return (
       <Container style={{padding: 0}}>
         <ControlBanner
