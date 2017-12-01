@@ -28,7 +28,7 @@ export default class HamburgerNavigation extends React.Component {
     this.hamburgerButtonPress = this.hamburgerButtonPress.bind(this)
     this.transactionButtonPress = this.transactionButtonPress.bind(this)
     this.budgetsButtonPress = this.budgetsButtonPress.bind(this)
-    this.archivesButtonPress = this.archivesButtonPress.bind(this)
+    //this.archivesButtonPress = this.archivesButtonPress.bind(this)
     this.accountButtonPress = this.accountButtonPress.bind(this)
     this.signOutButtonPress = this.signOutButtonPress.bind(this)
     this.shareBudgetButtonPress = this.shareBudgetButtonPress.bind(this)
@@ -49,7 +49,7 @@ export default class HamburgerNavigation extends React.Component {
     this.props.navigation.navigate('BudgetsPage')
   }
   async archivesButtonPress() {
-    this.props.navigation.navigate('NewCategory')
+    this.props.navigation.navigate('Archive')
   }
   async accountButtonPress() {
     this.props.navigation.navigate('AccountSettings')
@@ -77,11 +77,6 @@ export default class HamburgerNavigation extends React.Component {
               style={{marginTop: 20}}
               title={`Budgets`}
               onPress={this.budgetsButtonPress}
-            />
-            <StyledButton
-              style={{marginTop: 20}}
-              title={`Archives`}
-              onPress={this.archivesButtonPress}
             />
             <StyledButton
               style={{marginTop: 20}}
