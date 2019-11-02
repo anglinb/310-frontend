@@ -154,6 +154,13 @@ export default class Budget extends React.Component {
       categories = this.state.budget.categories.map((category, index) => {
         return <BudgetStatusBarCategory key={category.slug} category={category} />
       })
+      let savings = this.state.budget.categories.reduce((previous, category) => {
+        if (category.rolloverStatus === 'INACTIVE') {
+          return previous + (category.rolloverAmount || 0) 
+        }
+        return previous
+      }, 0)
+      categories.push(<BudgetStatusBar leftLabel={`Savings (from last period)`} rightLabel={`$${savings}`} key={`_savings`} />)
     }
 
     return (
